@@ -1,0 +1,1176 @@
+:root {
+  --nav-blue: #064aa4;
+  --deep-blue: #082e5e;
+  --gold: #f9b31b;
+  --title-gold: #b5a06a;
+  --page-title-size: clamp(44px, 5vw, 68px);
+  --section-title-size: clamp(38px, 4.6vw, 64px);
+  --card-title-size: clamp(24px, 2.8vw, 34px);
+  --body-text-size: 16px;
+  --small-text-size: 14px;
+  --content-width: 1120px;
+  --panel-radius: 18px;
+  --tan-panel: #bda66e;
+  --placeholder-gray: #777775;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: #1683ed;
+  color: #ffffff;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.page-shell {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.topbar {
+  align-items: center;
+  background: linear-gradient(90deg, #073b71 0%, #051f52 55%, #020202 100%);
+  display: flex;
+  justify-content: center;
+  min-height: 74px;
+  padding: 0 28px;
+  position: relative;
+}
+
+.brand-slot {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: flex-start;
+  left: 44px;
+  position: absolute;
+}
+
+.guild-logo {
+  display: block;
+  height: 54px;
+  object-fit: contain;
+  width: 54px;
+}
+
+.quest-nav {
+  align-items: center;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 153px 124px 160px 124px 124px;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.nav-card {
+  align-items: center;
+  background: #064fae;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  font-size: 13px;
+  font-weight: 700;
+  height: 41px;
+  justify-content: center;
+  letter-spacing: 0;
+  line-height: 1;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+  white-space: nowrap;
+}
+
+.nav-card:hover,
+.nav-card:focus-visible,
+.brand-slot:hover,
+.brand-slot:focus-visible {
+  outline: none;
+  transform: translateY(-2px);
+}
+
+.nav-card.active {
+  background: var(--gold);
+  color: #ffffff;
+  font-size: 13.75px;
+}
+
+.hero-band {
+  align-items: center;
+  background: #000000;
+  display: flex;
+  height: 260px;
+  justify-content: center;
+  padding: 0 24px;
+}
+
+.hero-band h1 {
+  color: var(--title-gold);
+  font-size: var(--page-title-size);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 0 0 18px;
+  text-transform: uppercase;
+}
+
+.color-band {
+  width: 100%;
+}
+
+.band-one {
+  background: #06294f;
+  height: 351px;
+}
+
+.band-two {
+  background: #073779;
+  height: 352px;
+}
+
+.band-three {
+  background: #0b4685;
+  height: 352px;
+}
+
+.band-four {
+  background: #1050a8;
+  height: 351px;
+}
+
+.band-five {
+  background: #1683ed;
+  min-height: 353px;
+}
+
+.quest-board-section {
+  background: var(--tan-panel);
+  padding: 28px 32px 38px;
+}
+
+.quest-folder {
+  margin: 0 auto;
+  max-width: var(--content-width);
+}
+
+.quest-tabs {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr 1fr 1.08fr;
+  margin: 0;
+}
+
+.quest-tab {
+  align-items: center;
+  background: var(--placeholder-gray);
+  border: 0;
+  border-radius: var(--panel-radius) var(--panel-radius) 0 0;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: var(--body-text-size);
+  font-weight: 700;
+  height: 70px;
+  justify-content: center;
+  line-height: 1.05;
+  margin-bottom: -1px;
+  padding: 0 14px;
+  position: relative;
+  text-align: center;
+  transition: background 160ms ease, color 160ms ease;
+  white-space: nowrap;
+}
+
+.quest-tab:hover,
+.quest-tab:focus-visible {
+  background: #6f6f6d;
+  outline: none;
+}
+
+.quest-tab.active {
+  background: #ffffff;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  color: #064fae;
+  font-size: 18px;
+  z-index: 2;
+}
+
+.quest-tab.active:hover,
+.quest-tab.active:focus-visible {
+  background: #ffffff;
+}
+
+.quest-panel {
+  background: #ffffff;
+  border-radius: 0 0 var(--panel-radius) var(--panel-radius);
+  margin: 0;
+  min-height: 0;
+  padding: 58px 32px 38px;
+  position: relative;
+  z-index: 1;
+}
+
+.quest-grid {
+  display: grid;
+  gap: 32px 30px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.quest-card {
+  color: #111111;
+}
+
+.quest-image-placeholder {
+  aspect-ratio: 1.68 / 1;
+  background: var(--placeholder-gray);
+  border-radius: 16px;
+  width: 100%;
+}
+
+.quest-card-meta {
+  align-items: baseline;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-top: 12px;
+}
+
+.quest-card h2 {
+  font-size: var(--card-title-size);
+  line-height: 1;
+  margin: 0;
+}
+
+.quest-card time {
+  color: #222222;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: var(--body-text-size);
+  white-space: nowrap;
+}
+
+.quest-card p {
+  color: #282828;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: var(--body-text-size);
+  margin: 5px 0 0;
+}
+
+.subguilds-section {
+  background: #ffffff;
+  padding: 0;
+}
+
+.subguilds-shell {
+  background: var(--tan-panel);
+  border-radius: 0 0 var(--panel-radius) var(--panel-radius);
+  margin: 0 auto;
+  min-height: calc(100vh - 74px);
+  padding: 86px 5.2vw 150px;
+}
+
+.subguilds-shell > h1 {
+  color: #000000;
+  font-size: var(--page-title-size);
+  line-height: 1;
+  margin: 0 0 62px;
+  text-align: center;
+}
+
+.featured-activities {
+  align-items: center;
+  background: #000000;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 62px;
+  max-width: var(--content-width);
+  min-height: 260px;
+  padding: 32px;
+}
+
+.featured-activities h2 {
+  color: var(--title-gold);
+  font-size: var(--section-title-size);
+  line-height: 1;
+  margin: 0;
+  text-align: center;
+}
+
+.subguild-card-grid {
+  display: grid;
+  gap: 48px 64px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0 auto;
+  max-width: 980px;
+}
+
+.subguild-card {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.subguild-image-placeholder {
+  aspect-ratio: 1 / 0.84;
+  background: url("/assets/subguild_portal.png") center / contain no-repeat;
+  position: relative;
+  width: min(100%, 260px);
+}
+
+.subguild-image-placeholder::after {
+  background: var(--subguild-accent);
+  border-radius: 50%;
+  content: "";
+  aspect-ratio: 1 / 1;
+  left: 50%;
+  position: absolute;
+  top: 43%;
+  transform: translate(-50%, -50%);
+  width: 42%;
+}
+
+.subguild-card h2 {
+  color: #ffffff;
+  font-size: var(--card-title-size);
+  line-height: 1;
+  margin: 12px 0 24px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.subguild-desc-box {
+  align-items: flex-start;
+  background: var(--placeholder-gray);
+  border-radius: 14px;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  min-height: 330px;
+  padding: 28px 18px;
+  width: 100%;
+}
+
+.subguild-desc-box p {
+  font-size: var(--body-text-size);
+  font-weight: 700;
+  margin: 0;
+}
+
+.rankers-section {
+  background: #ffffff;
+}
+
+.rankers-shell {
+  background: var(--tan-panel);
+  border-radius: 0 0 var(--panel-radius) var(--panel-radius);
+  margin: 0 auto;
+  min-height: calc(100vh - 74px);
+  padding: 78px 5.2vw 90px;
+}
+
+.rankers-shell > h1,
+.council-heading {
+  color: #000000;
+  font-size: var(--page-title-size);
+  line-height: 1;
+  margin: 0;
+  text-align: center;
+}
+
+.rankers-banner {
+  align-items: center;
+  background: #000000;
+  display: flex;
+  justify-content: center;
+  margin: 54px auto 40px;
+  max-width: var(--content-width);
+  min-height: 250px;
+  padding: 32px;
+}
+
+.rankers-banner h2 {
+  color: var(--title-gold);
+  font-size: var(--section-title-size);
+  line-height: 1;
+  margin: 0;
+  text-align: center;
+}
+
+.ranker-card-grid {
+  display: grid;
+  gap: 28px 34px;
+  margin: 0 auto;
+}
+
+.ranker-card-grid-primary {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  max-width: 980px;
+}
+
+.ranker-card-grid-council {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 880px;
+}
+
+.ranker-card-button {
+  align-items: flex-end;
+  aspect-ratio: 0.68 / 1;
+  background: var(--placeholder-gray);
+  border: 0;
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: var(--small-text-size);
+  font-weight: 700;
+  justify-content: center;
+  padding: 12px;
+  transition: transform 160ms ease, filter 160ms ease;
+}
+
+.ranker-card-button:hover,
+.ranker-card-button:focus-visible {
+  filter: brightness(0.94);
+  outline: 3px solid rgba(255, 255, 255, 0.5);
+  transform: translateY(-3px);
+}
+
+.council-heading {
+  margin: 74px 0 34px;
+}
+
+.council-card-button {
+  aspect-ratio: 0.7 / 1;
+}
+
+.ranker-modal-backdrop {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.76);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 28px;
+  position: fixed;
+  z-index: 50;
+}
+
+.ranker-modal {
+  color: #ffffff;
+  max-width: 760px;
+  position: relative;
+  width: min(100%, 760px);
+}
+
+.ranker-modal-close {
+  background: #ffffff;
+  border: 0;
+  border-radius: 999px;
+  color: #000000;
+  cursor: pointer;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  height: 34px;
+  position: absolute;
+  right: -12px;
+  top: -16px;
+  width: 34px;
+}
+
+.ranker-modal-cards {
+  display: grid;
+  gap: 52px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  justify-content: center;
+}
+
+.ranker-modal-card {
+  align-items: flex-end;
+  aspect-ratio: 0.68 / 1;
+  background: var(--placeholder-gray);
+  border: 4px solid #ffffff;
+  border-radius: 8px;
+  display: flex;
+  font-size: var(--body-text-size);
+  font-weight: 700;
+  justify-content: center;
+  padding: 18px;
+  text-align: center;
+}
+
+.ranker-profile-card {
+  background: #8c8c8a;
+}
+
+.ranker-modal-info {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  margin: 20px 0 0 8px;
+}
+
+.ranker-avatar-placeholder {
+  background: #ffffff;
+  border: 4px solid #143b92;
+  border-radius: 50%;
+  height: 52px;
+  width: 52px;
+}
+
+.ranker-modal-info h2 {
+  font-size: 24px;
+  line-height: 1;
+  margin: 0 0 14px;
+}
+
+.ranker-modal-info p {
+  font-size: var(--body-text-size);
+  font-weight: 700;
+  margin: 0;
+}
+
+.scrolls-section {
+  background: #ffffff;
+}
+
+.scrolls-shell {
+  background: var(--tan-panel);
+  border-radius: 0 0 var(--panel-radius) var(--panel-radius);
+  margin: 0 auto;
+  min-height: calc(100vh - 74px);
+  padding: 86px 5.2vw 84px;
+}
+
+.scrolls-shell > h1 {
+  color: #000000;
+  font-size: var(--page-title-size);
+  line-height: 1;
+  margin: 0 0 62px;
+  text-align: center;
+}
+
+.scrolls-featured {
+  align-items: center;
+  background: #000000;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 44px;
+  max-width: var(--content-width);
+  min-height: 300px;
+  padding: 32px;
+}
+
+.scrolls-featured h2 {
+  color: var(--title-gold);
+  font-size: var(--section-title-size);
+  line-height: 1.18;
+  margin: 0;
+  text-align: center;
+}
+
+.scrolls-featured span {
+  display: block;
+}
+
+.scroll-section-list {
+  display: grid;
+  gap: 58px;
+  margin: 0 auto;
+  max-width: var(--content-width);
+}
+
+.scroll-section-header {
+  align-items: center;
+  color: #000000;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: auto 1fr auto;
+  margin-bottom: 22px;
+}
+
+.scroll-section-header h2 {
+  font-size: var(--card-title-size);
+  line-height: 1;
+  margin: 0;
+}
+
+.scroll-section-header span {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: var(--small-text-size);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.scroll-divider {
+  border-bottom: 3px dashed #000000;
+  position: relative;
+}
+
+.scroll-divider::after {
+  background: var(--tan-panel);
+  border: 3px solid #000000;
+  content: "";
+  height: 8px;
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 8px;
+}
+
+.scroll-card-grid {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.scroll-card {
+  align-items: flex-end;
+  aspect-ratio: 1.7 / 1;
+  background: linear-gradient(135deg, #0754b5, #00164f);
+  border-radius: 18px;
+  color: #ffffff;
+  display: flex;
+  padding: 18px;
+}
+
+.scroll-card h3 {
+  font-size: var(--card-title-size);
+  line-height: 1;
+  margin: 0;
+}
+
+.codex-section {
+  background: #ffffff;
+}
+
+.codex-shell {
+  background: var(--tan-panel);
+  border-radius: 0 0 var(--panel-radius) var(--panel-radius);
+  margin: 0 auto;
+  min-height: calc(100vh - 74px);
+  padding: 86px 5.2vw 64px;
+}
+
+.codex-shell > h1 {
+  color: #000000;
+  font-size: var(--page-title-size);
+  line-height: 1;
+  margin: 0 0 62px;
+  text-align: center;
+}
+
+.codex-banner {
+  align-items: center;
+  background: #000000;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 46px;
+  max-width: var(--content-width);
+  min-height: 300px;
+  padding: 32px;
+}
+
+.codex-banner h2 {
+  color: var(--title-gold);
+  font-size: var(--section-title-size);
+  line-height: 1;
+  margin: 0;
+  text-align: center;
+}
+
+.codex-rule-list {
+  color: #000000;
+  display: grid;
+  gap: 34px;
+  margin: 0 auto;
+  max-width: 1040px;
+}
+
+.codex-rule {
+  text-align: center;
+}
+
+.codex-rule h2 {
+  font-size: clamp(28px, 3.1vw, 42px);
+  line-height: 1;
+  margin: 0 0 10px;
+}
+
+.codex-rule p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(20px, 2vw, 30px);
+  line-height: 1.46;
+  margin: 0;
+  text-align: center;
+}
+
+@media (max-width: 1280px) {
+  .topbar {
+    min-height: 68px;
+    padding: 0 22px;
+  }
+
+  .brand-slot {
+    left: 32px;
+  }
+
+  .guild-logo {
+    height: 48px;
+    width: 48px;
+  }
+
+  .quest-nav {
+    gap: 9px;
+    grid-template-columns: 138px 110px 142px 110px 110px;
+  }
+
+  .nav-card {
+    height: 39px;
+    font-size: 12px;
+  }
+
+  .nav-card.active {
+    font-size: 12.75px;
+  }
+
+  .quest-board-section {
+    padding: 26px 24px 36px;
+  }
+
+  .quest-folder {
+    max-width: 980px;
+  }
+
+  .quest-tab {
+    border-radius: 16px 16px 0 0;
+    font-size: 14px;
+    height: 60px;
+    padding: 0 10px;
+  }
+
+  .quest-tab.active {
+    font-size: 15px;
+  }
+
+  .quest-panel {
+    padding: 46px 24px 34px;
+  }
+
+  .quest-grid {
+    gap: 28px 22px;
+  }
+
+  .quest-card h2 {
+    font-size: 22px;
+  }
+
+  .quest-card time,
+  .quest-card p {
+    font-size: var(--body-text-size);
+  }
+
+  .subguilds-shell {
+    padding: 72px 4.5vw 120px;
+  }
+
+  .featured-activities {
+    min-height: 220px;
+  }
+
+  .subguild-card-grid {
+    gap: 42px;
+    max-width: 880px;
+  }
+
+  .subguild-desc-box {
+    min-height: 280px;
+  }
+
+  .rankers-shell {
+    padding: 68px 4.5vw 80px;
+  }
+
+  .rankers-banner {
+    min-height: 220px;
+  }
+
+  .ranker-card-grid-primary {
+    gap: 24px;
+    max-width: 860px;
+  }
+
+  .ranker-card-grid-council {
+    max-width: 780px;
+  }
+
+  .scrolls-shell {
+    padding: 72px 4.5vw 72px;
+  }
+
+  .scrolls-featured {
+    min-height: 250px;
+  }
+
+  .codex-shell {
+    padding: 72px 4.5vw 60px;
+  }
+
+  .codex-banner {
+    min-height: 250px;
+  }
+
+  .codex-rule-list {
+    max-width: 940px;
+  }
+
+  .codex-rule p {
+    font-size: clamp(18px, 2vw, 25px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .page-shell {
+    min-height: 1300px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+    padding: 12px 16px;
+    row-gap: 10px;
+  }
+
+  .brand-slot {
+    height: auto;
+    left: auto;
+    position: static;
+  }
+
+  .guild-logo {
+    height: 44px;
+    width: 44px;
+  }
+
+  .quest-nav {
+    gap: 8px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    justify-content: stretch;
+    width: 100%;
+  }
+
+  .nav-card {
+    border-radius: 8px;
+    font-size: 10px;
+    height: 35px;
+    padding: 0 6px;
+    white-space: normal;
+  }
+
+  .nav-card.active {
+    font-size: 10.5px;
+  }
+
+  .hero-band {
+    height: 220px;
+  }
+
+  .hero-band h1 {
+    font-size: var(--page-title-size);
+  }
+
+  .quest-board-section {
+    padding: 24px 18px 32px;
+  }
+
+  .quest-tabs {
+    gap: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .quest-tab {
+    border-radius: 12px;
+    font-size: 14px;
+    height: 52px;
+    margin-bottom: 0;
+    white-space: normal;
+  }
+
+  .quest-tab.active {
+    font-size: 15px;
+    transform: none;
+  }
+
+  .quest-panel {
+    border-radius: 16px;
+    margin-top: 12px;
+    min-height: 0;
+    padding: 24px 18px;
+  }
+
+  .quest-grid {
+    gap: 30px 20px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .quest-card-meta {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .quest-card h2 {
+    font-size: 22px;
+  }
+
+  .quest-card time,
+  .quest-card p {
+    font-size: 15px;
+  }
+
+  .subguilds-shell {
+    min-height: calc(100vh - 92px);
+    padding: 56px 24px 90px;
+  }
+
+  .subguilds-shell > h1 {
+    margin-bottom: 42px;
+  }
+
+  .featured-activities {
+    margin-bottom: 44px;
+    min-height: 180px;
+  }
+
+  .subguild-card-grid {
+    grid-template-columns: 1fr;
+    max-width: 360px;
+  }
+
+  .subguild-desc-box {
+    min-height: 220px;
+  }
+
+  .rankers-shell {
+    min-height: calc(100vh - 92px);
+    padding: 54px 24px 70px;
+  }
+
+  .rankers-banner {
+    margin: 42px auto 34px;
+    min-height: 180px;
+  }
+
+  .ranker-card-grid-primary,
+  .ranker-card-grid-council {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 420px;
+  }
+
+  .council-heading {
+    margin-top: 54px;
+  }
+
+  .ranker-modal-cards {
+    gap: 24px;
+  }
+
+  .scrolls-shell {
+    min-height: calc(100vh - 92px);
+    padding: 56px 24px 64px;
+  }
+
+  .scrolls-shell > h1 {
+    margin-bottom: 42px;
+  }
+
+  .scrolls-featured {
+    min-height: 190px;
+  }
+
+  .scroll-section-list {
+    gap: 44px;
+  }
+
+  .scroll-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .scroll-section-header {
+    gap: 12px;
+  }
+
+  .codex-shell {
+    min-height: calc(100vh - 92px);
+    padding: 56px 24px 58px;
+  }
+
+  .codex-shell > h1 {
+    margin-bottom: 42px;
+  }
+
+  .codex-banner {
+    margin-bottom: 38px;
+    min-height: 190px;
+  }
+
+  .codex-rule-list {
+    gap: 30px;
+  }
+
+  .codex-rule p {
+    font-size: 19px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-band {
+    height: 190px;
+  }
+
+  .hero-band h1 {
+    font-size: 42px;
+    margin-bottom: 8px;
+  }
+
+  .topbar {
+    padding: 12px 16px 14px;
+    row-gap: 10px;
+  }
+
+  .brand-slot {
+    height: auto;
+    justify-content: flex-start;
+    padding-left: 8px;
+  }
+
+  .guild-logo {
+    height: 44px;
+    width: 44px;
+  }
+
+  .quest-nav {
+    gap: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nav-card {
+    font-size: 11px;
+    height: 37px;
+  }
+
+  .nav-card.active {
+    font-size: 11.5px;
+  }
+
+  .quest-nav .nav-card:nth-child(3) {
+    grid-column: span 2;
+  }
+
+  .quest-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .quest-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quest-panel {
+    padding: 24px 16px;
+  }
+
+  .quest-card h2 {
+    font-size: 24px;
+  }
+
+  .subguilds-shell {
+    padding: 42px 18px 70px;
+  }
+
+  .featured-activities {
+    min-height: 150px;
+  }
+
+  .subguild-image-placeholder {
+    width: min(100%, 220px);
+  }
+
+  .rankers-shell {
+    padding: 42px 18px 60px;
+  }
+
+  .ranker-card-grid-primary,
+  .ranker-card-grid-council {
+    gap: 18px;
+  }
+
+  .ranker-modal-cards {
+    grid-template-columns: 1fr;
+    margin: 0 auto;
+    max-width: 250px;
+  }
+
+  .ranker-modal-info {
+    justify-content: center;
+    margin-left: 0;
+  }
+
+  .scrolls-shell {
+    padding: 42px 18px 52px;
+  }
+
+  .scrolls-featured {
+    min-height: 160px;
+  }
+
+  .scroll-section-header {
+    grid-template-columns: 1fr auto;
+  }
+
+  .scroll-divider {
+    display: none;
+  }
+
+  .codex-shell {
+    padding: 42px 18px 48px;
+  }
+
+  .codex-banner {
+    min-height: 160px;
+  }
+
+  .codex-rule h2 {
+    font-size: 28px;
+  }
+
+  .codex-rule p {
+    font-size: 17px;
+  }
+
+  .band-one,
+  .band-two,
+  .band-three,
+  .band-four,
+  .band-five {
+    height: 240px;
+    min-height: 240px;
+  }
+}
