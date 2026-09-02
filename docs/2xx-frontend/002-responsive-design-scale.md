@@ -17,6 +17,10 @@ shared size token -> page section -> responsive media query -> stable layout
 - Use `--card-title-size` for repeated card titles.
 - Keep page shells aligned through `--content-width`, `--panel-radius`, and `--tan-panel`.
 - Avoid one-off font sizes unless a component has a clear local reason.
+- Tablet and mobile layouts do not need to mirror desktop. Prioritize clean stacking, readable card widths, and navigation that wraps without crowding.
+- Keep iPad/tablet grids denser than mobile when they still read clearly, such as two-column Quest/Scroll cards or three-column Subguild cards.
+- Use the full navigation on desktop and a burger menu on tablet/mobile.
+- Quest category tabs should keep the bookmark/folder feel on smaller screens by wrapping into complete visible bookmark tabs. Avoid horizontal tab strips that cut off labels or tab edges.
 
 ## When to Use
 
