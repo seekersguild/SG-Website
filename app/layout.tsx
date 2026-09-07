@@ -5,9 +5,13 @@ export const metadata: Metadata = {
   title: "Seekers Guild",
   description: "Desktop-first Seekers Guild hub.",
   icons: {
-    icon: "/assets/seekersguild_logo.png",
-    shortcut: "/assets/seekersguild_logo.png",
-    apple: "/assets/seekersguild_logo.png",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
 };
 
