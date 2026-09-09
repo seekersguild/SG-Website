@@ -1185,11 +1185,19 @@ li {
   font-weight: 700;
 }
 
-.vision-support p,
-.pillar-card p {
+.vision-support p {
   color: rgba(239, 228, 202, 0.8);
   font-size: 16px;
   line-height: 1.55;
+  margin: 0;
+}
+
+/* Pillar bodies read as supporting text under the title, so they sit a step
+   down in size while gaining contrast to stay legible at the smaller scale. */
+.pillar-card p {
+  color: rgba(239, 228, 202, 0.86);
+  font-size: 14px;
+  line-height: 1.5;
   margin: 0;
 }
 
@@ -1217,37 +1225,43 @@ li {
   padding-left: clamp(20px, 3vw, 40px);
 }
 
+/* Five equal columns: with no leftover card the fifth pillar stops reading as
+   a different kind of thing, which is what flattened the old hierarchy.
+   Gap is local rather than --grid-gap so the token stays put for other grids. */
 .pillar-grid {
   display: grid;
-  gap: var(--grid-gap);
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(10px, 1.1vw, 16px);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
-.pillar-card:nth-child(5) {
-  grid-column: 1 / -1;
+/* Icon over title over description, centred, so each card reads top-down
+   in one pass instead of as a paragraph block. */
+.pillar-card .panel-face {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
 
-.pillar-card:nth-child(5) .panel-face {
-  align-content: center;
-  column-gap: clamp(16px, 2.2vw, 28px);
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-}
-
-.pillar-card:nth-child(5) .hex-numeral {
-  align-self: center;
-  grid-row: 1 / 3;
-  margin-bottom: 0;
+.pillar-card .hex-numeral {
+  margin-bottom: 12px;
 }
 
 .pillar-card h3 {
   color: var(--gold);
   font-family: var(--font-caps);
-  font-size: clamp(17px, 1.65vw, 21px);
+  font-size: clamp(15px, 1.3vw, 19px);
   font-weight: 700;
-  line-height: 1.2;
-  margin: 0 0 8px;
+  letter-spacing: 0.02em;
+  line-height: 1.22;
+  margin: 0 0 10px;
+  /* Titles wrap to at most three lines at five columns. Reserving that height
+     keeps every description starting on the same baseline, so a shorter title
+     like "Decentralized Empowerment" doesn't ride up out of the row. The
+     reservation drops per breakpoint as the columns widen. */
+  min-height: calc(3 * 1.22em);
   text-transform: uppercase;
+  text-wrap: balance;
 }
 
 .culture-list {
@@ -1498,6 +1512,16 @@ li {
   .hero-copy h1 {
     font-size: clamp(46px, 7vw, 76px);
   }
+
+  /* Five columns stop holding a readable line length here */
+  .pillar-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* Wider columns wrap titles to two lines at most */
+  .pillar-card h3 {
+    min-height: calc(2 * 1.22em);
+  }
 }
 
 /* Nav wraps to a second row so links stay reachable */
@@ -1526,11 +1550,20 @@ li {
     height: 80px;
     width: 80px;
   }
+
+  .pillar-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Every title fits one line from here down, so reserving space would only
+     open a gap between title and description */
+  .pillar-card h3 {
+    min-height: 0;
+  }
 }
 
 /* Two-column card grids stop earning their keep */
 @media (max-width: 760px) {
-  .pillar-grid,
   .culture-list {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -1559,20 +1592,13 @@ li {
     padding-top: 18px;
   }
 
-  .pillar-card:nth-child(5) {
-    grid-column: auto;
-  }
-
-  .pillar-card:nth-child(5) .panel-face {
-    display: block;
-  }
-
-  .pillar-card:nth-child(5) .hex-numeral {
-    margin-bottom: 14px;
-  }
 }
 
 @media (max-width: 560px) {
+  .pillar-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .section-heading h2 {
     font-size: clamp(24px, 8vw, 34px);
   }
