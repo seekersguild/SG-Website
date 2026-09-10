@@ -82,6 +82,12 @@
   --grid-gap: clamp(7px, 0.8vw, 11px);
   --measure: 1160px;
 
+  /* The console's lead-in. The hero copy column reads the same three values to
+     start level with the crest chamber, so the two cannot drift apart. */
+  --console-pad: clamp(22px, 2.8vw, 38px);
+  --console-header-h: 24px;
+  --console-header-gap: clamp(10px, 1.5vw, 20px);
+
   /* Fine fiber noise; multiply on paper, soft-light on dark surfaces */
   --grain-fine: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23f)' opacity='0.5'/%3E%3C/svg%3E");
   /* Low-frequency cloudiness; breaks up flat fills */
@@ -569,10 +575,9 @@ li {
   justify-content: flex-start;
   min-width: 0;
   overflow: hidden;
-  /* Starts level with the crest chamber opposite: the console's own padding,
-     plus its 24px header row and the gap below it */
+  /* Starts level with the crest chamber opposite */
   padding:
-    calc(clamp(22px, 2.8vw, 38px) + 24px + clamp(10px, 1.5vw, 20px))
+    calc(var(--console-pad) + var(--console-header-h) + var(--console-header-gap))
     clamp(28px, 3.8vw, 52px)
     clamp(28px, 3.8vw, 52px);
   position: relative;
@@ -894,7 +899,7 @@ li {
   flex-direction: column;
   min-width: 0;
   overflow: hidden;
-  padding: clamp(22px, 2.8vw, 38px);
+  padding: var(--console-pad);
   position: relative;
 }
 
@@ -935,7 +940,8 @@ li {
   gap: 8px;
   justify-content: space-between;
   letter-spacing: 0.18em;
-  margin-bottom: clamp(10px, 1.5vw, 20px);
+  margin-bottom: var(--console-header-gap);
+  min-height: var(--console-header-h);
   padding-bottom: 11px;
   position: relative;
   text-transform: uppercase;
