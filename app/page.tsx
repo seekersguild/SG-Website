@@ -329,11 +329,13 @@ export default function Home() {
                     </p>
                   </div>
                   <div className="hero-actions">
-                    <a className="button button-primary" href="#mission">
-                      <span>Read Mission</span>
-                    </a>
-                    <a className="button button-secondary" href="#pillars">
-                      <span>View Pillars</span>
+                    <a
+                      className="hero-cta"
+                      href="https://luma.com/user/seekersguild"
+                      rel="noreferrer noopener"
+                      target="_blank"
+                    >
+                      <span>See what&apos;s next</span>
                     </a>
                   </div>
                 </div>
@@ -368,15 +370,13 @@ export default function Home() {
                       provinces &mdash; looking past the classroom, their usual circles, and the
                       chances sitting immediately around them.
                     </p>
-                    <div className="charter-next">
-                      <p>Gatherings go up as they are set.</p>
-                      <a
-                        className="charter-cta"
-                        href="https://luma.com/user/seekersguild"
-                        rel="noreferrer noopener"
-                        target="_blank"
-                      >
-                        <span>See what&apos;s next</span>
+                    <p>Gatherings go up as they are set.</p>
+                    <div className="charter-actions">
+                      <a className="button button-secondary" href="#mission">
+                        <span>Read Mission</span>
+                      </a>
+                      <a className="button button-secondary" href="#pillars">
+                        <span>View Pillars</span>
                       </a>
                     </div>
                   </div>
