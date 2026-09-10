@@ -337,14 +337,6 @@ export default function Home() {
                     >
                       <span>See what&apos;s next</span>
                     </a>
-                    <div className="hero-actions-row">
-                      <a className="button button-secondary" href="#mission">
-                        <span>Read Mission</span>
-                      </a>
-                      <a className="button button-secondary" href="#pillars">
-                        <span>View Pillars</span>
-                      </a>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -379,6 +371,14 @@ export default function Home() {
                       chances sitting immediately around them.
                     </p>
                     <p>Gatherings go up as they are set.</p>
+                    <div className="charter-actions">
+                      <a className="button button-secondary" href="#mission">
+                        <span>Read Mission</span>
+                      </a>
+                      <a className="button button-secondary" href="#pillars">
+                        <span>View Pillars</span>
+                      </a>
+                    </div>
                   </div>
 
                   <nav className="charter-links" aria-label="Follow the guild">

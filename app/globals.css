@@ -712,14 +712,14 @@ li {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: 14px;
   margin-top: clamp(18px, 2.4vw, 28px);
 }
 
-.hero-actions-row {
+.charter-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
+  margin-top: 4px;
 }
 
 .button-primary {
@@ -1604,7 +1604,7 @@ li {
     width: 72px;
   }
 
-  .hero-actions .button {
+  .charter-actions .button {
     flex: 1 1 auto;
   }
 
