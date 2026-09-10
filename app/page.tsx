@@ -3,6 +3,7 @@ import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 
 import { InteractiveCompass } from "./components/InteractiveCompass";
+import { ScrollSpy } from "./scroll-spy";
 import { SmoothAnchors } from "./smooth-anchors";
 
 const navItems = [
@@ -290,9 +291,9 @@ export default function Home() {
       <InteractiveCompass />
       <main className="site-shell">
         <SmoothAnchors />
+        <ScrollSpy />
         <SiteAtmosphere />
 
-      <div className="first-screen" id="top">
         <header className="site-nav">
           <a className="site-brand" href="#top" aria-label="Back to top">
             <Image src="/assets/seekersguild_logo.png" alt="" width={982} height={982} priority />
@@ -310,6 +311,7 @@ export default function Home() {
           </nav>
         </header>
 
+      <div className="first-screen" id="top">
         <section className="hero-section" aria-labelledby="hero-title">
           <div className="hero-frame">
             <div className="hero-grid">
