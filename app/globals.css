@@ -1182,32 +1182,41 @@ li {
   padding: clamp(18px, 2.2vw, 28px) clamp(20px, 2.4vw, 32px);
 }
 
-.mission-plate p {
-  color: rgba(239, 228, 202, 0.8);
-  font-size: 16px;
-  line-height: 1.55;
-  margin: 0;
+.mission-item {
+  column-gap: clamp(20px, 3vw, 40px);
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
 }
 
-.mission-plate p + p {
+.mission-item + .mission-item {
   border-top: 1px solid var(--gold-line);
-  margin-top: 16px;
-  padding-top: 16px;
+  margin-top: 20px;
+  padding-top: 20px;
 }
 
-.mission-plate strong {
+.mission-lead {
   color: var(--paper-light);
   font-family: var(--font-serif);
   font-size: 18px;
   font-weight: 700;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.mission-body {
+  color: rgba(239, 228, 202, 0.8);
+  font-size: 16px;
+  line-height: 1.65;
+  margin: 0;
 }
 
 .vision-support p,
 .pillar-card p {
   color: rgba(239, 228, 202, 0.8);
   font-size: 16px;
-  line-height: 1.55;
+  line-height: 1.6;
   margin: 0;
+  max-width: 68ch;
 }
 
 .vision-panel .panel-face {
@@ -1579,6 +1588,11 @@ li {
     border-top: 1px solid var(--gold-line);
     padding-left: 0;
     padding-top: 18px;
+  }
+
+  .mission-item {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 10px;
   }
 
   .pillar-card:nth-child(5) {

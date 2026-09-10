@@ -408,9 +408,10 @@ export default function Home() {
         <article className="panel mission-plate">
           <div className="panel-face">
             {missionItems.map((item) => (
-              <p key={item.lead}>
-                <strong>{item.lead}</strong> {item.body}
-              </p>
+              <div className="mission-item" key={item.lead}>
+                <p className="mission-lead">{item.lead}</p>
+                <p className="mission-body">{item.body}</p>
+              </div>
             ))}
           </div>
         </article>
