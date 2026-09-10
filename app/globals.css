@@ -158,7 +158,9 @@ li {
     radial-gradient(circle at 62% 82%, rgba(213, 154, 111, 0.08), transparent 34%),
     linear-gradient(180deg, #1656a6 0%, var(--blue) 44%, #0b3272 100%);
   min-height: 100svh;
-  overflow: hidden;
+  /* clip (not hidden): kills the horizontal scrollbar from hanging figures
+     without becoming a scroll container, so the sticky nav keeps working. */
+  overflow-x: clip;
   padding: var(--shell-top) var(--shell-pad) 0;
   position: relative;
 }
@@ -246,9 +248,12 @@ li {
   max-width: var(--measure);
   min-height: 48px;
   padding-bottom: 8px;
-  position: relative;
+  /* Sticky so the primary nav (and its scroll-spy active state) stays
+     visible while sections scroll beneath it. */
+  position: sticky;
+  top: 0;
   width: 100%;
-  z-index: 5;
+  z-index: 10;
 }
 
 /* Full-bleed plate so the bar reads as chrome rather than page content */
@@ -357,6 +362,16 @@ li {
   position: absolute;
   right: 14px;
   transition: opacity 180ms var(--ease-out);
+}
+
+/* Scroll-spy active section: same visual language as hover, but persistent
+   and not gated on hover capability so touch users get it too. */
+.nav-menu a[aria-current="true"] {
+  color: var(--paper-light);
+}
+
+.nav-menu a[aria-current="true"]::after {
+  opacity: 1;
 }
 
 .footer-meta a {
