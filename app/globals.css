@@ -1552,7 +1552,7 @@ li {
   }
 }
 
-/* Two-column card grids stop earning their keep */
+/* Two-column culture list stops earning its keep */
 @media (max-width: 760px) {
   .culture-list {
     grid-template-columns: minmax(0, 1fr);
