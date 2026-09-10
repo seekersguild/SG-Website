@@ -566,10 +566,15 @@ li {
   border-right: 1px solid rgba(212, 175, 55, 0.3);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   min-width: 0;
   overflow: hidden;
-  padding: clamp(28px, 3.8vw, 52px);
+  /* Starts level with the crest chamber opposite: the console's own padding,
+     plus its 24px header row and the gap below it */
+  padding:
+    calc(clamp(22px, 2.8vw, 38px) + 24px + clamp(10px, 1.5vw, 20px))
+    clamp(28px, 3.8vw, 52px)
+    clamp(28px, 3.8vw, 52px);
   position: relative;
 }
 
@@ -704,10 +709,17 @@ li {
 }
 
 .hero-actions {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: clamp(18px, 2.4vw, 28px);
+}
+
+.hero-actions-row {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
-  margin-top: clamp(18px, 2.4vw, 28px);
 }
 
 .button-primary {
@@ -1044,21 +1056,8 @@ li {
   line-height: 1.62;
 }
 
-.charter-next {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.charter-next p {
-  color: rgba(16, 19, 31, 0.68);
-  flex: none;
-}
-
-.charter-cta {
-  --notch: 9px;
+.hero-cta {
+  --notch: 12px;
   align-items: center;
   background:
     linear-gradient(145deg, rgba(255, 248, 232, 0.34), transparent 42%),
@@ -1069,14 +1068,18 @@ li {
   clip-path: var(--clip);
   color: var(--navy);
   display: inline-flex;
+  /* drop-shadow, not box-shadow: clip-path would cut a box-shadow off */
+  filter:
+    drop-shadow(0 1px 1px rgba(3, 8, 20, 0.5))
+    drop-shadow(0 8px 16px rgba(3, 8, 20, 0.45));
   font-family: var(--font-caps);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
-  height: 34px;
+  height: 50px;
   justify-content: center;
   letter-spacing: 0.12em;
-  min-width: 156px;
-  padding-inline: 16px;
+  min-width: 230px;
+  padding-inline: 34px;
   position: relative;
   text-decoration: none;
   text-transform: uppercase;
@@ -1086,18 +1089,19 @@ li {
   white-space: nowrap;
 }
 
-.charter-cta span {
+.hero-cta span {
   position: relative;
   z-index: 1;
 }
 
-.charter-cta:focus-visible {
+.hero-cta:focus-visible {
   outline: 2px solid rgba(8, 35, 85, 0.66);
   outline-offset: 3px;
 }
 
-.charter-cta:active {
-  transform: scale(0.97);
+.hero-cta:active {
+  filter: drop-shadow(0 1px 1px rgba(3, 8, 20, 0.5));
+  transform: translateY(1px) scale(0.99);
 }
 
 .charter-links {
@@ -1474,9 +1478,14 @@ li {
     background: var(--edge-bright);
   }
 
-  .charter-cta:hover {
-    filter: brightness(1.08) saturate(1.05);
-    transform: translateY(-1px);
+  /* filter replaces rather than adds, so the lift is restated here */
+  .hero-cta:hover {
+    filter:
+      brightness(1.06)
+      saturate(1.04)
+      drop-shadow(0 2px 2px rgba(3, 8, 20, 0.5))
+      drop-shadow(0 13px 24px rgba(3, 8, 20, 0.5));
+    transform: translateY(-2px);
   }
 
   .charter-links a:hover {
@@ -1586,7 +1595,7 @@ li {
     justify-items: start;
   }
 
-  .charter-cta {
+  .hero-cta {
     width: 100%;
   }
 
