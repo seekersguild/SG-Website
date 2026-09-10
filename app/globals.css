@@ -445,7 +445,6 @@ li {
   clip-path: var(--clip);
   padding: 1px;
   position: relative;
-  transition: background 200ms var(--ease-out);
 }
 
 .panel-face {
@@ -1277,7 +1276,6 @@ li {
   gap: 11px;
   line-height: 1.3;
   padding: 13px 16px;
-  transition: box-shadow 180ms var(--ease-out);
 }
 
 .culture-list li::before {
@@ -1470,10 +1468,6 @@ li {
     background: rgba(19, 76, 151, 0.62);
   }
 
-  .panel:hover {
-    background: var(--edge-bright);
-  }
-
   .charter-cta:hover {
     filter: brightness(1.08) saturate(1.05);
     transform: translateY(-1px);
@@ -1481,10 +1475,6 @@ li {
 
   .charter-links a:hover {
     color: var(--navy);
-  }
-
-  .culture-list li:hover {
-    box-shadow: inset 0 0 0 1px rgba(212, 175, 55, 0.58);
   }
 
 }
