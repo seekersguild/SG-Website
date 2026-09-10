@@ -715,11 +715,18 @@ li {
   margin-top: clamp(18px, 2.4vw, 28px);
 }
 
+/* Controls sit further from the prose than the paragraphs sit from each other */
 .charter-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 4px;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.charter-actions .button {
+  font-size: 12px;
+  height: 40px;
+  padding-inline: 22px;
 }
 
 .button-primary {
