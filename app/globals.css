@@ -82,6 +82,12 @@
   --grid-gap: clamp(7px, 0.8vw, 11px);
   --measure: 1160px;
 
+  /* The console's lead-in. The hero copy column reads the same three values to
+     start level with the crest chamber, so the two cannot drift apart. */
+  --console-pad: clamp(22px, 2.8vw, 38px);
+  --console-header-h: 24px;
+  --console-header-gap: clamp(10px, 1.5vw, 20px);
+
   /* Fine fiber noise; multiply on paper, soft-light on dark surfaces */
   --grain-fine: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23f)' opacity='0.5'/%3E%3C/svg%3E");
   /* Low-frequency cloudiness; breaks up flat fills */
@@ -152,7 +158,9 @@ li {
     radial-gradient(circle at 62% 82%, rgba(213, 154, 111, 0.08), transparent 34%),
     linear-gradient(180deg, #1656a6 0%, var(--blue) 44%, #0b3272 100%);
   min-height: 100svh;
-  overflow: hidden;
+  /* clip (not hidden): kills the horizontal scrollbar from hanging figures
+     without becoming a scroll container, so the sticky nav keeps working. */
+  overflow-x: clip;
   padding: var(--shell-top) var(--shell-pad) 0;
   position: relative;
 }
@@ -240,9 +248,12 @@ li {
   max-width: var(--measure);
   min-height: 48px;
   padding-bottom: 8px;
-  position: relative;
+  /* Sticky so the primary nav (and its scroll-spy active state) stays
+     visible while sections scroll beneath it. */
+  position: sticky;
+  top: 0;
   width: 100%;
-  z-index: 5;
+  z-index: 10;
 }
 
 /* Full-bleed plate so the bar reads as chrome rather than page content */
@@ -351,6 +362,16 @@ li {
   position: absolute;
   right: 14px;
   transition: opacity 180ms var(--ease-out);
+}
+
+/* Scroll-spy active section: same visual language as hover, but persistent
+   and not gated on hover capability so touch users get it too. */
+.nav-menu a[aria-current="true"] {
+  color: var(--paper-light);
+}
+
+.nav-menu a[aria-current="true"]::after {
+  opacity: 1;
 }
 
 .footer-meta a {
@@ -566,10 +587,14 @@ li {
   border-right: 1px solid rgba(212, 175, 55, 0.3);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   min-width: 0;
   overflow: hidden;
-  padding: clamp(28px, 3.8vw, 52px);
+  /* Starts level with the crest chamber opposite */
+  padding:
+    calc(var(--console-pad) + var(--console-header-h) + var(--console-header-gap))
+    clamp(28px, 3.8vw, 52px)
+    clamp(28px, 3.8vw, 52px);
   position: relative;
 }
 
@@ -704,10 +729,24 @@ li {
 }
 
 .hero-actions {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  margin-top: clamp(18px, 2.4vw, 28px);
+}
+
+/* Controls sit further from the prose than the paragraphs sit from each other */
+.charter-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
-  margin-top: clamp(18px, 2.4vw, 28px);
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.charter-actions .button {
+  font-size: 12px;
+  height: 40px;
+  padding-inline: 22px;
 }
 
 .button-primary {
@@ -875,7 +914,7 @@ li {
   flex-direction: column;
   min-width: 0;
   overflow: hidden;
-  padding: clamp(22px, 2.8vw, 38px);
+  padding: var(--console-pad);
   position: relative;
 }
 
@@ -916,7 +955,8 @@ li {
   gap: 8px;
   justify-content: space-between;
   letter-spacing: 0.18em;
-  margin-bottom: clamp(10px, 1.5vw, 20px);
+  margin-bottom: var(--console-header-gap);
+  min-height: var(--console-header-h);
   padding-bottom: 11px;
   position: relative;
   text-transform: uppercase;
@@ -1044,21 +1084,8 @@ li {
   line-height: 1.62;
 }
 
-.charter-next {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.charter-next p {
-  color: rgba(16, 19, 31, 0.68);
-  flex: none;
-}
-
-.charter-cta {
-  --notch: 9px;
+.hero-cta {
+  --notch: 12px;
   align-items: center;
   background:
     linear-gradient(145deg, rgba(255, 248, 232, 0.34), transparent 42%),
@@ -1069,14 +1096,18 @@ li {
   clip-path: var(--clip);
   color: var(--navy);
   display: inline-flex;
+  /* drop-shadow, not box-shadow: clip-path would cut a box-shadow off */
+  filter:
+    drop-shadow(0 1px 1px rgba(3, 8, 20, 0.5))
+    drop-shadow(0 8px 16px rgba(3, 8, 20, 0.45));
   font-family: var(--font-caps);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
-  height: 34px;
+  height: 50px;
   justify-content: center;
   letter-spacing: 0.12em;
-  min-width: 156px;
-  padding-inline: 16px;
+  min-width: 230px;
+  padding-inline: 34px;
   position: relative;
   text-decoration: none;
   text-transform: uppercase;
@@ -1086,18 +1117,19 @@ li {
   white-space: nowrap;
 }
 
-.charter-cta span {
+.hero-cta span {
   position: relative;
   z-index: 1;
 }
 
-.charter-cta:focus-visible {
+.hero-cta:focus-visible {
   outline: 2px solid rgba(8, 35, 85, 0.66);
   outline-offset: 3px;
 }
 
-.charter-cta:active {
-  transform: scale(0.97);
+.hero-cta:active {
+  filter: drop-shadow(0 1px 1px rgba(3, 8, 20, 0.5));
+  transform: translateY(1px) scale(0.99);
 }
 
 .charter-links {
@@ -1165,31 +1197,40 @@ li {
   padding: clamp(18px, 2.2vw, 28px) clamp(20px, 2.4vw, 32px);
 }
 
-.mission-plate p {
-  color: rgba(239, 228, 202, 0.8);
-  font-size: 16px;
-  line-height: 1.55;
-  margin: 0;
+.mission-item {
+  column-gap: clamp(20px, 3vw, 40px);
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
 }
 
-.mission-plate p + p {
+.mission-item + .mission-item {
   border-top: 1px solid var(--gold-line);
-  margin-top: 16px;
-  padding-top: 16px;
+  margin-top: 20px;
+  padding-top: 20px;
 }
 
-.mission-plate strong {
+.mission-lead {
   color: var(--paper-light);
   font-family: var(--font-serif);
   font-size: 18px;
   font-weight: 700;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.mission-body {
+  color: rgba(239, 228, 202, 0.8);
+  font-size: 16px;
+  line-height: 1.65;
+  margin: 0;
 }
 
 .vision-support p {
   color: rgba(239, 228, 202, 0.8);
   font-size: 16px;
-  line-height: 1.55;
+  line-height: 1.6;
   margin: 0;
+  max-width: 68ch;
 }
 
 .pillar-card p {
@@ -1479,9 +1520,14 @@ li {
     background: var(--edge-bright);
   }
 
-  .charter-cta:hover {
-    filter: brightness(1.08) saturate(1.05);
-    transform: translateY(-1px);
+  /* filter replaces rather than adds, so the lift is restated here */
+  .hero-cta:hover {
+    filter:
+      brightness(1.06)
+      saturate(1.04)
+      drop-shadow(0 2px 2px rgba(3, 8, 20, 0.5))
+      drop-shadow(0 13px 24px rgba(3, 8, 20, 0.5));
+    transform: translateY(-2px);
   }
 
   .charter-links a:hover {
@@ -1582,6 +1628,23 @@ li {
     padding-top: 18px;
   }
 
+  .mission-item {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 10px;
+  }
+
+  .pillar-card:nth-child(5) {
+    grid-column: auto;
+  }
+
+  .pillar-card:nth-child(5) .panel-face {
+    display: block;
+  }
+
+  .pillar-card:nth-child(5) .hex-numeral {
+    margin-bottom: 14px;
+  }
+ 
 }
 
 @media (max-width: 560px) {
@@ -1602,7 +1665,7 @@ li {
     justify-items: start;
   }
 
-  .charter-cta {
+  .hero-cta {
     width: 100%;
   }
 
@@ -1611,7 +1674,7 @@ li {
     width: 72px;
   }
 
-  .hero-actions .button {
+  .charter-actions .button {
     flex: 1 1 auto;
   }
 
