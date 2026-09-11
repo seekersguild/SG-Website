@@ -3,6 +3,7 @@ import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 
 import { InteractiveCompass } from "./components/InteractiveCompass";
+import { ScrollSpy } from "./scroll-spy";
 import { SmoothAnchors } from "./smooth-anchors";
 
 const navItems = [
@@ -31,27 +32,27 @@ const pillars = [
   {
     numeral: "I",
     title: "Purpose-Driven Collaboration",
-    body: "We begin with why. Every project, event, and alliance is rooted in meaningful goals that align with the vision of impact and growth.",
+    body: "We begin with why. Every project and alliance is rooted in goals that drive real impact.",
   },
   {
     numeral: "II",
     title: "Inclusive Community Culture",
-    body: "We create a safe, welcoming space where diversity is celebrated, respect is non-negotiable, and everyone feels a sense of belonging.",
+    body: "A safe, welcoming space where diversity is celebrated and everyone feels they belong.",
   },
   {
     numeral: "III",
     title: "Decentralized Empowerment",
-    body: "Leadership is shared, not reserved. Every guild, member, and initiative has the power to lead, decide, and shape the community's direction. We value all voices, especially the bold, the curious, and the wildly imaginative, because every idea holds potential when heard.",
+    body: "Leadership is shared, not reserved. Every member can shape our direction, because every idea holds potential when heard.",
   },
   {
     numeral: "IV",
     title: "Open Knowledge Exchange",
-    body: "We freely share valuable ideas, insights, and learnings across campuses and disciplines, because when knowledge flows, innovation grows.",
+    body: "Ideas move freely across campuses and disciplines, because when knowledge flows, innovation grows.",
   },
   {
     numeral: "V",
     title: "Continuous Learning & Development",
-    body: "We value lifelong growth, both technical and personal. Curiosity, mentorship, and self-improvement fuel our journey forward.",
+    body: "Curiosity, mentorship, and self-improvement fuel lifelong technical and personal growth.",
   },
 ];
 
@@ -290,9 +291,9 @@ export default function Home() {
       <InteractiveCompass />
       <main className="site-shell">
         <SmoothAnchors />
+        <ScrollSpy />
         <SiteAtmosphere />
 
-      <div className="first-screen" id="top">
         <header className="site-nav">
           <a className="site-brand" href="#top" aria-label="Back to top">
             <Image src="/assets/seekersguild_logo.png" alt="" width={982} height={982} priority />
@@ -310,6 +311,7 @@ export default function Home() {
           </nav>
         </header>
 
+      <div className="first-screen" id="top">
         <section className="hero-section" aria-labelledby="hero-title">
           <div className="hero-frame">
             <div className="hero-grid">
@@ -329,11 +331,13 @@ export default function Home() {
                     </p>
                   </div>
                   <div className="hero-actions">
-                    <a className="button button-primary" href="#mission">
-                      <span>Read Mission</span>
-                    </a>
-                    <a className="button button-secondary" href="#pillars">
-                      <span>View Pillars</span>
+                    <a
+                      className="hero-cta"
+                      href="https://luma.com/user/seekersguild"
+                      rel="noreferrer noopener"
+                      target="_blank"
+                    >
+                      <span>See what&apos;s next</span>
                     </a>
                   </div>
                 </div>
@@ -368,15 +372,13 @@ export default function Home() {
                       provinces &mdash; looking past the classroom, their usual circles, and the
                       chances sitting immediately around them.
                     </p>
-                    <div className="charter-next">
-                      <p>Gatherings go up as they are set.</p>
-                      <a
-                        className="charter-cta"
-                        href="https://luma.com/user/seekersguild"
-                        rel="noreferrer noopener"
-                        target="_blank"
-                      >
-                        <span>See what&apos;s next</span>
+                    <p>Gatherings go up as they are set.</p>
+                    <div className="charter-actions">
+                      <a className="button button-secondary" href="#mission">
+                        <span>Read Mission</span>
+                      </a>
+                      <a className="button button-secondary" href="#pillars">
+                        <span>View Pillars</span>
                       </a>
                     </div>
                   </div>
@@ -408,9 +410,10 @@ export default function Home() {
         <article className="panel mission-plate">
           <div className="panel-face">
             {missionItems.map((item) => (
-              <p key={item.lead}>
-                <strong>{item.lead}</strong> {item.body}
-              </p>
+              <div className="mission-item" key={item.lead}>
+                <p className="mission-lead">{item.lead}</p>
+                <p className="mission-body">{item.body}</p>
+              </div>
             ))}
           </div>
         </article>
