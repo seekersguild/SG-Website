@@ -2,11 +2,18 @@
   "name": "seekersguild",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "tsc --noEmit",
+    "release:notes": "node scripts/release-notes.mjs HEAD",
+    "release:patch": "npm version patch -m \"chore(release): v%s\"",
+    "release:minor": "npm version minor -m \"chore(release): v%s\"",
+    "release:major": "npm version major -m \"chore(release): v%s\"",
+    "preversion": "node scripts/preversion.mjs",
+    "postversion": "git push origin main --follow-tags"
   },
   "dependencies": {
     "next": "16.2.10",
