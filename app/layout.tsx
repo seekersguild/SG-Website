@@ -39,10 +39,19 @@ const montserrat = localFont({
 const description =
   "Seekers Guild is a student-led AI builder community in the Philippines, empowering curious and driven minds, especially from the provinces, through collaboration, real-world experiences and opportunities beyond the classroom.";
 
-/* Icons come from app/icon.png and app/apple-icon.png; the share image from
-   app/opengraph-image.tsx. */
+/* Icons are the approved guild mark in public/ (favicon.ico, 16/32px PNGs,
+   apple-touch-icon); the share image comes from app/opengraph-image.tsx. */
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
   title: {
     default: "Seekers Guild: we seek those who seek",
     template: "%s | Seekers Guild",

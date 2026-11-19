@@ -73,23 +73,23 @@ export const mission = [
 export const pillars = [
   {
     title: "Purpose-driven collaboration",
-    body: "We begin with why. Every project, event, and alliance is rooted in meaningful goals that align with the vision of impact and growth.",
+    body: "We begin with why. Every project and alliance is rooted in goals that drive real impact.",
   },
   {
     title: "Inclusive community culture",
-    body: "We create a safe, welcoming space where diversity is celebrated, respect is non-negotiable, and everyone feels a sense of belonging.",
+    body: "A safe, welcoming space where diversity is celebrated and everyone feels they belong.",
   },
   {
     title: "Decentralized empowerment",
-    body: "Leadership is shared, not reserved. Every guild, member, and initiative has the power to lead, decide, and shape the community's direction. We value all voices, especially the bold, the curious, and the wildly imaginative, because every idea holds potential when heard.",
+    body: "Leadership is shared, not reserved. Every member can shape our direction, because every idea holds potential when heard.",
   },
   {
     title: "Open knowledge exchange",
-    body: "We freely share valuable ideas, insights, and learnings across campuses and disciplines, because when knowledge flows, innovation grows.",
+    body: "Ideas move freely across campuses and disciplines, because when knowledge flows, innovation grows.",
   },
   {
     title: "Continuous learning and development",
-    body: "We value lifelong growth, both technical and personal. Curiosity, mentorship, and self-improvement fuel our journey forward.",
+    body: "Curiosity, mentorship, and self-improvement fuel lifelong technical and personal growth.",
   },
 ];
 

@@ -7,16 +7,14 @@ import { useEffect, useRef, useState } from "react";
 
 import { LUMA_URL, sectionNav } from "../content/site";
 
-/* One plain bar: the mark, four section links, one action. It turns solid
-   once the page moves, tucks away while reading down, returns on any upward
-   scroll, and marks the section being read. */
+/* One plain bar: the mark, the section links, one action. It turns solid
+   once the page moves, stays in view while reading, and marks the section
+   being read. */
 export function SiteHeader() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [solid, setSolid] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [current, setCurrent] = useState<string | null>(null);
-  const lastY = useRef(0);
   const menuButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -25,11 +23,7 @@ export function SiteHeader() {
       if (frame) return;
       frame = requestAnimationFrame(() => {
         frame = 0;
-        const y = window.scrollY;
-        setSolid(y > 24);
-        if (y > 480 && y > lastY.current + 4) setHidden(true);
-        else if (y < lastY.current - 4 || y <= 480) setHidden(false);
-        lastY.current = y;
+        setSolid(window.scrollY > 24);
       });
     }
     onScroll();
@@ -78,7 +72,7 @@ export function SiteHeader() {
   const isActive = (href: string) => pathname === "/" && current === href.split("#")[1];
 
   return (
-    <header className="site-header" data-solid={solid || menuOpen ? "" : undefined} data-hidden={hidden && !menuOpen ? "" : undefined}>
+    <header className="site-header" data-solid={solid || menuOpen ? "" : undefined}>
       <div className="site-header__bar">
         <Link className="wordmark" href="/" aria-label="Seekers Guild, home">
           <Image src="/assets/seekersguild_logo.png" alt="" width={40} height={40} priority />
