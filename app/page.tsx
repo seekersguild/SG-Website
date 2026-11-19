@@ -1,523 +1,326 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties } from "react";
 
-import Image from "next/image";
+import { Events } from "./components/Events";
+import { HeroCompass } from "./components/HeroCompass";
+import { StructuredData } from "./components/StructuredData";
+import { MagicCircle, Motes } from "./components/MagicCircle";
+import { Flourish, Ornate } from "./components/Ornament";
+import { brand, culture, faqs, joinSteps, LUMA_URL, mission, pillars, programmes, socialLinks, vision } from "./content/site";
 
-import { InteractiveCompass } from "./components/InteractiveCompass";
-import { SmoothAnchors } from "./smooth-anchors";
+const numerals = ["I", "II", "III", "IV", "V"];
 
-const navItems = [
-  ["Mission", "#mission"],
-  ["Vision", "#vision"],
-  ["Pillars", "#pillars"],
-  ["Culture", "#culture"],
-];
-
-const missionItems = [
-  {
-    lead: "Empower students from all walks of life",
-    body: "especially those from the provinces and underserved sectors, to take ownership of their lifelong learning, leadership, and future by bridging access to opportunities, events, and collaborative spaces across Manila and other major hubs.",
-  },
-  {
-    lead: "Equip seekers with transformative, real-world experiences",
-    body: "that transcend the boundaries of textbooks through cross-functional projects, idea exchanges, student-led initiatives, and immersive learning journeys that spark bold action.",
-  },
-  {
-    lead: "Foster a vibrant, purpose-driven community",
-    body: "of passionate minds and courageous leaders united across disciplines, institutes, and regions by shared leadership, inclusive collaboration, and a culture of mentorship and lifelong learning.",
-  },
-];
-
-const pillars = [
-  {
-    numeral: "I",
-    title: "Purpose-Driven Collaboration",
-    body: "We begin with why. Every project, event, and alliance is rooted in meaningful goals that align with the vision of impact and growth.",
-  },
-  {
-    numeral: "II",
-    title: "Inclusive Community Culture",
-    body: "We create a safe, welcoming space where diversity is celebrated, respect is non-negotiable, and everyone feels a sense of belonging.",
-  },
-  {
-    numeral: "III",
-    title: "Decentralized Empowerment",
-    body: "Leadership is shared, not reserved. Every guild, member, and initiative has the power to lead, decide, and shape the community's direction. We value all voices, especially the bold, the curious, and the wildly imaginative, because every idea holds potential when heard.",
-  },
-  {
-    numeral: "IV",
-    title: "Open Knowledge Exchange",
-    body: "We freely share valuable ideas, insights, and learnings across campuses and disciplines, because when knowledge flows, innovation grows.",
-  },
-  {
-    numeral: "V",
-    title: "Continuous Learning & Development",
-    body: "We value lifelong growth, both technical and personal. Curiosity, mentorship, and self-improvement fuel our journey forward.",
-  },
-];
-
-const cultureItems = [
-  "Diverse and Inclusive Environment",
-  "Personal and Professional Development",
-  "Adapt and Evolve",
-  "Cross-Functional Collaboration",
-  "Open and Transparent Communication",
-  "Positive Impact on the World",
-  "Embrace Failure as a Learning Opportunity",
-  "Foster a Sense of Belonging",
-  "Encourage Creativity in Problem-Solving",
-  "Flat Hierarchy",
-];
-
-const socialLinks = [
-  {
-    label: "Facebook",
-    href: "https://www.facebook.com/seekersguildcommunity",
-    path: <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />,
-  },
-  {
-    label: "Instagram",
-    href: "https://www.instagram.com/seekersguild.community/",
-    path: (
-      <>
-        <rect x="2" y="2" width="20" height="20" rx="5" />
-        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-      </>
-    ),
-  },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/company/seekersguildcommunity/posts/?feedView=all",
-    path: (
-      <>
-        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" />
-        <rect x="2" y="9" width="4" height="12" />
-        <circle cx="4" cy="4" r="2" />
-      </>
-    ),
-  },
-  {
-    label: "Luma",
-    href: "https://luma.com/user/seekersguild",
-    path: (
-      <path d="M12 2a5 5 0 0 1 5 5 5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5-5z" />
-    ),
-  },
-];
-
-function hexPoints(cx: number, cy: number, r: number) {
-  return Array.from({ length: 6 }, (_, index) => {
-    const angle = (Math.PI / 180) * (30 + index * 60);
-    return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`;
-  }).join(" ");
-}
-
-function HexMark() {
+function SectionHead({ id, title, tone = "light" }: { id: string; title: string; tone?: "light" | "dark" }) {
   return (
-    <svg className="hex-mark" viewBox="0 0 24 28" aria-hidden="true">
-      <polygon points="12,1 23,7.5 23,20.5 12,27 1,20.5 1,7.5" />
-      <polygon points="12,8 17,11 17,17 12,20 7,17 7,11" />
-    </svg>
-  );
-}
-
-function HexNumeral({ numeral }: { numeral: string }) {
-  return (
-    <div className="hex-numeral">
-      <svg viewBox="0 0 52 60" aria-hidden="true">
-        <polygon points="26,1 51,15.5 51,44.5 26,59 1,44.5 1,15.5" />
-        <polygon points="26,7 46,18.5 46,41.5 26,53 6,41.5 6,18.5" />
-      </svg>
-      <span>{numeral}</span>
+    <div className={`section-head section-head--${tone}`} data-reveal-item>
+      <h2 className="heading" id={id}>
+        {title}
+      </h2>
+      <Flourish />
     </div>
   );
 }
 
-/* Every figure is drawn in the same 200-unit square so the pieces below can
-   be combined freely; CSS scales and places each one on the sheet. */
-function Figure({ children, style }: { children: ReactNode; style: CSSProperties }) {
+/* A painting laid into a section as its atmosphere. The inner layer
+   is pinned to the screen while the section scrolls over it, so the painting
+   only ever has to fill one screen and is never stretched to a tall section. */
+function Paint({ which }: { which: "dark" | "dark-water" | "light" }) {
   return (
-    <svg aria-hidden="true" className="draft-figure" style={style} viewBox="0 0 200 200">
-      <g className="poly-ink">{children}</g>
-    </svg>
-  );
-}
-
-/* Circumscribing circle plus inscribed hexagon: the construction geometry a
-   draughtsman leaves on the sheet rather than erasing. */
-function HexPlate({ r = 84, inner = 0 }: { r?: number; inner?: number }) {
-  return (
-    <>
-      <circle cx="100" cy="100" r={r} />
-      <polygon points={hexPoints(100, 100, r)} />
-      {inner > 0 ? <polygon points={hexPoints(100, 100, inner)} /> : null}
-    </>
-  );
-}
-
-function CentreCross({ r = 96 }: { r?: number }) {
-  return (
-    <>
-      <path d={`M100 ${100 - r} V${100 + r}`} />
-      <path d={`M${100 - r} 100 H${100 + r}`} />
-    </>
-  );
-}
-
-/* Three cells tessellated the way pointy-top hexagons actually pack:
-   rows step 1.5r vertically and stagger by half a cell width. */
-function HexCluster({ r = 40 }: { r?: number }) {
-  const dx = (r * Math.sqrt(3)) / 2;
-  return (
-    <>
-      <polygon points={hexPoints(100, 100 - 0.75 * r, r)} />
-      <polygon points={hexPoints(100 - dx, 100 + 0.75 * r, r)} />
-      <polygon points={hexPoints(100 + dx, 100 + 0.75 * r, r)} />
-    </>
-  );
-}
-
-/* Dimension line with witness lines running back toward the measured edge */
-function DimensionLine() {
-  return (
-    <>
-      <path d="M16 108 H184" />
-      <path d="M16 96 V120" />
-      <path d="M184 96 V120" />
-      <path className="poly-dash" d="M16 62 V96" />
-      <path className="poly-dash" d="M184 62 V96" />
-    </>
-  );
-}
-
-function SiteAtmosphere() {
-  return (
-    <div className="site-atmosphere" aria-hidden="true">
-      <div className="site-grain" />
-      <div className="site-lattice" />
-
-      <div className="draft-sheet">
-        <Figure style={{ top: "1%", left: "-7%", width: "clamp(260px, 30vw, 460px)" }}>
-          <HexPlate inner={48} />
-          <CentreCross />
-          <path className="poly-dash" d="M32 44 L168 156" />
-        </Figure>
-
-        <Figure style={{ top: "4%", right: "-3%", width: "clamp(150px, 16vw, 250px)" }}>
-          <HexPlate r={72} />
-          <path className="poly-dash" d="M40 46 L172 132" />
-        </Figure>
-
-        <Figure style={{ top: "15%", right: "4%", width: "clamp(120px, 13vw, 190px)" }}>
-          <DimensionLine />
-        </Figure>
-
-        <Figure style={{ top: "22%", left: "-5%", width: "clamp(200px, 22vw, 340px)" }}>
-          <HexPlate r={80} inner={44} />
-          <CentreCross r={92} />
-        </Figure>
-
-        <Figure style={{ top: "33%", right: "-6%", width: "clamp(220px, 25vw, 380px)" }}>
-          <HexCluster r={44} />
-        </Figure>
-
-        <Figure style={{ top: "45%", left: "3%", width: "clamp(110px, 12vw, 170px)" }}>
-          <circle cx="100" cy="100" r="60" />
-          <CentreCross r={84} />
-        </Figure>
-
-        <Figure style={{ top: "54%", right: "2%", width: "clamp(180px, 20vw, 300px)" }}>
-          <HexPlate r={78} />
-          <path d="M100 100 L167 61" />
-          <path className="poly-dash" d="M100 100 L100 22" />
-        </Figure>
-
-        <Figure style={{ top: "66%", left: "-6%", width: "clamp(230px, 26vw, 400px)" }}>
-          <HexPlate r={86} inner={50} />
-          <CentreCross />
-        </Figure>
-
-        <Figure style={{ top: "77%", right: "5%", width: "clamp(120px, 13vw, 190px)" }}>
-          <DimensionLine />
-        </Figure>
-
-        <Figure style={{ top: "86%", left: "4%", width: "clamp(160px, 18vw, 270px)" }}>
-          <HexCluster r={38} />
-        </Figure>
-
-        <Figure style={{ top: "94%", right: "-5%", width: "clamp(200px, 22vw, 340px)" }}>
-          <HexPlate r={82} inner={46} />
-          <path className="poly-dash" d="M28 52 L172 148" />
-        </Figure>
-      </div>
-    </div>
-  );
-}
-
-function ConstructionPlate({ className, dense = false }: { className: string; dense?: boolean }) {
-  return (
-    <svg className={className} viewBox="0 0 500 500" aria-hidden="true" focusable="false">
-      <circle cx="250" cy="250" r="186" />
-      <polygon points={hexPoints(250, 250, 186)} />
-      <polygon points={hexPoints(250, 250, 140)} />
-      <polygon points={hexPoints(250, 250, 104)} />
-      <polygon points={hexPoints(250, 250, 52)} />
-      <path d="M250 30 V470" />
-      <path d="M30 250 H470" />
-      <path d="M90 90 L410 410" />
-      <path d="M410 90 L90 410" />
-      <path className="poly-dash" d="M250 250 L418 148" />
-      <circle cx="250" cy="250" r="7" />
-      {dense ? (
-        <>
-          <circle cx="250" cy="250" r="220" />
-          <polygon points={hexPoints(250, 250, 220)} />
-          <path d="M250 22 V42" />
-          <path d="M250 458 V478" />
-          <path d="M22 250 H42" />
-          <path d="M458 250 H478" />
-          <circle cx="392" cy="108" r="34" />
-          <polygon points={hexPoints(392, 108, 34)} />
-        </>
-      ) : null}
-    </svg>
+    <span className={`paint paint--${which}`} aria-hidden="true">
+      <span className="paint__img" />
+    </span>
   );
 }
 
 export default function Home() {
   return (
     <>
-      <InteractiveCompass />
-      <main className="site-shell">
-        <SmoothAnchors />
-        <SiteAtmosphere />
+      <StructuredData />
 
-      <div className="first-screen" id="top">
-        <header className="site-nav">
-          <a className="site-brand" href="#top" aria-label="Back to top">
-            <Image src="/assets/seekersguild_logo.png" alt="" width={982} height={982} priority />
-            <div className="site-brand-text">
-              <span>Seekers Guild</span>
-            </div>
-          </a>
+      {/* The hero painting is a CSS background, so tell the browser about it up front, at the right size. */}
+      <link
+        rel="preload"
+        as="image"
+        href="/images/paint-dark-1200.webp"
+        imageSrcSet="/images/paint-dark-1200.webp 1x, /images/paint-dark-2400.webp 2x"
+        media="(max-width: 760px) and (min-aspect-ratio: 13001/25000)"
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href="/images/paint-dark-1200.webp"
+        imageSrcSet="/images/paint-dark-1200.webp 1x, /images/paint-dark-2400.webp 2x, /images/paint-dark-tall.webp 3x"
+        media="(max-width: 760px) and (max-aspect-ratio: 13/25)"
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href="/images/paint-dark-2000.webp"
+        imageSrcSet="/images/paint-dark-2000.webp 1x, /images/paint-dark-2880.webp 2x"
+        media="(min-width: 761px) and (max-width: 2000px)"
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href="/images/paint-dark-2880.webp"
+        imageSrcSet="/images/paint-dark-2880.webp 1x, /images/paint-dark-3840.webp 2x"
+        media="(min-width: 2001px) and (max-width: 2880px)"
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href="/images/paint-dark-3840.webp"
+        media="(min-width: 2881px)"
+        fetchPriority="high"
+      />
 
-          <nav className="nav-menu" aria-label="Primary navigation">
-            {navItems.map(([label, href]) => (
-              <a href={href} key={label}>
-                {label}
-              </a>
-            ))}
-          </nav>
-        </header>
-
-        <section className="hero-section" aria-labelledby="hero-title">
-          <div className="hero-frame">
-            <div className="hero-grid">
-              <div className="hero-copy">
-                <ConstructionPlate className="hero-construction hero-construction-left" dense />
-                <div className="hero-copy-inner">
-                  <div className="hero-intro">
-                    <p className="eyebrow">Student-led guild for curious builders</p>
-                    <h1 id="hero-title">Seekers Guild</h1>
-                  </div>
-                  <hr className="hero-divider" aria-hidden="true" />
-                  <div className="hero-body">
-                    <p className="hero-tagline">A compass for the curious, a home for the driven.</p>
-                    <p className="hero-lede">
-                      Built for students looking beyond the classroom, their usual circles, and the
-                      opportunities immediately around them.
-                    </p>
-                  </div>
-                  <div className="hero-actions">
-                    <a className="button button-primary" href="#mission">
-                      <span>Read Mission</span>
-                    </a>
-                    <a className="button button-secondary" href="#pillars">
-                      <span>View Pillars</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <aside className="guild-console" aria-label="Guild charter preview">
-                <div className="console-header">
-                  <span>Guild Charter</span>
-                  <span>MMXXVI</span>
-                </div>
-
-                <div className="console-grid">
-                  <section className="crest-chamber" aria-labelledby="season-title">
-                    <div className="crest-ring" aria-hidden="true">
-                      <Image
-                        src="/assets/seekersguild_logo.png"
-                        alt=""
-                        width={982}
-                        height={982}
-                        priority
-                      />
-                    </div>
-                    <div>
-                      <p>Opening Chapter</p>
-                      <h2 id="season-title">The charter is being written.</h2>
-                    </div>
-                  </section>
-
-                  <div className="charter-body">
-                    <p>
-                      A house for seekers from every corner of the Philippines, especially the
-                      provinces &mdash; looking past the classroom, their usual circles, and the
-                      chances sitting immediately around them.
-                    </p>
-                    <div className="charter-next">
-                      <p>Gatherings go up as they are set.</p>
-                      <a
-                        className="charter-cta"
-                        href="https://luma.com/user/seekersguild"
-                        rel="noreferrer noopener"
-                        target="_blank"
-                      >
-                        <span>See what&apos;s next</span>
-                      </a>
-                    </div>
-                  </div>
-
-                  <nav className="charter-links" aria-label="Follow the guild">
-                    {socialLinks.map((social) => (
-                      <a
-                        href={social.href}
-                        key={social.label}
-                        rel="noreferrer noopener"
-                        target="_blank"
-                      >
-                        {social.label}
-                      </a>
-                    ))}
-                  </nav>
-                </div>
-              </aside>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <section className="content-section" id="mission" aria-labelledby="mission-title">
-        <div className="section-heading">
-          <HexMark />
-          <h2 id="mission-title">Mission</h2>
+      {/* Opening: gold type on deep sapphire, the compass inside its circle of light. */}
+      <section className="band band--night hero" aria-labelledby="page-title">
+        <Paint which="dark" />
+        <span className="sky" aria-hidden="true" />
+        <div className="hero__stage" aria-hidden="true">
+          <MagicCircle className="hero__circle" />
+          <HeroCompass className="hero__compass" />
         </div>
-        <article className="panel mission-plate">
-          <div className="panel-face">
-            {missionItems.map((item) => (
-              <p key={item.lead}>
-                <strong>{item.lead}</strong> {item.body}
-              </p>
-            ))}
-          </div>
-        </article>
-      </section>
-
-      <section className="content-section" id="vision" aria-labelledby="vision-title">
-        <div className="section-heading">
-          <HexMark />
-          <h2 id="vision-title">Vision</h2>
-        </div>
-        <article className="panel vision-panel">
-          <div className="panel-face">
-            <p className="vision-lead">
-              To awaken a generation of inspired trailblazers, students transformed not by what
-              school alone can offer, but by the exposure, experience, and empowerment they find
-              beyond it.
+        <Motes count={22} />
+        <div className="wrap hero__inner">
+          <h1 className="hero__title lines" id="page-title">
+            <span className="line">
+              <span data-line className="gold-text" style={{ "--i": 0 } as CSSProperties}>
+                We seek those
+              </span>
+            </span>
+            <span className="line">
+              <span data-line className="gold-text" style={{ "--i": 1 } as CSSProperties}>
+                who seek
+              </span>
+            </span>
+          </h1>
+          <div className="hero__foot">
+            <p className="hero__lead">
+              Seekers Guild is a student-led community in the Philippines, founded in April 2025. We empower curious and driven minds,
+              especially from the provinces, through collaboration, real-world experiences and opportunities beyond the classroom.
             </p>
-            <div className="vision-support">
-              <p>
-                We envision a decentralized guild where seekers from every corner of the
-                Philippines, especially the provinces, rise as changemakers connected by shared
-                knowledge, driven by purpose, and committed to giving back.
-              </p>
-              <p>
-                In this future, curiosity becomes courage, access becomes opportunity, and every
-                seeker finds the compass that points to the life they&apos;re meant to lead.
-              </p>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <section className="content-section" id="pillars" aria-labelledby="pillars-title">
-        <div className="section-heading">
-          <HexMark />
-          <h2 id="pillars-title">Five Pillars</h2>
-        </div>
-        <div className="pillar-grid">
-          {pillars.map((pillar) => (
-            <article className="panel pillar-card" key={pillar.title}>
-              <div className="panel-face">
-                <HexNumeral numeral={pillar.numeral} />
-                <h3>{pillar.title}</h3>
-                <p>{pillar.body}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="content-section" id="culture" aria-labelledby="culture-title">
-        <div className="section-heading">
-          <HexMark />
-          <h2 id="culture-title">Culture</h2>
-        </div>
-        <ul className="culture-list">
-          {cultureItems.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </section>
-
-      <footer className="site-footer">
-        <div className="footer-top">
-          <div className="footer-identity">
-            <a className="footer-brand" href="#top">
-              <Image src="/assets/seekersguild_logo.png" alt="" width={982} height={982} />
-              <span>Seekers Guild</span>
-            </a>
-            <p>A compass for the curious, a home for the driven.</p>
-          </div>
-
-          <nav className="footer-meta" aria-label="Footer navigation">
-            <h2>Explore</h2>
-            {navItems.map(([label, href]) => (
-              <a href={href} key={label}>
-                {label}
+            <div className="actions">
+              <a className="button button--gold" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
+                Join a gathering
               </a>
-            ))}
-          </nav>
-
-          <div className="footer-connect">
-            <h2>Connect</h2>
-            <div className="footer-social">
-              {socialLinks.map((social) => (
-                <a
-                  aria-label={social.label}
-                  href={social.href}
-                  key={social.label}
-                  rel="noreferrer noopener"
-                  target="_blank"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    {social.path}
-                  </svg>
-                </a>
-              ))}
+              <a className="button button--line" href="#who">
+                Who we are
+              </a>
             </div>
           </div>
         </div>
+      </section>
 
-        <div className="footer-base">
-          <p>&copy; {new Date().getFullYear()} Seekers Guild</p>
-          <p>Student-led guild for curious builders</p>
+      {/* Who we are: the Sigil of Seeking. */}
+      <section className="band band--sky band--cut who" id="who" aria-labelledby="who-title" data-reveal>
+        <Paint which="light" />
+        <div className="wrap who__grid">
+          <div data-reveal-item>
+            <Ornate as="blockquote" className="ornate--light who__sigil">
+              <p className="who__quote">&ldquo;{brand.sigil.quote}&rdquo;</p>
+              <p className="who__answer">{brand.sigil.answer}</p>
+              <p className="who__source">The Sigil of Seeking</p>
+            </Ornate>
+          </div>
+          <div className="who__copy">
+            <SectionHead id="who-title" title="Who we are" />
+            <p className="lead" data-reveal-item>
+              {brand.who}
+            </p>
+            <p data-reveal-item>
+              We welcome technology, business, creative and events enthusiasts from colleges and senior high schools, especially, but not
+              limited to, those from the provinces. Membership is free. We seek those who seek.
+            </p>
+          </div>
         </div>
-      </footer>
-      </main>
+      </section>
+
+      {/* Vision */}
+      <section className="band band--blue band--cut band--cut-left vision" id="vision" aria-labelledby="vision-title" data-reveal>
+        <Paint which="light" />
+        <span className="sky sky--stars" aria-hidden="true" />
+        <div className="wrap vision__inner">
+          <SectionHead id="vision-title" title="Our vision" tone="dark" />
+          <p className="vision__statement" data-reveal-item>
+            {vision.lead}
+          </p>
+          <div className="vision__body" data-reveal-item>
+            {vision.body.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Mission */}
+      <section className="band band--sky band--cut mission" id="mission" aria-labelledby="mission-title" data-reveal>
+        <Paint which="light" />
+        <div className="wrap">
+          <SectionHead id="mission-title" title="Our mission" />
+          <ul className="mission__list">
+            {mission.map((item, index) => (
+              <li key={item.lead} data-reveal-item>
+                <Ornate className="ornate--light mission__card">
+                  <span className="medallion" aria-hidden="true">
+                    {numerals[index]}
+                  </span>
+                  <h3 className="mission__lead">{item.lead.replace(/,$/, "")}</h3>
+                  <p>{item.body.charAt(0).toUpperCase() + item.body.slice(1)}</p>
+                </Ornate>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Pillars */}
+      <section className="band band--night band--cut band--cut-left pillars" id="pillars" aria-labelledby="pillars-title" data-reveal>
+        <Paint which="dark-water" />
+        <span className="sky sky--stars" aria-hidden="true" />
+        <div className="wrap">
+          <SectionHead id="pillars-title" title="Five pillars" tone="dark" />
+          <ul className="pillars__grid">
+            {pillars.map((pillar, index) => (
+              <li key={pillar.title} data-reveal-item>
+                <Ornate className="ornate--dark pillar">
+                  <span className="pillar__n" aria-hidden="true">
+                    <span>{numerals[index]}</span>
+                  </span>
+                  <h3 className="pillar__title">{pillar.title}</h3>
+                  <p className="pillar__body">{pillar.body}</p>
+                </Ornate>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Culture */}
+      <section className="band band--royal band--cut culture" id="culture" aria-labelledby="culture-title" data-reveal>
+        <Paint which="light" />
+        <span className="sky sky--stars" aria-hidden="true" />
+        <div className="wrap">
+          <SectionHead id="culture-title" title="Our culture" tone="dark" />
+          <ul className="culture__grid">
+            {culture.map((value) => (
+              <li key={value} className="value" data-reveal-item>
+                <span className="value__gem" aria-hidden="true" />
+                <span className="value__text">{value}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Programmes */}
+      <section className="band band--sky band--cut band--cut-left programmes" id="programmes" aria-labelledby="programmes-title" data-reveal>
+        <Paint which="light" />
+        <div className="wrap">
+          <SectionHead id="programmes-title" title="What we do" />
+          <ul className="programmes__grid">
+            {programmes.map((programme) => (
+              <li key={programme.name} data-reveal-item>
+                <Ornate className="ornate--light programme">
+                  <p className="programme__cadence">{programme.cadence}</p>
+                  <h3 className="programme__name">{programme.name}</h3>
+                  <p className="programme__body">{programme.body}</p>
+                  <p className="programme__access">{programme.access}</p>
+                </Ornate>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Events */}
+      <section className="band band--night band--cut events" id="events" aria-labelledby="events-title" data-reveal>
+        <Paint which="dark-water" />
+        <span className="sky sky--stars" aria-hidden="true" />
+        <div className="wrap">
+          <SectionHead id="events-title" title="Gatherings" tone="dark" />
+          <p className="events__intro" data-reveal-item>
+            Every gathering is posted on Luma. Here is what is coming up, and what the guild has hosted so far.
+          </p>
+          <Events />
+        </div>
+      </section>
+
+      {/* Join */}
+      <section className="band band--blue band--cut band--cut-left join" id="join" aria-labelledby="join-title" data-reveal>
+        <Paint which="light" />
+        <span className="sky sky--stars" aria-hidden="true" />
+        <div className="wrap">
+          <SectionHead id="join-title" title="How to join" tone="dark" />
+          <p className="join__intro" data-reveal-item>
+            Membership is free. There is no fee and no donation; what the guild asks for is curiosity and contribution.
+          </p>
+          <ol className="join__steps">
+            {joinSteps.map((step, index) => (
+              <li key={step.title} className="join__step" data-reveal-item>
+                <span className="medallion" aria-hidden="true">
+                  {numerals[index]}
+                </span>
+                <h3 className="join__title">{step.title}</h3>
+                <p>{step.body}</p>
+              </li>
+            ))}
+          </ol>
+          <div className="actions join__actions" data-reveal-item>
+            <a className="button button--gold" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
+              Find the next Open Table
+            </a>
+            <a className="button button--line" href={socialLinks[0].href} target="_blank" rel="noreferrer noopener">
+              Message us on Facebook
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Questions */}
+      <section className="band band--sky band--cut faq" id="faq" aria-labelledby="faq-title" data-reveal>
+        <Paint which="light" />
+        <div className="wrap faq__grid">
+          <SectionHead id="faq-title" title="Questions" />
+          <div className="faq__list" data-reveal-item>
+            {faqs.map((item) => (
+              <details className="faq__item" key={item.q}>
+                <summary className="faq__q">
+                  <span>{item.q}</span>
+                  <span className="faq__icon" aria-hidden="true" />
+                </summary>
+                <p className="faq__a">{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Close */}
+      <section className="band band--night band--cut band--cut-left close" aria-labelledby="close-title" data-reveal>
+        <Paint which="dark" />
+        <span className="sky" aria-hidden="true" />
+        <MagicCircle className="close__circle" />
+        <Motes count={12} />
+        <div className="wrap close__inner">
+          <h2 className="close__title gold-text" id="close-title" data-reveal-item>
+            Onward, fellow seeker
+          </h2>
+          <Flourish className="close__flourish" />
+          <p className="close__lead" data-reveal-item>
+            {brand.motto} Gatherings go up on Luma as they are set; come to the next one and bring someone from another school.
+          </p>
+          <div className="actions" data-reveal-item>
+            <a className="button button--gold" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
+              See upcoming gatherings
+            </a>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

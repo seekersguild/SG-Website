@@ -2,29 +2,35 @@
 
 ## Rationale
 
-The Seekers Guild website should feel like a polished fantasy guild hub inspired by collectible card game interfaces and Piltover-style art-deco fantasy technology. The palette should stay rooted in deep blue, brass gold, cream/tan, black/navy, and white.
+The site follows the Seekers Guild visual identity from the guild's brand document: Sapphire, Heliodor, Moonshine and Obsidian; Cinzel, Lora and Montserrat; and "bold, gold typography against the dark blue background". Its one object is the compass from the Sigil of Seeking: "This compass does not point north. It points to the thing you want most in this world." The page is built from brand-colour bands given depth (night skies lit by hextech blue, a faint starfield), metallic Heliodor gold, gold-framed panels, a circle of light around the compass engraved with the guild's taglines, and two public-domain impressionist paintings laid into the bands as atmosphere: a deep-blue one behind the dark bands and a light one behind the light and blue bands.
 
 ## Pseudocode Example
 
 ```text
-deep blue + brass gold + cream panels -> art-deco fantasy framing -> consistent responsive layout
+Opening   Sapphire deep  "We seek those who seek" in Heliodor Cinzel + the compass (needle follows the visitor)
+Who       Moonshine      the Sigil of Seeking + who the guild is
+Vision    Sapphire       the vision statement in Lora
+Mission   Moonshine      three promises
+Pillars   Obsidian       five pillars
+Culture   Heliodor       ten values set large
+Close     Sapphire deep  "Onward, fellow seeker"
+bands meet on hard diagonal edges (.band--cut / .band--cut-left)
 ```
 
 ## Critical Quirks
 
-- Keep the established Seekers palette intact, but favor polished brass, navy, and cream over muddy parchment.
-- Use Cinzel as the primary type family.
-- Prefer framed panels, art-deco linework, brass edging, navy interiors, and controlled shadows over flat blocks.
-- Keep Quests, Subguilds, Ranker's Hall, Scrolls, and Codex on the same surface, banner, card, and heading treatment unless a page has a specific reason to differ.
-- Buttons and interactive controls should use the same brass-edge/navy-plate language, with visible hover, focus, active, and selected states. Prefer restrained sheen/border effects over moving the button position or adding heavy glow.
-- Quest category controls should read as connected folder tabs on desktop, with the active tab sharing the panel edge. On smaller screens they may wrap, but each tab must remain complete and readable.
-- Page sections should still use the shared sizing tokens in `app/globals.css`.
-- Do not add decorative effects that make text harder to read.
+- Colours are the brand hexes, as tokens in `app/globals.css`. Do not add tints, gradients, glows or new hues.
+- Cinzel is the guild voice (headings, display); Lora carries long statements and quotes; Montserrat is for everything read quickly. All three are self-hosted via `next/font/local`.
+- All copy comes from the guild's documents (`app/content/site.ts`). Founded April 2025.
+- Ornaments live in `app/components/Ornament.tsx` (`Flourish`, `Ornate`) and `MagicCircle.tsx` (circle of light, motes). Painting layers are the `Paint` element in `app/page.tsx` with `.paint--*` classes; each sits under a veil so text keeps its contrast.
+- Readability rule: Cinzel only for headings and short titles. Paragraphs are at least 17px, in near-full colour, never grey on grey. Panel titles use Lora.
+- Buttons are square: a Heliodor gold fill, or a gold 1.5px line.
+- Motion: the headline rises once, the compass assembles once and then only answers the pointer, sections enter once. The only ambient motion is the slow turn of the circle of light and the drifting motes; both stop under reduced motion. Everything moving sits inside `prefers-reduced-motion: no-preference`.
 
 ## When to Use
 
-Use this direction for public-facing pages, intro banners, card placeholders, and major section panels.
+Every page. A new section is a new band in one of the five brand colours, alternating light and dark.
 
 ## When Not to Use
 
-Avoid heavy ornamentation on compact controls, mobile layouts, or areas where readability is more important than atmosphere.
+Do not add monospace labels, numbered markers, fake metadata, glows or texture overlays; they read as generated and are not part of the brand.

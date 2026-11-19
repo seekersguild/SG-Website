@@ -42,3 +42,9 @@ pnpm-debug.log*
 # System files
 .DS_Store
 Thumbs.db
+
+# design inspection screenshots
+.taste-skill/
+
+# TypeScript incremental build cache
+*.tsbuildinfo

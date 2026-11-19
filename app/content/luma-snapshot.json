@@ -1,0 +1,437 @@
+{
+ "past": [
+  {
+   "api_id": "evt-83PrG7AZloAnUDk",
+   "event": {
+    "name": "Founders Live Manila",
+    "start_at": "2026-11-11T10:00:00.000Z",
+    "end_at": "2026-11-11T14:00:00.000Z",
+    "timezone": "Asia/Manila",
+    "url": "founderslive-manila-2026-11",
+    "cover_url": "https://images.lumacdn.com/uploads/8g/2d693b33-73b7-423c-b585-adc4899709f8.png",
+    "location_type": "offline",
+    "visibility": "public",
+    "geo_address_info": {
+     "address": "Milestone at Fifth Avenue",
+     "city_state": "Taguig, Philippines",
+     "city": "Taguig"
+    }
+   },
+   "hosts": [
+    {
+     "name": "Nerry Vyncynt Carreon"
+    },
+    {
+     "name": "Seekers Guild"
+    },
+    {
+     "name": "Huawei Cloud Developer Group"
+    },
+    {
+     "name": "Carlos Jerico Dela Torre"
+    },
+    {
+     "name": "Danielle Pauleen G. Labasa"
+    },
+    {
+     "name": "Alexandre Andrei Nevero"
+    }
+   ],
+   "ticket_info": {
+    "is_free": true
+   }
+  },
+  {
+   "api_id": "evt-g9srQCTsWlLtfsQ",
+   "event": {
+    "name": "Founders Live in Manila",
+    "start_at": "2026-09-11T09:00:00.000Z",
+    "end_at": "2026-09-11T13:00:00.000Z",
+    "timezone": "Asia/Manila",
+    "url": "qjaynm7u",
+    "cover_url": "https://images.lumacdn.com/uploads/hc/18efb866-9fe9-4a81-a939-b41dceec5031.png",
+    "location_type": "offline",
+    "visibility": "public",
+    "geo_address_info": {
+     "address": "Common Ground Rockwell",
+     "city_state": "Makati City, Philippines",
+     "city": "Makati City"
+    }
+   },
+   "hosts": [
+    {
+     "name": "Seekers Guild"
+    },
+    {
+     "name": "Carlos Jerico Dela Torre"
+    },
+    {
+     "name": "Nerry Vyncynt Carreon"
+    },
+    {
+     "name": "Danielle Pauleen G. Labasa"
+    }
+   ],
+   "ticket_info": {
+    "is_free": true
+   }
+  },
+  {
+   "api_id": "evt-PBNNB18hUK3BGeC",
+   "event": {
+    "name": "Seekers Guild Open Table: Compass & Conversation VII with GDG PUP TECH Department",
+    "start_at": "2026-08-30T06:00:00.000Z",
+    "end_at": "2026-08-30T12:00:00.000Z",
+    "timezone": "Asia/Manila",
+    "url": "e4id2prp",
+    "cover_url": "https://images.lumacdn.com/uploads/sz/f2e46c5a-d540-49fa-9b4a-bee31ffeab54.png",
+    "location_type": "offline",
+    "visibility": "public",
+    "geo_address_info": {
+     "address": null,
+     "city_state": "Quezon City, Philippines",
+     "city": "Quezon City"
+    }
+   },
+   "hosts": [
+    {
+     "name": "Seekers Guild"
+    },
+    {
+     "name": "Carlos Jerico Dela Torre"
+    },
+    {
+     "name": "Nerry Vyncynt Carreon"
+    }
+   ],
+   "ticket_info": {
+    "is_free": true
+   }
+  },
+  {
+   "api_id": "evt-1F65799Vr3DOGQo",
+   "event": {
+    "name": "Seekers Guild Open Table: Compass & Conversation VI",
+    "start_at": "2026-07-26T06:00:00.000Z",
+    "end_at": "2026-07-26T12:00:00.000Z",
+    "timezone": "Asia/Manila",
+    "url": "0tyls3ff",
+    "cover_url": "https://images.lumacdn.com/uploads/aa/0b55c2d5-536a-4828-8798-67ef2c8125bf.png",
+    "location_type": "offline",
+    "visibility": "public",
+    "geo_address_info": {
+     "address": "Communal Coffee",
+     "city_state": "Marikina, Philippines",
+     "city": "Marikina"
+    }
+   },
+   "hosts": [
+    {
+     "name": "Seekers Guild"
+    },
+    {
+     "name": "Carlos Jerico Dela Torre"
+    }
+   ],
+   "ticket_info": {
+    "is_free": true
+   }
+  },
+  {
+   "api_id": "evt-ROC9oxV9UU1p79I",
+   "event": {
+    "name": "Seekers Guild Open Table: Compass & Conversation V",
+    "start_at": "2026-06-28T06:00:00.000Z",
+    "end_at": "2026-06-28T12:00:00.000Z",
+    "timezone": "Asia/Manila",
+    "url": "x1gm1hzp",
+    "cover_url": "https://images.lumacdn.com/uploads/m6/4ec31d18-a436-4e0d-ba6e-e03d5fdb7c92.png",
+    "location_type": "offline",
+    "visibility": "public",
+    "geo_address_info": {
+     "address": "Communal Coffee",
+     "city_state": "Marikina, Philippines",
+     "city": "Marikina"
+    }
+   },
+   "hosts": [
+    {
+     "name": "Seekers Guild"
+    },
+    {
+     "name": "Carlos Jerico Dela Torre"
+    }
+   ],
+   "ticket_info": {
+    "is_free": true
+   }
+  },
+  {
+   "api_id": "evt-TxOfuYpEfJZB1jV",
+   "event": {
+    "name": "Seekers Guild Open Table: Compass & Conversation IV",
+    "start_at": "2026-05-31T06:00:00.000Z",
+    "end_at": "2026-05-31T11:00:00.000Z",
+    "timezone": "Asia/Manila",
+    "url": "3a2hjtje",
+    "cover_url": "https://images.lumacdn.com/uploads/ug/1027618f-e7d5-4af6-8abe-7c043d7c8dcf.png",
+    "location_type": "offline",
+    "visibility": "public",
+    "geo_address_info": {
+     "address": "Air Cavaliers Credit Cooperative - Coffee Spot",
+     "city_state": "Taguig, Philippines",
+     "city": "Taguig"
+    }
+   },
+   "hosts": [
+    {
+     "name": "Seekers Guild"
+    },
+    {
+     "name": "Carlos Jerico Dela Torre"
+    }
+   ],
+   "ticket_info": {
+    "is_free": true
+   }
+  },
+  {
+   "api_id": "evt-mBh92A6cCCagoHs",
+   "event": {
+    "name": "Seekers Guild Open Table: Compass & Conversation III",
+    "start_at": "2026-04-26T06:00:00.000Z",
+    "end_at": "2026-04-26T11:00:00.000Z",
+    "timezone": "Asia/Manila",
+    "url": "7dhi44kt",
+    "cover_url": "https://images.lumacdn.com/event-covers/cp/78776484-ecfd-4d04-9970-eda4c7baa3c5.png",
+    "location_type": "offline",
+    "visibility": "public",
+    "geo_address_info": {
+     "address": null,
+     "city_state": "Manila, Metro Manila",
+     "city": "Manila"
+    }
+   },
+   "hosts": [
+    {
+     "name": "Seekers Guild"
+    }
+   ],
+   "ticket_info": {
+    "is_free": true
+   }
+  },
+  {
+   "api_id": "evt-M4lUWkDjPuN8JRq",
+   "event": {
+    "name": "Seekers Guild Open Table: Compass & Conversation II",
+    "start_at": "2026-03-22T06:00:00.000Z",
+    "end_at": "2026-03-22T11:00:00.000Z",
+    "timezone": "Asia/Manila",
+    "url": "meehzlx4",
+    "cover_url": "https://images.lumacdn.com/event-covers/8a/8417a264-fee2-424f-9738-67acc60b9b6c.png",
+    "location_type": "offline",
+    "visibility": "public",
+    "geo_address_info": {
+     "address": null,
+     "city_state": "Makati City, Metro Manila",
+     "city": "Makati City"
+    }
+   },
+   "hosts": [
+    {
+     "name": "Seekers Guild"
+    }
+   ],
+   "ticket_info": {
+    "is_free": true
+   }
+  },
+  {
+   "api_id": "evt-Lg3rzTKXuFiVdTa",
+   "event": {
+    "name": "Seekers Guild Open Table: Compass & Conversation",
+    "start_at": "2026-02-22T06:00:00.000Z",
+    "end_at": "2026-02-22T11:00:00.000Z",
+    "timezone": "Asia/Manila",
+    "url": "10v50384",
+    "cover_url": "https://images.lumacdn.com/event-covers/33/b24efd62-27a5-4c0c-a72e-89f505adc3bf.png",
+    "location_type": "offline",
+    "visibility": "public",
+    "geo_address_info": {
+     "address": null,
+     "city_state": "Quezon City, Metro Manila",
+     "city": "Quezon City"
+    }
+   },
+   "hosts": [
+    {
+     "name": "Seekers Guild"
+    }
+   ],
+   "ticket_info": {
+    "is_free": true
+   }
+  },
+  {
+   "api_id": "evt-rqaUecPO04G5xZ4",
+   "event": {
+    "name": "MATCH & HATCH: WHERE FOUNDERS FIND EACH OTHER",
+    "start_at": "2025-11-13T06:00:00.000Z",
+    "end_at": "2025-11-13T10:00:00.000Z",
+    "timezone": "Asia/Manila",
+    "url": "yd0id6ry",
+    "cover_url": "https://images.lumacdn.com/event-covers/1u/32c2ebd0-a707-40cc-9650-7dd220d8a5fc.jpg",
+    "location_type": "offline",
+    "visibility": "public",
+    "geo_address_info": {
+     "address": null,
+     "city_state": "Taguig, Metro Manila",
+     "city": "Taguig"
+    }
+   },
+   "hosts": [
+    {
+     "name": "Seekers Guild"
+    },
+    {
+     "name": "YSPACES Philippines Inc."
+    }
+   ],
+   "ticket_info": {
+    "is_free": true
+   }
+  },
+  {
+   "api_id": "evt-d26RC1Rg6MNiRy1",
+   "event": {
+    "name": "ZERO TO CEO: Forging Visions that Echo",
+    "start_at": "2025-10-16T09:00:00.000Z",
+    "end_at": "2025-10-16T13:00:00.000Z",
+    "timezone": "Asia/Manila",
+    "url": "7hgkf9fi",
+    "cover_url": "https://images.lumacdn.com/event-covers/0j/bf66474e-955f-4f12-98e2-86a8f05bb7b9.png",
+    "location_type": "offline",
+    "visibility": "public",
+    "geo_address_info": {
+     "address": "White Cloak Technologies , Inc.",
+     "city_state": "Pasig, Kalakhang Maynila",
+     "city": "Pasig"
+    }
+   },
+   "hosts": [
+    {
+     "name": "Seekers Guild"
+    },
+    {
+     "name": "Nerry Vyncynt Carreon"
+    },
+    {
+     "name": "Hunsell Dela Cruz"
+    }
+   ],
+   "ticket_info": {
+    "is_free": true
+   }
+  },
+  {
+   "api_id": "evt-MBKfuiPyyMw4uxT",
+   "event": {
+    "name": "Artisans Guild Workshop #3: Low-Fidelity and High-Fidelity Prototyping",
+    "start_at": "2025-10-13T09:00:00.000Z",
+    "end_at": "2025-10-13T11:00:00.000Z",
+    "timezone": "Asia/Manila",
+    "url": "8swdelbv",
+    "cover_url": "https://images.lumacdn.com/event-covers/2z/a76f7a31-78c4-4914-8212-a71e74f6a2f2.png",
+    "location_type": "unknown",
+    "visibility": "public",
+    "geo_address_info": {
+     "address": null,
+     "city_state": null,
+     "city": null
+    }
+   },
+   "hosts": [
+    {
+     "name": "Melanie Dotollo"
+    },
+    {
+     "name": "Seekers Guild"
+    }
+   ],
+   "ticket_info": {
+    "is_free": true
+   }
+  },
+  {
+   "api_id": "evt-l2vSPk6EtJojKrg",
+   "event": {
+    "name": "Innoverse 2025: The Launchpad for Young Innovators",
+    "start_at": "2025-06-21T01:00:00.000Z",
+    "end_at": "2025-06-21T09:00:00.000Z",
+    "timezone": "Asia/Manila",
+    "url": "gv94156m",
+    "cover_url": "https://images.lumacdn.com/event-covers/ir/e21fa3b4-a462-4e04-9801-464786fe1624.gif",
+    "location_type": "offline",
+    "visibility": "public",
+    "geo_address_info": {
+     "address": "Sotero H. Laurel Academic Resource Center",
+     "city_state": "City Of Manila, Metro Manila",
+     "city": "City Of Manila"
+    }
+   },
+   "hosts": [
+    {
+     "name": "LPU - Manila Management Society"
+    },
+    {
+     "name": "Seekers Guild"
+    },
+    {
+     "name": null
+    }
+   ],
+   "ticket_info": {
+    "is_free": true
+   }
+  }
+ ],
+ "future": [
+  {
+   "api_id": "evt-NjD3vl13MDANweA",
+   "event": {
+    "name": "Seekers Guild Open Table: Compass & Conversation X",
+    "start_at": "2026-11-29T04:00:00.000Z",
+    "end_at": "2026-11-29T09:00:00.000Z",
+    "timezone": "Asia/Manila",
+    "url": "hf20kfv8",
+    "cover_url": "https://images.lumacdn.com/uploads/qu/c4c8e713-9e0b-401c-bf66-73ce48599fca.jpg",
+    "location_type": "offline",
+    "visibility": "public",
+    "geo_address_info": {
+     "address": null,
+     "city_state": "Pasig, Philippines",
+     "city": "Pasig"
+    }
+   },
+   "hosts": [
+    {
+     "name": "Seekers Guild"
+    },
+    {
+     "name": "Carlos Jerico Dela Torre"
+    },
+    {
+     "name": "James Fontanilla"
+    },
+    {
+     "name": "Nerry Vyncynt Carreon"
+    }
+   ],
+   "ticket_info": {
+    "is_free": true
+   }
+  }
+ ],
+ "captured_at": "2026-11-19"
+}
