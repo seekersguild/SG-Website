@@ -2,7 +2,7 @@
 
 ## Rationale
 
-The site follows the Seekers Guild visual identity from the guild's brand document: Sapphire, Heliodor, Moonshine and Obsidian; Cinzel, Lora and Montserrat; and "bold, gold typography against the dark blue background". Its one object is the compass from the Sigil of Seeking: "This compass does not point north. It points to the thing you want most in this world." The page is built from brand-colour bands given depth (night skies lit by hextech blue, a faint starfield), metallic Heliodor gold, gold-framed panels, a circle of light around the compass engraved with the guild's taglines, and two public-domain impressionist paintings laid into the bands as atmosphere: a deep-blue one behind the dark bands and a light one behind the light and blue bands.
+The site follows the Seekers Guild visual identity from the guild's brand document: Sapphire, Heliodor, Moonshine and Obsidian; Cinzel, Lora and Montserrat; and "bold, gold typography against the dark blue background". Its one object is the compass from the Sigil of Seeking: "This compass does not point north. It points to the thing you want most in this world." The page is built from flat brand-colour bands that meet on angled cuts. Gold is flat Heliodor, with gold-framed panels, a circle of light around the compass engraved with the guild's taglines, and two public-domain impressionist paintings laid into the bands as atmosphere: a deep-blue one behind the dark bands and a light one behind the light and blue bands.
 
 ## Pseudocode Example
 
@@ -19,7 +19,7 @@ bands meet on hard diagonal edges (.band--cut / .band--cut-left)
 
 ## Critical Quirks
 
-- Colours are the brand hexes, as tokens in `app/globals.css`. Do not add tints, gradients, glows or new hues.
+- Colours are the brand hexes, as tokens in `app/globals.css`. Flat colour only: no gradients, glows, drop shadows or new hues. Panels get their edge from the gold frame, not from shadows or offset plates.
 - Cinzel is the guild voice (headings, display); Lora carries long statements and quotes; Montserrat is for everything read quickly. All three are self-hosted via `next/font/local`.
 - All copy comes from the guild's documents (`app/content/site.ts`). Founded April 2025.
 - Ornaments live in `app/components/Ornament.tsx` (`Flourish`, `Ornate`) and `MagicCircle.tsx` (circle of light, motes). Painting layers are the `Paint` element in `app/page.tsx` with `.paint--*` classes; each sits under a veil so text keeps its contrast.
