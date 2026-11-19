@@ -1,7 +1,7 @@
 /* Seekers Guild: the guild's own identity (Sapphire, Heliodor, Moonshine,
-   Obsidian; Cinzel, Lora, Montserrat), given depth: night skies lit by
-   hextech blue, metallic gold, framed panels, a circle of light around the
-   compass, and impressionist paintings laid in as the atmosphere.
+   Obsidian; Cinzel, Lora, Montserrat) in flat colour: solid bands meeting
+   on angled cuts, gold-framed panels, a circle of light around the compass,
+   and impressionist paintings laid in as the atmosphere.
    Readability first: Cinzel only for short titles. */
 
 :root {
@@ -32,8 +32,9 @@
   --gold-ink: #9a6f00;
   --on-dark: #fdfefe;
   --on-dark-2: rgb(253 254 254 / 0.9);
-  --gold-metal: linear-gradient(180deg, #fff4bd 0%, #ffdd56 28%, #ffcd03 52%, #feb812 74%, #d08f00 100%);
-  --gold-flat: linear-gradient(180deg, #ffdd56, #feb812);
+  /* Flat colour only: no gradients, glows or shadows. */
+  --face-dark: #072c66;
+  --face-light: #ffffff;
 
   /* Type */
   --f-guild: var(--font-cinzel), "Cinzel", Georgia, serif;
@@ -199,11 +200,7 @@ p {
 /* ---------- Gold, headings, ornaments ---------- */
 
 .gold-text {
-  background: var(--gold-metal);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  color: var(--heliodor);
 }
 
 .heading {
@@ -222,11 +219,7 @@ p {
 }
 
 .section-head--dark .heading {
-  background: var(--gold-metal);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  color: var(--heliodor);
 }
 
 .section-head--light .heading {
@@ -290,14 +283,11 @@ p {
 .ornate__corner--bl { bottom: -3px; left: -3px; transform: rotate(270deg); }
 
 .ornate--dark {
-  border-color: rgb(255 205 3 / 0.38);
-  background:
-    radial-gradient(90% 60% at 50% 0%, rgb(6 114 248 / 0.22), transparent 70%),
-    linear-gradient(180deg, rgb(9 52 128 / 0.85), rgb(3 22 58 / 0.92));
+  border-color: rgb(255 205 3 / 0.45);
+  background: var(--face-dark);
   box-shadow:
-    inset 0 0 0 4px rgb(3 22 58 / 0.6),
-    inset 0 0 0 5px rgb(255 205 3 / 0.12),
-    0 16px 40px rgb(1 8 24 / 0.4);
+    inset 0 0 0 4px var(--face-dark),
+    inset 0 0 0 5px rgb(255 205 3 / 0.16);
   color: var(--on-dark);
 }
 
@@ -311,14 +301,11 @@ p {
 }
 
 .ornate--light {
-  border-color: rgb(201 150 0 / 0.45);
-  background:
-    radial-gradient(100% 60% at 50% 0%, rgb(217 253 254 / 0.9), transparent 70%),
-    linear-gradient(180deg, #ffffff, #f4fafd);
+  border-color: rgb(201 150 0 / 0.5);
+  background: var(--face-light);
   box-shadow:
-    inset 0 0 0 4px #ffffff,
-    inset 0 0 0 5px rgb(201 150 0 / 0.18),
-    0 16px 40px rgb(5 53 118 / 0.1);
+    inset 0 0 0 4px var(--face-light),
+    inset 0 0 0 5px rgb(201 150 0 / 0.2);
   color: var(--ink);
 }
 
@@ -338,10 +325,8 @@ p {
   height: 36px;
   border-radius: 50%;
   border: 1.5px solid var(--heliodor);
-  background: radial-gradient(circle at 35% 30%, var(--sapphire-bright), var(--sapphire-deep) 70%);
-  box-shadow:
-    0 0 0 3px rgb(255 205 3 / 0.16),
-    0 4px 12px rgb(5 53 118 / 0.3);
+  background: var(--sapphire);
+  box-shadow: 0 0 0 3px rgb(255 205 3 / 0.2);
   font-family: var(--f-guild);
   font-size: 0.8125rem;
   font-weight: 700;
@@ -358,34 +343,22 @@ p {
 
 .band--night {
   color: var(--on-dark);
-  background:
-    radial-gradient(50% 55% at 75% 45%, rgb(6 114 248 / 0.32), transparent 70%),
-    radial-gradient(40% 40% at 15% 15%, rgb(255 205 3 / 0.08), transparent 70%),
-    linear-gradient(180deg, var(--night-deep), var(--sapphire-deep) 60%, var(--night));
+  background: var(--night);
 }
 
 .band--blue {
   color: var(--on-dark);
-  background:
-    radial-gradient(60% 60% at 50% 0%, rgb(255 205 3 / 0.12), transparent 70%),
-    radial-gradient(50% 60% at 90% 90%, rgb(6 114 248 / 0.35), transparent 70%),
-    linear-gradient(170deg, var(--sapphire), var(--sapphire-deep));
+  background: var(--sapphire);
 }
 
 .band--royal {
   color: var(--on-dark);
-  background:
-    radial-gradient(60% 50% at 50% 100%, rgb(6 114 248 / 0.3), transparent 70%),
-    radial-gradient(40% 40% at 50% 0%, rgb(255 205 3 / 0.1), transparent 70%),
-    linear-gradient(180deg, var(--sapphire-deep), var(--night-deep));
+  background: var(--sapphire-deep);
 }
 
 .band--sky {
   color: var(--ink);
-  background:
-    radial-gradient(60% 50% at 80% 0%, rgb(217 253 254 / 0.95), transparent 70%),
-    radial-gradient(50% 50% at 0% 100%, rgb(6 114 248 / 0.1), transparent 70%),
-    linear-gradient(180deg, #ffffff, var(--moonshine) 45%, #e4f2fa);
+  background: var(--moonshine);
 }
 
 /* Paintings, laid in as each band's atmosphere.
@@ -427,17 +400,15 @@ p {
 }
 
 .hero .paint--dark::after {
-  background:
-    linear-gradient(90deg, rgb(2 13 36 / 0.94) 0%, rgb(2 13 36 / 0.82) 34%, rgb(3 22 58 / 0.5) 62%, rgb(3 22 58 / 0.42) 100%),
-    linear-gradient(180deg, rgb(2 13 36 / 0.5), transparent 30%, transparent 70%, rgb(2 13 36 / 0.6));
+  background: rgb(2 13 36 / 0.8);
 }
 
 .close .paint--dark::after {
-  background: radial-gradient(60% 70% at 50% 50%, rgb(2 13 36 / 0.82), rgb(2 13 36 / 0.62));
+  background: rgb(2 13 36 / 0.76);
 }
 
 .paint--dark-water::after {
-  background: linear-gradient(180deg, rgb(2 13 36 / 0.84), rgb(3 22 58 / 0.7) 50%, rgb(2 13 36 / 0.86));
+  background: rgb(2 13 36 / 0.82);
 }
 
 /* The light painting behind the sky and blue bands. */
@@ -452,7 +423,7 @@ p {
 }
 
 .band--sky .paint--light::after {
-  background: linear-gradient(180deg, rgb(255 255 255 / 0.55), rgb(239 248 251 / 0.2) 40%, rgb(239 248 251 / 0.35));
+  background: rgb(239 248 251 / 0.4);
 }
 
 .band--blue .paint--light,
@@ -527,13 +498,7 @@ p {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image:
-    radial-gradient(1.5px 1.5px at 20% 30%, rgb(255 255 255 / 0.7), transparent),
-    radial-gradient(1px 1px at 70% 20%, rgb(255 255 255 / 0.6), transparent),
-    radial-gradient(1.5px 1.5px at 40% 80%, rgb(255 221 86 / 0.7), transparent),
-    radial-gradient(1px 1px at 85% 65%, rgb(255 255 255 / 0.5), transparent),
-    radial-gradient(1px 1px at 10% 70%, rgb(217 253 254 / 0.6), transparent),
-    radial-gradient(1.5px 1.5px at 60% 50%, rgb(255 255 255 / 0.45), transparent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cg fill='%23ffffff'%3E%3Ccircle cx='52' cy='78' r='1.2' opacity='.7'/%3E%3Ccircle cx='182' cy='52' r='.8' opacity='.6'/%3E%3Ccircle cx='221' cy='169' r='.8' opacity='.5'/%3E%3Ccircle cx='156' cy='130' r='1.2' opacity='.45'/%3E%3C/g%3E%3Ccircle cx='104' cy='208' r='1.2' fill='%23ffdd56' opacity='.7'/%3E%3Ccircle cx='26' cy='182' r='.8' fill='%23d9fdfe' opacity='.6'/%3E%3C/svg%3E");
   background-size: 260px 260px;
   opacity: 0.55;
 }
@@ -569,7 +534,6 @@ p {
   text-align: center;
   transition:
     transform 160ms var(--ease-out),
-    box-shadow 240ms ease,
     background-color 180ms ease,
     color 180ms ease,
     border-color 180ms ease;
@@ -580,18 +544,14 @@ p {
 }
 
 .button--gold {
-  background: var(--gold-flat);
+  background: var(--heliodor);
   color: var(--obsidian);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.6),
-    inset 0 -2px 0 rgb(160 100 0 / 0.3),
-    0 6px 18px rgb(255 205 3 / 0.18);
 }
 
 .button--line {
   border: 1.5px solid var(--heliodor);
   color: var(--on-dark);
-  background: rgb(3 22 58 / 0.35);
+  background: var(--night);
 }
 
 .button--wide {
@@ -600,10 +560,7 @@ p {
 
 @media (hover: hover) and (pointer: fine) {
   .button--gold:hover {
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.6),
-      inset 0 -2px 0 rgb(160 100 0 / 0.35),
-      0 8px 24px rgb(255 205 3 / 0.3);
+    background: var(--heliodor-light);
   }
 
   .button--line:hover {
@@ -691,7 +648,6 @@ p {
   width: 6px;
   height: 6px;
   background: var(--heliodor);
-  box-shadow: 0 0 10px var(--heliodor);
   transform: translateX(-50%) rotate(45deg) scale(0);
   transition: transform 240ms var(--ease-out);
 }
@@ -735,7 +691,7 @@ p {
   justify-content: space-between;
   gap: 32px;
   padding: calc(var(--header-h) + 40px) var(--gutter) 32px;
-  background: linear-gradient(180deg, var(--night-deep), var(--sapphire-deep));
+  background: var(--night-deep);
   overflow-y: auto;
   opacity: 0;
   visibility: hidden;
@@ -953,18 +909,15 @@ p {
   bottom: -10px;
   border-radius: 50%;
   background: #fff1a8;
-  box-shadow: 0 0 10px 2px rgb(255 221 86 / 0.7);
   opacity: 0;
 }
 
 .motes span:nth-child(3n) {
   background: var(--lilac);
-  box-shadow: 0 0 10px 2px rgb(217 198 242 / 0.7);
 }
 
 .motes span:nth-child(4n) {
   background: var(--lily-pink);
-  box-shadow: 0 0 10px 2px rgb(255 211 226 / 0.65);
 }
 
 
@@ -996,15 +949,9 @@ p {
   height: 100%;
 }
 
-/* The glow is drawn once per layer, then the layer is only moved. */
-.hero__circle .mc-layer {
-  filter: drop-shadow(0 0 14px rgb(6 114 248 / 0.55));
-}
-
 .hero__compass {
   position: absolute;
   inset: 19%;
-  filter: drop-shadow(0 0 40px rgb(255 205 3 / 0.3)) drop-shadow(0 0 80px rgb(6 114 248 / 0.4));
 }
 
 .emblem--hero {
@@ -1019,7 +966,6 @@ p {
 }
 
 .hero__title {
-  filter: drop-shadow(0 2px 0 rgb(2 13 36 / 0.5)) drop-shadow(0 0 22px rgb(255 205 3 / 0.18));
   font-family: var(--f-guild);
   font-size: var(--step-display);
   font-weight: 400;
@@ -1049,7 +995,6 @@ p {
   font-size: var(--step-lead);
   line-height: 1.7;
   color: var(--on-dark);
-  text-shadow: 0 2px 20px rgb(2 13 36 / 0.8);
 }
 
 .hero--page {
@@ -1071,7 +1016,7 @@ p {
   }
 
   .hero .paint--dark::after {
-    background: linear-gradient(180deg, rgb(2 13 36 / 0.92) 0%, rgb(2 13 36 / 0.8) 50%, rgb(3 22 58 / 0.45) 100%);
+    background: rgb(2 13 36 / 0.84);
   }
 }
 
@@ -1153,7 +1098,6 @@ p {
   font-weight: 400;
   line-height: 1.45;
   color: var(--white);
-  text-shadow: 0 2px 30px rgb(2 13 36 / 0.5);
 }
 
 .vision__statement::before,
@@ -1251,8 +1195,7 @@ p {
   margin: 4px 0 6px 4px;
   rotate: 45deg;
   border: 1px solid var(--heliodor);
-  background: radial-gradient(circle at 35% 30%, var(--sapphire-bright), var(--sapphire-deep) 75%);
-  box-shadow: 0 0 14px rgb(6 114 248 / 0.4);
+  background: var(--sapphire);
   font-family: var(--f-guild);
   font-size: 0.6875rem;
   font-weight: 700;
@@ -1314,8 +1257,8 @@ p {
   gap: 14px;
   min-height: 56px;
   padding: 12px 20px;
-  border: 1px solid rgb(255 205 3 / 0.28);
-  background: linear-gradient(90deg, rgb(3 22 58 / 0.7), rgb(5 53 118 / 0.55));
+  border: 1px solid rgb(255 205 3 / 0.3);
+  background: var(--night);
 }
 
 .value__gem {
@@ -1323,8 +1266,7 @@ p {
   width: 7px;
   height: 7px;
   rotate: 45deg;
-  background: var(--gold-flat);
-  box-shadow: 0 0 12px rgb(255 205 3 / 0.7);
+  background: var(--heliodor);
 }
 
 .value__text {
@@ -1754,7 +1696,6 @@ p {
 }
 
 .close__title {
-  filter: drop-shadow(0 2px 0 rgb(2 13 36 / 0.5)) drop-shadow(0 0 22px rgb(255 205 3 / 0.18));
   font-family: var(--f-guild);
   font-size: clamp(2.125rem, 1.4rem + 2.4vw, 3.5rem);
   font-weight: 400;

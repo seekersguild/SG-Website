@@ -27,7 +27,7 @@ export default async function OpengraphImage() {
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(90deg, rgba(2,13,36,0.92) 0%, rgba(2,13,36,0.7) 55%, rgba(2,13,36,0.35) 100%)",
+            background: "rgba(2,13,36,0.8)",
           }}
         />
         <div style={{ position: "relative", display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 80px", gap: 28 }}>
