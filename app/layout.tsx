@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 
+import { Ambient } from "./components/Ambient";
 import { Reveal } from "./components/Reveal";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
@@ -95,6 +96,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </main>
         <SiteFooter />
         <Reveal />
+        <Ambient />
       </body>
     </html>
   );

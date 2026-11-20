@@ -80,14 +80,14 @@ export default function Home() {
       />
 
       {/* Opening: gold type on deep sapphire, the compass inside its circle of light. */}
-      <section className="band band--night hero" aria-labelledby="page-title">
+      <section className="band band--night hero" aria-labelledby="page-title" data-ambient>
         <Paint which="dark" />
         <span className="sky" aria-hidden="true" />
         <div className="hero__stage" aria-hidden="true">
           <MagicCircle className="hero__circle" />
           <HeroCompass className="hero__compass" />
         </div>
-        <Motes count={22} />
+        <Motes />
         <div className="wrap hero__inner">
           <h1 className="hero__title lines" id="page-title">
             <span className="line">
@@ -312,10 +312,10 @@ export default function Home() {
       </section>
 
       {/* Close */}
-      <section className="band band--night band--cut band--cut-left close" aria-labelledby="close-title" data-reveal>
+      <section className="band band--night band--cut band--cut-left close" aria-labelledby="close-title" data-reveal data-ambient>
         <Paint which="dark" />
         <span className="sky" aria-hidden="true" />
-        <Motes count={12} />
+        <Motes className="motes--sparse" />
         {/* The opening's compass returns, larger and cropped by the edge, its
             needle swung round to point at the way on. */}
         <div className="close__compass" aria-hidden="true">

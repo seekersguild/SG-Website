@@ -118,28 +118,15 @@ export function MagicCircle({ className = "" }: { className?: string }) {
   );
 }
 
-/* Slow motes of light drifting upward: deterministic positions, CSS motion. */
-export function Motes({ count = 18, className = "" }: { count?: number; className?: string }) {
-  const motes = Array.from({ length: count }, (_, i) => ({
-    left: (i * 53) % 100,
-    delay: (i * 1.7) % 12,
-    duration: 10 + ((i * 7) % 9),
-    size: 2 + (i % 3),
-  }));
+/* Slow motes of light drifting upward: two tiled layers of dots (see
+   .motes in globals.css), each sliding up by exactly one tile and looping.
+   Two GPU-moved layers instead of a box per mote, so they cost next to
+   nothing on any device. */
+export function Motes({ className = "" }: { className?: string }) {
   return (
     <div className={`motes ${className}`} aria-hidden="true">
-      {motes.map((m, i) => (
-        <span
-          key={i}
-          style={{
-            left: `${m.left}%`,
-            width: m.size,
-            height: m.size,
-            animationDelay: `${m.delay}s`,
-            animationDuration: `${m.duration}s`,
-          }}
-        />
-      ))}
+      <span className="motes__layer motes__layer--near" />
+      <span className="motes__layer motes__layer--far" />
     </div>
   );
 }
