@@ -426,14 +426,53 @@ p {
   background: rgb(239 248 251 / 0.4);
 }
 
-.band--blue .paint--light,
-.band--royal .paint--light {
-  mix-blend-mode: luminosity;
-  opacity: 0.32;
+/* The blue bands show the light painting as if blended by luminosity into
+   the band colour. The blend is baked into the files (paint-blue-*,
+   paint-royal-*), so the browser never blends live while scrolling. */
+.band--blue .paint--light .paint__img {
+  background-image: url("/images/paint-blue-2000.webp");
+  background-image: -webkit-image-set(url("/images/paint-blue-2000.webp") 1x, url("/images/paint-blue-3000.webp") 2x);
+  background-image: image-set(url("/images/paint-blue-2000.webp") 1x, url("/images/paint-blue-3000.webp") 2x);
 }
 
-.band--royal .paint--light {
-  opacity: 0.22;
+.band--royal .paint--light .paint__img {
+  background-image: url("/images/paint-royal-2000.webp");
+  background-image: -webkit-image-set(url("/images/paint-royal-2000.webp") 1x, url("/images/paint-royal-3000.webp") 2x);
+  background-image: image-set(url("/images/paint-royal-2000.webp") 1x, url("/images/paint-royal-3000.webp") 2x);
+}
+
+@media (max-width: 760px) {
+  .band--blue .paint--light .paint__img {
+    background-image: -webkit-image-set(url("/images/paint-blue-1400.webp") 1x, url("/images/paint-blue-3000.webp") 2x);
+    background-image: image-set(url("/images/paint-blue-1400.webp") 1x, url("/images/paint-blue-3000.webp") 2x);
+  }
+
+  .band--royal .paint--light .paint__img {
+    background-image: -webkit-image-set(url("/images/paint-royal-1400.webp") 1x, url("/images/paint-royal-3000.webp") 2x);
+    background-image: image-set(url("/images/paint-royal-1400.webp") 1x, url("/images/paint-royal-3000.webp") 2x);
+  }
+}
+
+@media (max-width: 760px) and (max-aspect-ratio: 13/25) {
+  .band--blue .paint--light .paint__img {
+    background-image: -webkit-image-set(url("/images/paint-blue-1400.webp") 1x, url("/images/paint-blue-tall.webp") 2x);
+    background-image: image-set(url("/images/paint-blue-1400.webp") 1x, url("/images/paint-blue-tall.webp") 2x);
+  }
+
+  .band--royal .paint--light .paint__img {
+    background-image: -webkit-image-set(url("/images/paint-royal-1400.webp") 1x, url("/images/paint-royal-tall.webp") 2x);
+    background-image: image-set(url("/images/paint-royal-1400.webp") 1x, url("/images/paint-royal-tall.webp") 2x);
+  }
+}
+
+@media (min-width: 2001px) {
+  .band--blue .paint--light .paint__img {
+    background-image: url("/images/paint-blue-3000.webp");
+  }
+
+  .band--royal .paint--light .paint__img {
+    background-image: url("/images/paint-royal-3000.webp");
+  }
 }
 
 /* Phones: files sized for a tall, narrow screen at 1x and 2-3x density. */
@@ -970,22 +1009,31 @@ p {
   pointer-events: none;
 }
 
-.motes span {
+/* Two tiled layers of dots; each slides up by exactly one tile and loops,
+   so the drift is seamless and the GPU moves two layers, nothing more. */
+.motes__layer {
   position: absolute;
-  bottom: -10px;
-  border-radius: 50%;
-  background: #fff1a8;
-  opacity: 0;
+  inset: 0 0 auto;
+  height: calc(100% + var(--tile));
+  background-repeat: repeat;
 }
 
-.motes span:nth-child(3n) {
-  background: var(--lilac);
+.motes__layer--near {
+  --tile: 440px;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='560' height='440'><circle cx='90' cy='60' r='1.5' fill='%23fff1a8'/><circle cx='330' cy='250' r='1' fill='%23d9c6f2'/><circle cx='470' cy='380' r='1.5' fill='%23fff1a8'/><circle cx='210' cy='330' r='1' fill='%23fff1a8'/></svg>");
+  opacity: 0.75;
 }
 
-.motes span:nth-child(4n) {
-  background: var(--lily-pink);
+.motes__layer--far {
+  --tile: 620px;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='760' height='620'><circle cx='180' cy='140' r='1' fill='%23ffd3e2'/><circle cx='520' cy='40' r='1' fill='%23fff1a8'/><circle cx='640' cy='470' r='1.5' fill='%23d9c6f2'/><circle cx='300' cy='520' r='1' fill='%23fff1a8'/><circle cx='60' cy='400' r='1' fill='%23fff1a8'/></svg>");
+  background-position: 37% 0;
+  opacity: 0.5;
 }
 
+.motes--sparse .motes__layer--far {
+  display: none;
+}
 
 /* ---------- Opening ---------- */
 
@@ -2030,20 +2078,16 @@ p {
   }
 }
 
-@keyframes rise {
-  0% {
-    transform: translate(0, 0);
-    opacity: 0;
+/* Each moves by exactly its layer's tile height (--tile), so the loop is seamless. */
+@keyframes drift-near {
+  to {
+    transform: translateY(-440px);
   }
-  15% {
-    opacity: 0.9;
-  }
-  85% {
-    opacity: 0.6;
-  }
-  100% {
-    transform: translate(30px, -90vh);
-    opacity: 0;
+}
+
+@keyframes drift-far {
+  to {
+    transform: translateY(-620px);
   }
 }
 
@@ -2082,10 +2126,23 @@ p {
     will-change: transform;
   }
 
-  .motes span {
-    animation-name: rise;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
+  .motes__layer--near {
+    animation: drift-near 18s linear infinite;
+  }
+
+  .motes__layer--far {
+    animation: drift-far 40s linear infinite;
+  }
+
+  /* The ambient motion stops off screen and while the page scrolls
+     (Ambient.tsx sets data-still and data-scrolling). */
+  [data-still] .mc-bezel,
+  [data-still] .mc-scan,
+  [data-still] .motes__layer,
+  [data-scrolling] .mc-bezel,
+  [data-scrolling] .mc-scan,
+  [data-scrolling] .motes__layer {
+    animation-play-state: paused;
   }
 
   .js [data-reveal] [data-reveal-item] {
