@@ -510,11 +510,14 @@ p {
 .band--cut {
   margin-top: calc(var(--cut) * -1);
   padding-top: calc(var(--band-pad) + var(--cut));
-  clip-path: polygon(0 var(--cut), 100% 0, 100% 100%, 0 100%);
+  /* The polygon runs a few pixels past the sides and bottom: edges that sit
+     exactly on the screen edge are anti-aliased at fractional pixel ratios
+     and let the page background show through as a hairline. */
+  clip-path: polygon(-4px calc(var(--cut) + 0.4px), calc(100% + 4px) -0.4px, calc(100% + 4px) calc(100% + 4px), -4px calc(100% + 4px));
 }
 
 .band--cut-left {
-  clip-path: polygon(0 0, 100% var(--cut), 100% 100%, 0 100%);
+  clip-path: polygon(-4px -0.4px, calc(100% + 4px) calc(var(--cut) + 0.4px), calc(100% + 4px) calc(100% + 4px), -4px calc(100% + 4px));
 }
 
 /* ---------- Buttons ---------- */
@@ -791,43 +794,41 @@ p {
   stroke-opacity: 1;
 }
 
-.em-arc,
-.em-hook {
-  fill: none;
-  stroke: var(--heliodor);
-  stroke-width: 26;
+/* Inside the bezel the degree scale is already drawn: no second one. */
+.emblem--hero .em-ticks,
+.close__emblem .em-ticks {
+  display: none;
 }
 
-.em-ring__line {
-  fill: none;
-  stroke: var(--heliodor);
-  stroke-width: 8;
+/* Low-poly facets: flat tones of the brand golds and the star's whites and
+   moonshine blues, stepped so each facet reads as its own plane. */
+/* Facets are stroked in their own fill to close anti-aliasing seams. */
+.em-facet,
+.em-point polygon {
+  stroke-width: 1;
+  stroke-linejoin: round;
 }
 
-.em-spur {
-  fill: var(--heliodor);
-}
+.em-facet.f1 { fill: var(--heliodor); stroke: var(--heliodor); }
+.em-facet.f2 { fill: var(--heliodor-light); stroke: var(--heliodor-light); }
+.em-facet.f3 { fill: var(--heliodor-deep); stroke: var(--heliodor-deep); }
+.em-facet.f4 { fill: #ffd52e; stroke: #ffd52e; }
 
-.em-star__light {
-  fill: var(--white);
-}
+.em-point .s1 { fill: var(--white); stroke: var(--white); }
+.em-point .s2 { fill: var(--moonshine); stroke: var(--moonshine); }
+.em-point .s3 { fill: #b9dcef; stroke: #b9dcef; }
+.em-point .s4 { fill: #8cbcd9; stroke: #8cbcd9; }
 
-.em-star__dark {
-  fill: rgb(217 253 254 / 0.55);
-}
-
-.em-star__dim {
-  fill: rgb(253 254 254 / 0.7);
-}
-
-.em-star__dimmer {
-  fill: rgb(217 253 254 / 0.3);
-}
+.em-point--minor .s1 { fill: #c9e4f2; stroke: #c9e4f2; }
+.em-point--minor .s2 { fill: #a9d0e6; stroke: #a9d0e6; }
+.em-point--minor .s3 { fill: #6f9fc4; stroke: #6f9fc4; }
+.em-point--minor .s4 { fill: #4f7fab; stroke: #4f7fab; }
 
 .em-hub {
   fill: var(--sapphire-deep);
   stroke: var(--heliodor);
   stroke-width: 5;
+  stroke-linejoin: miter;
 }
 
 .em-hub__core {
@@ -838,15 +839,10 @@ p {
   transform: rotate(var(--needle, 0deg));
 }
 
-.em-needle__north {
-  fill: var(--heliodor);
-}
-
-.em-needle__south {
-  fill: var(--night-deep);
-  stroke: var(--heliodor);
-  stroke-width: 2;
-}
+.em-needle__n1 { fill: var(--heliodor-light); }
+.em-needle__n2 { fill: var(--heliodor-deep); }
+.em-needle__s1 { fill: var(--sapphire-deep); }
+.em-needle__s2 { fill: var(--night-deep); }
 
 .em-needle__hub {
   fill: var(--heliodor);
@@ -868,31 +864,101 @@ p {
   fill: none;
 }
 
-.mc-ring {
-  stroke: rgb(255 205 3 / 0.55);
-  stroke-width: 1.2;
+/* Each facet is stroked in its own fill, which closes the hairline seams
+   anti-aliasing leaves between neighbouring polygons. */
+.mc-facet {
+  stroke-width: 0.8;
+  stroke-linejoin: round;
 }
 
-.mc-ring--soft {
-  stroke: rgb(120 190 255 / 0.4);
+.mc-facet--1 { fill: #0a2e63; stroke: #0a2e63; }
+.mc-facet--2 { fill: #082656; stroke: #082656; }
+.mc-facet--3 { fill: #0c3670; stroke: #0c3670; }
+.mc-facet--4 { fill: #06204a; stroke: #06204a; }
+
+.mc-rule {
+  fill: none;
+  stroke-linejoin: miter;
+  stroke: rgb(255 205 3 / 0.6);
+  stroke-width: 1.5;
+}
+
+.mc-rule--fine {
+  stroke: rgb(255 205 3 / 0.35);
+  stroke-width: 1;
 }
 
 .mc-tick {
   stroke: rgb(255 205 3 / 0.45);
-  stroke-width: 1.2;
+  stroke-width: 1;
 }
 
 .mc-tick--major {
+  stroke: rgb(255 205 3 / 0.7);
+  stroke-width: 1.5;
+}
+
+.mc-tick--cardinal {
   stroke: var(--heliodor);
-  stroke-width: 2.4;
+  stroke-width: 2.5;
+}
+
+/* Mask strokes for drawing the bands in: white shows, so a full stroke
+   reveals the band and a dashed-off one hides it. */
+.em-draw {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 36;
+}
+
+.em-draw--ring {
+  stroke-width: 40;
+}
+
+/* The scanner ring. */
+.mc-track {
+  fill: none;
+  stroke: rgb(120 190 255 / 0.22);
+  stroke-width: 1;
+  stroke-dasharray: 2 6;
+}
+
+.mc-scan__arc {
+  fill: none;
+  stroke: rgb(255 205 3 / 0.45);
+  stroke-width: 1.5;
+}
+
+.mc-node {
+  fill: rgb(255 205 3 / 0.6);
+}
+
+.mc-numeral {
+  fill: rgb(253 254 254 / 0.4);
+  font-family: var(--f-sans);
+  font-size: 9px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.mc-cardinal {
+  fill: var(--heliodor);
+  font-family: var(--f-guild);
+  font-size: 20px;
+  font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: central;
 }
 
 .mc-text {
-  fill: rgb(255 221 86 / 0.8);
+  fill: rgb(255 221 86 / 0.75);
   font-family: var(--f-guild);
-  font-size: 13.5px;
-  font-weight: 700;
-  letter-spacing: 0.32em;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
 }
 
 /* Motes of light; a few take the lilac and pink tints. */
@@ -929,16 +995,19 @@ p {
   min-height: 100svh;
   padding-top: calc(var(--header-h) + 48px);
   padding-bottom: clamp(64px, 8vw, 112px);
-  overflow: hidden;
+  overflow: clip;
 }
 
+/* The compass sits whole on the right, sized to the screen: it grows with
+   the width, is capped by the height, and on wide screens stays with the
+   content column (overhanging it a little) instead of drifting to the edge. */
 .hero__stage {
   position: absolute;
-  top: 50%;
-  right: var(--gutter);
-  width: min(42vw, 580px);
+  top: calc(50% + var(--header-h) / 2);
+  right: max(var(--gutter), calc((100vw - var(--max)) / 2 - 80px));
+  width: min(44vw, calc(100svh - var(--header-h) - 96px), 640px);
   aspect-ratio: 1;
-  translate: 0 -46%;
+  translate: 0 -50%;
   pointer-events: none;
 }
 
@@ -991,10 +1060,8 @@ p {
   max-width: 29rem;
 }
 
-.hero__lead {
-  font-size: var(--step-lead);
-  line-height: 1.7;
-  color: var(--on-dark);
+.hero__lead--short {
+  display: none;
 }
 
 .hero--page {
@@ -1002,19 +1069,6 @@ p {
 }
 
 @media (max-width: 860px) {
-  .hero {
-    align-items: flex-start;
-    padding-bottom: 92vw;
-  }
-
-  .hero__stage {
-    top: auto;
-    bottom: -10vw;
-    right: 50%;
-    width: 96vw;
-    translate: 50% 0;
-  }
-
   .hero .paint--dark::after {
     background: rgb(2 13 36 / 0.84);
   }
@@ -1244,21 +1298,30 @@ p {
 
 /* ---------- Culture ---------- */
 
+/* The guild's code: one gold-framed panel, the values as a list divided by
+   fine gold rules (two columns on wide screens, one on phones). */
+.culture__panel {
+  margin-top: var(--head-gap);
+  padding: clamp(10px, 1.6vw, 20px) clamp(20px, 3vw, 44px);
+}
+
 .culture__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px clamp(14px, 1.6vw, 20px);
-  margin-top: var(--head-gap);
+  column-gap: clamp(32px, 4vw, 64px);
 }
 
 .value {
   display: flex;
   align-items: center;
   gap: 14px;
-  min-height: 56px;
-  padding: 12px 20px;
-  border: 1px solid rgb(255 205 3 / 0.3);
-  background: var(--night);
+  padding: 18px 0;
+  border-top: 1px solid rgb(255 205 3 / 0.18);
+}
+
+/* The first row of each column has no rule above it. */
+.value:nth-child(-n + 2) {
+  border-top: 0;
 }
 
 .value__gem {
@@ -1275,12 +1338,6 @@ p {
   font-weight: 500;
   line-height: 1.45;
   color: var(--white);
-}
-
-@media (max-width: 760px) {
-  .culture__grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* ---------- Programmes ---------- */
@@ -1674,45 +1731,145 @@ p {
 
 /* ---------- Close ---------- */
 
+/* The send-off mirrors the opening: there the compass stands whole beside
+   the motto; here it returns larger, cropped by the left edge, its needle
+   swung round toward the message on the right. */
 .close {
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: clamp(640px, 86vh, 820px);
+  /* clip, not hidden: hidden would make this a scroll container and pin the
+     sticky painting below the padding instead of to the screen. */
+  overflow: clip;
+}
+
+.close__compass {
+  position: absolute;
+  top: calc(50% + var(--cut) / 2);
+  left: 0;
+  z-index: -1;
+  width: min(60vw, 760px);
+  aspect-ratio: 1;
+  translate: -34% -50%;
 }
 
 .close__circle {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: -1;
-  width: min(620px, 120vw);
-  translate: -50% -50%;
-  opacity: 0.45;
+  inset: 0;
+}
+
+.close__emblem {
+  position: absolute;
+  inset: 19%;
+  width: 62%;
+  height: auto;
 }
 
 .close__inner {
   display: grid;
-  justify-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+}
+
+.close__text {
+  grid-column: 2;
+  display: grid;
+  justify-items: start;
   gap: 24px;
-  text-align: center;
 }
 
 .close__title {
   font-family: var(--f-guild);
-  font-size: clamp(2.125rem, 1.4rem + 2.4vw, 3.5rem);
+  font-size: clamp(2.5rem, 1.4rem + 3.2vw, 4.5rem);
   font-weight: 400;
-  line-height: 1.1;
+  line-height: 1.05;
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
 
+.close__title span {
+  display: block;
+}
+
 .close__flourish {
-  width: 120px;
+  width: 132px;
+  margin-left: -6px;
 }
 
 .close__lead {
-  max-width: 38ch;
+  max-width: 36ch;
   font-size: var(--step-lead);
   line-height: 1.7;
   color: var(--on-dark);
+}
+
+.close__follow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 24px;
+  margin: 8px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid rgb(255 205 3 / 0.25);
+  color: var(--on-dark);
+}
+
+.close__follow-label {
+  font-family: var(--f-serif);
+  font-style: italic;
+  opacity: 0.85;
+}
+
+.close__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.close__social a {
+  display: inline-block;
+  padding-block: 8px;
+  color: var(--on-dark);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgb(255 205 3 / 0.5);
+  text-underline-offset: 5px;
+  transition: color 160ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .close__social a:hover {
+    color: var(--heliodor);
+  }
+}
+
+/* Narrow screens: the compass sits whole above the message. */
+@media (max-width: 860px) {
+  .close {
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 0;
+  }
+
+  /* Same size as the opening's stacked compass, so the two read as a pair. */
+  .close__compass {
+    position: relative;
+    top: auto;
+    width: min(84vw, 540px);
+    margin: 0 auto clamp(40px, 8vw, 72px);
+    translate: none;
+  }
+
+  .close__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .close__text {
+    grid-column: 1;
+  }
 }
 
 /* ---------- Footer ---------- */
@@ -1836,15 +1993,6 @@ p {
   }
 }
 
-@keyframes draw {
-  from {
-    stroke-dashoffset: 1;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
 @keyframes appear {
   from {
     opacity: 0;
@@ -1858,15 +2006,24 @@ p {
   }
 }
 
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 @keyframes spin {
   to {
-    rotate: 360deg;
+    transform: rotate(360deg);
   }
 }
 
 @keyframes spin-back {
   to {
-    rotate: -360deg;
+    transform: rotate(-360deg);
   }
 }
 
@@ -1898,8 +2055,7 @@ p {
     animation: fade-up 700ms var(--ease-out) 450ms both;
   }
 
-  .js .emblem--hero .em-arc,
-  .js .emblem--hero .em-ring__line {
+  .js .emblem--hero .em-draw {
     stroke-dasharray: 1;
     animation: draw 1400ms var(--ease-out) 250ms both;
   }
@@ -1912,13 +2068,13 @@ p {
     animation: needle-in 1600ms var(--ease-out) 500ms backwards;
   }
 
-  /* Ambient: the circle turns slowly, motes of light drift up. */
-  .mc-outer {
+  /* Ambient: the bezel turns slowly, motes of light drift up. */
+  .mc-bezel {
     animation: spin 140s linear infinite;
     will-change: transform;
   }
 
-  .mc-inner {
+  .mc-scan {
     animation: spin-back 90s linear infinite;
     will-change: transform;
   }
@@ -1947,5 +2103,310 @@ p {
 @media (prefers-reduced-motion: reduce) {
   .motes {
     display: none;
+  }
+}
+
+/* ==========================================================================
+   Compact layout: phones and portrait tablets (860px and narrower)
+
+   Not the desktop stacked up, but its own design for touch. The opening and
+   the send-off are centred bookends around the compass; groups of cards
+   become rows you swipe, with dots; the culture becomes chips; past
+   gatherings open on the latest few; and a slim bar at the bottom keeps the
+   next gathering within the thumb's reach. Desktop never sees any of it.
+   ========================================================================== */
+
+/* Desktop: rails are grids, so their dots and the dock are not shown. */
+.rail-dots,
+.events__toggle,
+.join-dock {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  /* ---- Opening: the motto, then the compass rising on the horizon ----
+     The compass is zoomed past the screen's width with its hub just above
+     the section's foot, so only its upper half shows: the gold S, the
+     needle, north, and the motto arcing over the top. */
+  .hero {
+    --horizon: min(136vw, 780px);
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    min-height: 100svh;
+    padding-top: calc(var(--header-h) + clamp(24px, 6vw, 56px));
+    padding-bottom: calc(var(--horizon) * 0.6 + clamp(16px, 4vw, 40px));
+  }
+
+  .hero__stage {
+    position: absolute;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 50%;
+    width: var(--horizon);
+    margin: 0;
+    translate: -50% 40%;
+  }
+
+  .hero__inner {
+    justify-items: center;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .hero .hero__title {
+    font-size: clamp(2.5rem, 10.4vw, 4.25rem);
+  }
+
+  .hero__foot {
+    justify-items: center;
+    gap: 24px;
+    max-width: 30rem;
+    margin-inline: auto;
+  }
+
+  .hero__lead--full {
+    display: none;
+  }
+
+  .hero__lead--short {
+    display: block;
+    font-size: var(--step-lead);
+    line-height: 1.6;
+  }
+
+  .hero .actions,
+  .close .actions {
+    justify-content: center;
+  }
+
+  /* ---- Rows of cards you swipe ---- */
+  .rail {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    grid-auto-columns: min(84%, 340px);
+    gap: 14px;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 6px var(--gutter) 10px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rail > li,
+  .pillars__grid.rail > li,
+  .pillars__grid.rail > li:nth-child(n + 4),
+  .pillars__grid.rail > li:last-child {
+    grid-column: auto;
+    scroll-snap-align: start;
+  }
+
+  .rail-dots {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    margin-top: 10px;
+  }
+
+  /* A 24px target around an 8px diamond. */
+  .rail-dots__dot {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+
+  .rail-dots__dot::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    rotate: 45deg;
+    border: 1px solid currentColor;
+    transition:
+      background-color 160ms ease,
+      scale 160ms ease;
+  }
+
+  .rail-dots__dot[aria-current="true"]::before {
+    background: currentColor;
+    scale: 1.25;
+  }
+
+  .mission .rail-dots,
+  .programmes .rail-dots {
+    color: #c99600;
+  }
+
+  .pillars .rail-dots {
+    color: var(--heliodor);
+  }
+
+  /* ---- Culture: the guild's code, one column on phones ---- */
+  .value {
+    padding: 13px 0;
+  }
+
+  .value__text {
+    font-size: 0.9375rem;
+  }
+
+  /* ---- Past gatherings: the latest few, then a button ---- */
+  .events__past[data-open="false"] .events__year:not(:first-of-type),
+  .events__past[data-open="false"] .events__year .event-list > li:nth-child(n + 5) {
+    display: none;
+  }
+
+  .events__toggle {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    padding: 14px 18px;
+    border: 1px solid rgb(255 205 3 / 0.45);
+    background: var(--night);
+    color: var(--heliodor);
+    font: 600 var(--step-small) / 1.2 var(--f-sans);
+    cursor: pointer;
+  }
+
+  /* ---- Send-off: centred, with the same horizon under it ---- */
+  .close {
+    --horizon: min(136vw, 780px);
+    padding-bottom: calc(var(--horizon) * 0.6 + clamp(16px, 4vw, 40px));
+  }
+
+  .close .close__compass {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 50%;
+    width: var(--horizon);
+    margin: 0;
+    translate: -50% 40%;
+  }
+
+  .close__text {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .close .close__title {
+    font-size: clamp(2.25rem, 9.4vw, 4rem);
+  }
+
+  .close__flourish {
+    margin-left: 0;
+  }
+
+  .close__follow {
+    justify-content: center;
+  }
+
+  .close__social {
+    justify-content: center;
+  }
+
+  /* ---- The join bar ---- */
+  .join-dock {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom));
+    border-top: 1px solid rgb(255 205 3 / 0.35);
+    background: var(--night-deep);
+    translate: 0 100%;
+    visibility: hidden;
+    transition:
+      translate 240ms var(--ease-out),
+      visibility 0s linear 240ms;
+  }
+
+  .join-dock[data-show="true"] {
+    translate: 0 0;
+    visibility: visible;
+    transition:
+      translate 240ms var(--ease-out),
+      visibility 0s;
+  }
+
+  .join-dock__text {
+    display: grid;
+    flex: 1;
+    min-width: 0;
+    gap: 2px;
+  }
+
+  .join-dock__label {
+    font-size: var(--step-xs);
+    color: rgb(253 254 254 / 0.7);
+  }
+
+  .join-dock__title {
+    overflow: hidden;
+    font-family: var(--f-serif);
+    font-size: var(--step-small);
+    font-weight: 600;
+    color: var(--white);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .join-dock__button {
+    flex: none;
+    min-height: 44px;
+  }
+}
+
+/* Phones: one card per view, full-width buttons, the code in one column. */
+@media (max-width: 560px) {
+  .culture__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .value:nth-child(2) {
+    border-top: 1px solid rgb(255 205 3 / 0.18);
+  }
+
+  .hero .actions,
+  .close .actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .hero .actions .button,
+  .close .actions .button {
+    justify-content: center;
+  }
+}
+
+/* Portrait tablets: two cards per view, with the next peeking in. */
+@media (min-width: 561px) and (max-width: 860px) {
+  .rail {
+    grid-auto-columns: calc(47% - 7px);
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .join-dock,
+  .join-dock[data-show="true"] {
+    transition: none;
   }
 }

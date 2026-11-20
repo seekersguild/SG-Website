@@ -2,7 +2,9 @@ import Image from "next/image";
 
 import { getEvents, type GuildEvent } from "../content/events";
 import { LUMA_URL } from "../content/site";
+import { JoinDock } from "./JoinDock";
 import { Ornate } from "./Ornament";
+import { PastEvents } from "./PastEvents";
 
 const tz = "Asia/Manila";
 const fmt = (iso: string, opts: Intl.DateTimeFormatOptions) => new Intl.DateTimeFormat("en-PH", { ...opts, timeZone: tz }).format(new Date(iso));
@@ -55,6 +57,7 @@ export async function Events() {
         </div>
       ) : null}
 
+      <PastEvents total={previous.length}>
       {years.map((y) => (
         <section className="events__year" key={y} aria-label={`Events in ${y}`} data-reveal-item>
           <h3 className="events__year-title">{y}</h3>
@@ -84,6 +87,7 @@ export async function Events() {
           </ul>
         </section>
       ))}
+      </PastEvents>
 
       <p className="events__more" data-reveal-item>
         <a className="text-link" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
@@ -91,5 +95,17 @@ export async function Events() {
         </a>
       </p>
     </>
+  );
+}
+
+/* The phone and tablet join bar, filled from Luma: the next gathering when
+   one is set, otherwise a pointer to Luma. */
+export async function JoinDockFromLuma() {
+  const { upcoming } = await getEvents();
+  const next = upcoming[0];
+  return next ? (
+    <JoinDock href={next.url} title={next.title} when={fmt(next.start, { weekday: "short", month: "short", day: "numeric" })} />
+  ) : (
+    <JoinDock href={LUMA_URL} title="Posted on Luma as they are set" when={null} />
   );
 }

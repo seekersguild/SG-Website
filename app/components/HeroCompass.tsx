@@ -51,7 +51,7 @@ export function HeroCompass({ className = "" }: { className?: string }) {
 
   return (
     <div className={`compass ${className}`} ref={wrap} aria-hidden="true">
-      <Emblem className="emblem--hero" needle={32} />
+      <Emblem id="hero-em" className="emblem--hero" needle={32} />
     </div>
   );
 }
