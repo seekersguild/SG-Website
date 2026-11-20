@@ -206,7 +206,7 @@ p {
 .heading {
   font-family: var(--f-guild);
   font-size: var(--step-head);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.15;
   letter-spacing: 0.02em;
   text-wrap: balance;
@@ -719,7 +719,7 @@ p {
   padding: 6px 0;
   font-family: var(--f-guild);
   font-size: clamp(1.625rem, 7vw, 2.25rem);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.25;
 }
 
@@ -1037,7 +1037,7 @@ p {
 .hero__title {
   font-family: var(--f-guild);
   font-size: var(--step-display);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.08;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -1773,14 +1773,16 @@ p {
 .close__text {
   grid-column: 2;
   display: grid;
+  /* the title sizes itself to this column, so it always stays two lines */
+  container-type: inline-size;
   justify-items: start;
   gap: 24px;
 }
 
 .close__title {
   font-family: var(--f-guild);
-  font-size: clamp(2.5rem, 1.4rem + 3.2vw, 4.5rem);
-  font-weight: 400;
+  font-size: min(clamp(2.5rem, 1.4rem + 3.2vw, 4.5rem), 10.4cqi);
+  font-weight: 700;
   line-height: 1.05;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -1788,6 +1790,7 @@ p {
 
 .close__title span {
   display: block;
+  white-space: nowrap;
 }
 
 .close__flourish {
@@ -2302,7 +2305,7 @@ p {
   }
 
   .close .close__title {
-    font-size: clamp(2.25rem, 9.4vw, 4rem);
+    font-size: min(clamp(2.25rem, 9.4vw, 4rem), 10.4cqi);
   }
 
   .close__flourish {
