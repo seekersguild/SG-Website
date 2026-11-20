@@ -1,10 +1,12 @@
 import type { CSSProperties } from "react";
 
-import { Events } from "./components/Events";
+import { Emblem } from "./components/Emblem";
+import { Events, JoinDockFromLuma } from "./components/Events";
 import { HeroCompass } from "./components/HeroCompass";
 import { StructuredData } from "./components/StructuredData";
 import { MagicCircle, Motes } from "./components/MagicCircle";
 import { Flourish, Ornate } from "./components/Ornament";
+import { RailDots } from "./components/Rail";
 import { brand, culture, faqs, joinSteps, LUMA_URL, mission, pillars, programmes, socialLinks, vision } from "./content/site";
 
 const numerals = ["I", "II", "III", "IV", "V"];
@@ -100,7 +102,9 @@ export default function Home() {
             </span>
           </h1>
           <div className="hero__foot">
-            <p className="hero__lead">
+            {/* Phones and portrait tablets read the short line; the full one is for wider screens. */}
+            <p className="hero__lead hero__lead--short">A student-led community in the Philippines for curious and driven minds, especially from the provinces.</p>
+            <p className="hero__lead hero__lead--full">
               Seekers Guild is a student-led community in the Philippines, founded in April 2025. We empower curious and driven minds,
               especially from the provinces, through collaboration, real-world experiences and opportunities beyond the classroom.
             </p>
@@ -162,7 +166,7 @@ export default function Home() {
         <Paint which="light" />
         <div className="wrap">
           <SectionHead id="mission-title" title="Our mission" />
-          <ul className="mission__list">
+          <ul className="mission__list rail" id="mission-rail">
             {mission.map((item, index) => (
               <li key={item.lead} data-reveal-item>
                 <Ornate className="ornate--light mission__card">
@@ -175,6 +179,7 @@ export default function Home() {
               </li>
             ))}
           </ul>
+          <RailDots target="mission-rail" count={mission.length} label="Mission cards" />
         </div>
       </section>
 
@@ -184,7 +189,7 @@ export default function Home() {
         <span className="sky sky--stars" aria-hidden="true" />
         <div className="wrap">
           <SectionHead id="pillars-title" title="Five pillars" tone="dark" />
-          <ul className="pillars__grid">
+          <ul className="pillars__grid rail" id="pillars-rail">
             {pillars.map((pillar, index) => (
               <li key={pillar.title} data-reveal-item>
                 <Ornate className="ornate--dark pillar">
@@ -197,6 +202,7 @@ export default function Home() {
               </li>
             ))}
           </ul>
+          <RailDots target="pillars-rail" count={pillars.length} label="Pillar cards" />
         </div>
       </section>
 
@@ -206,14 +212,18 @@ export default function Home() {
         <span className="sky sky--stars" aria-hidden="true" />
         <div className="wrap">
           <SectionHead id="culture-title" title="Our culture" tone="dark" />
-          <ul className="culture__grid">
-            {culture.map((value) => (
-              <li key={value} className="value" data-reveal-item>
-                <span className="value__gem" aria-hidden="true" />
-                <span className="value__text">{value}</span>
-              </li>
-            ))}
-          </ul>
+          {/* On phones and tablets the frame shows and the values read as one
+              list; on desktop the frame steps aside and they sit in a grid. */}
+          <Ornate className="ornate--dark culture__panel">
+            <ul className="culture__grid">
+              {culture.map((value) => (
+                <li key={value} className="value" data-reveal-item>
+                  <span className="value__gem" aria-hidden="true" />
+                  <span className="value__text">{value}</span>
+                </li>
+              ))}
+            </ul>
+          </Ornate>
         </div>
       </section>
 
@@ -222,7 +232,7 @@ export default function Home() {
         <Paint which="light" />
         <div className="wrap">
           <SectionHead id="programmes-title" title="What we do" />
-          <ul className="programmes__grid">
+          <ul className="programmes__grid rail" id="programmes-rail">
             {programmes.map((programme) => (
               <li key={programme.name} data-reveal-item>
                 <Ornate className="ornate--light programme">
@@ -234,6 +244,7 @@ export default function Home() {
               </li>
             ))}
           </ul>
+          <RailDots target="programmes-rail" count={programmes.length} label="Programme cards" />
         </div>
       </section>
 
@@ -304,23 +315,49 @@ export default function Home() {
       <section className="band band--night band--cut band--cut-left close" aria-labelledby="close-title" data-reveal>
         <Paint which="dark" />
         <span className="sky" aria-hidden="true" />
-        <MagicCircle className="close__circle" />
         <Motes count={12} />
+        {/* The opening's compass returns, larger and cropped by the edge, its
+            needle swung round to point at the way on. */}
+        <div className="close__compass" aria-hidden="true">
+          <MagicCircle className="close__circle" />
+          <Emblem id="close-em" className="close__emblem" needle={78} />
+        </div>
         <div className="wrap close__inner">
-          <h2 className="close__title gold-text" id="close-title" data-reveal-item>
-            Onward, fellow seeker
-          </h2>
-          <Flourish className="close__flourish" />
-          <p className="close__lead" data-reveal-item>
-            {brand.motto} Gatherings go up on Luma as they are set; come to the next one and bring someone from another school.
-          </p>
-          <div className="actions" data-reveal-item>
-            <a className="button button--gold" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
-              See upcoming gatherings
-            </a>
+          <div className="close__text">
+            <h2 className="close__title gold-text" id="close-title" data-reveal-item>
+              <span>Onward,</span> <span>fellow seeker</span>
+            </h2>
+            <Flourish className="close__flourish" />
+            <p className="close__lead" data-reveal-item>
+              {brand.motto} Gatherings go up on Luma as they are set; come to the next one and bring someone from another school.
+            </p>
+            <div className="actions" data-reveal-item>
+              <a className="button button--gold" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
+                See upcoming gatherings
+              </a>
+              <a className="button button--line" href="#join">
+                How to join
+              </a>
+            </div>
+            <div className="close__follow" data-reveal-item>
+              <span className="close__follow-label">Follow the guild</span>
+              <ul className="close__social">
+                {socialLinks
+                  .filter((link) => link.label !== "Luma")
+                  .map((link) => (
+                    <li key={link.label}>
+                      <a href={link.href} target="_blank" rel="noreferrer noopener">
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
+
+      <JoinDockFromLuma />
     </>
   );
 }
