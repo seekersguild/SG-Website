@@ -18,19 +18,17 @@ export function SiteHeader() {
   const menuButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    let frame = 0;
+    let wasSolid = false;
     function onScroll() {
-      if (frame) return;
-      frame = requestAnimationFrame(() => {
-        frame = 0;
-        setSolid(window.scrollY > 24);
-      });
+      const next = window.scrollY > 24;
+      if (next === wasSolid) return;
+      wasSolid = next;
+      setSolid(next);
     }
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
-      cancelAnimationFrame(frame);
     };
   }, []);
 
@@ -52,6 +50,13 @@ export function SiteHeader() {
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const wide = window.matchMedia("(min-width: 1101px)");
+    const onChange = () => { if (wide.matches) setMenuOpen(false); };
+    wide.addEventListener("change", onChange);
+    return () => wide.removeEventListener("change", onChange);
+  }, []);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -99,11 +104,15 @@ export function SiteHeader() {
           ref={menuButton}
           className="menu-toggle"
           type="button"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
           onClick={() => setMenuOpen((open) => !open)}
         >
-          {menuOpen ? "Close" : "Menu"}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" aria-hidden="true">
+            <path className="menu-toggle__top" d="M4 8h16" />
+            <path className="menu-toggle__bottom" d="M4 16h16" />
+          </svg>
         </button>
       </div>
 

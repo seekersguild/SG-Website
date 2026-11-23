@@ -50,7 +50,7 @@ export async function Events() {
   return (
     <>
       {upcoming.length ? (
-        <div className="events__next" data-reveal-item>
+        <div className="events__next">
           {upcoming.map((event) => (
             <Upcoming key={event.id} event={event} />
           ))}
@@ -59,7 +59,7 @@ export async function Events() {
 
       <PastEvents total={previous.length}>
       {years.map((y) => (
-        <section className="events__year" key={y} aria-label={`Events in ${y}`} data-reveal-item>
+        <section className="events__year" key={y} aria-label={`Events in ${y}`}>
           <h3 className="events__year-title">{y}</h3>
           <ul className="event-list">
             {previous
@@ -89,7 +89,7 @@ export async function Events() {
       ))}
       </PastEvents>
 
-      <p className="events__more" data-reveal-item>
+      <p className="events__more">
         <a className="text-link" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
           See every gathering on Luma
         </a>

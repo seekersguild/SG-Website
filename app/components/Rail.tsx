@@ -28,8 +28,8 @@ export function RailDots({ target, count, label }: { target: string; count: numb
     const rail = document.getElementById(target);
     const item = rail?.children[index] as HTMLElement | undefined;
     if (!rail || !item) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    rail.scrollTo({ left: item.offsetLeft - rail.offsetLeft - parseFloat(getComputedStyle(rail).paddingLeft), behavior: reduce ? "auto" : "smooth" });
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+    rail.scrollTo({ left: item.offsetLeft - rail.offsetLeft - parseFloat(getComputedStyle(rail).paddingLeft), behavior });
   };
 
   return (

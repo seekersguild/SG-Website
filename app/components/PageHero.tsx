@@ -1,13 +1,13 @@
 import type { ReactNode } from "react";
 
-import { HeroCompass } from "./HeroCompass";
+import { MagneticCompass } from "./MagneticCompass";
 
 /* A plain opening for secondary pages (the 404): the title in the guild's
    gold, one sentence, and the compass. */
 export function PageHero({ title, intro, children }: { title: string; intro: ReactNode; kicker?: string; children?: ReactNode }) {
   return (
     <section className="band band--deep hero hero--page" aria-labelledby="page-title">
-      <HeroCompass className="hero__compass" />
+      <MagneticCompass id="page-em" className="hero__compass" emblemClassName="emblem--hero" />
       <div className="wrap hero__inner">
         <h1 className="hero__title lines" id="page-title">
           <span className="line">

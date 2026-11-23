@@ -61,6 +61,14 @@
   /* Motion */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --duration-press: 140ms;
+  --duration-feedback: 160ms;
+  --duration-menu: 220ms;
+  --duration-compass-align: 1600ms;
+  --duration-compass-settle: 2400ms;
+  /* Mass 1, stiffness 100, damping 10; 81 samples over 1.2 seconds.
+     The opening stretches this curve over 2.4 seconds for a slower pull. */
+  --ease-compass: linear(0, 0.01069, 0.04052, 0.0862, 0.14458, 0.21267, 0.28769, 0.36712, 0.44868, 0.53038, 0.61049, 0.68757, 0.76043, 0.82813, 0.88999, 0.94552, 0.99446, 1.03669, 1.07228, 1.1014, 1.12435, 1.14152, 1.15334, 1.16031, 1.16297, 1.16186, 1.15753, 1.15052, 1.14135, 1.1305, 1.11845, 1.1056, 1.09234, 1.079, 1.06588, 1.0532, 1.04119, 1.02998, 1.01972, 1.01047, 1.00229, 0.9952, 0.9892, 0.98426, 0.98034, 0.97738, 0.97529, 0.97402, 0.97346, 0.97354, 0.97415, 0.97522, 0.97666, 0.97838, 0.98032, 0.98239, 0.98455, 0.98672, 0.98887, 0.99095, 0.99293, 0.99479, 0.99649, 0.99803, 0.99939, 1.00058, 1.00159, 1.00243, 1.0031, 1.00361, 1.00398, 1.00421, 1.00432, 1.00432, 1.00424, 1.00408, 1.00385, 1.00358, 1.00327, 1.00293, 1);
 }
 
 /* ---------- Base ---------- */
@@ -75,12 +83,6 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   background: var(--night-deep);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
 }
 
 html.menu-lock {
@@ -178,7 +180,6 @@ main:focus {
   color: var(--obsidian);
   font-weight: 700;
   transform: translateY(-160%);
-  transition: transform 200ms var(--ease-out);
 }
 
 .skip-link:focus-visible {
@@ -341,6 +342,36 @@ p {
   isolation: isolate;
 }
 
+/* Still paper folds sit above the paintings and below every reading surface.
+   One small shared vector; no filters, blending or animation work. */
+.band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url("/images/origami-folds.svg") 17% 31% / 960px 800px repeat;
+  opacity: 0.08;
+}
+
+.band:nth-of-type(even)::before {
+  background-position: 73% 67%;
+}
+
+.band:nth-of-type(3n)::before {
+  background-position: 41% 13%;
+}
+
+@media (max-width: 860px) {
+  .band::before {
+    background-size: 720px 600px;
+  }
+}
+
+.band--sky::before {
+  opacity: 0.06;
+}
+
 .band--night {
   color: var(--on-dark);
   background: var(--night);
@@ -361,11 +392,7 @@ p {
   background: var(--moonshine);
 }
 
-/* Paintings, laid in as each band's atmosphere.
-   .paint fills the section and carries the veil (::after); .paint__img is
-   pinned to the screen (sticky, one screen tall), so a painting is never
-   stretched over a tall section. Each screen gets a file sized for its width
-   and pixel density, so nothing is upscaled. */
+/* Static paintings fill their sections and scroll with the document. */
 .paint {
   position: absolute;
   inset: 0;
@@ -374,12 +401,11 @@ p {
 }
 
 .paint__img {
-  position: sticky;
-  top: 0;
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
-  height: 100vh;
-  height: 100lvh;
+  height: 100%;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -574,16 +600,8 @@ p {
   letter-spacing: 0.01em;
   line-height: 1.2;
   text-align: center;
-  transition:
-    transform 160ms var(--ease-out),
-    background-color 180ms ease,
-    color 180ms ease,
-    border-color 180ms ease;
 }
 
-.button:active {
-  transform: scale(0.97);
-}
 
 .button--gold {
   background: var(--heliodor);
@@ -635,14 +653,11 @@ p {
   gap: 36px;
   height: var(--header-h);
   padding-inline: var(--gutter);
+  background: var(--night-deep);
   border-bottom: 1px solid transparent;
-  transition:
-    background-color 240ms ease,
-    border-color 240ms ease;
 }
 
 .site-header[data-solid] .site-header__bar {
-  background: rgb(2 13 36 / 0.94);
   border-bottom-color: rgb(255 205 3 / 0.22);
 }
 
@@ -679,7 +694,6 @@ p {
   font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--on-dark-2);
-  transition: color 180ms ease;
 }
 
 .site-nav a::after {
@@ -690,8 +704,8 @@ p {
   width: 6px;
   height: 6px;
   background: var(--heliodor);
-  transform: translateX(-50%) rotate(45deg) scale(0);
-  transition: transform 240ms var(--ease-out);
+  opacity: 0;
+  transform: translateX(-50%) rotate(45deg) scale(0.85);
 }
 
 .site-nav a[aria-current] {
@@ -699,6 +713,7 @@ p {
 }
 
 .site-nav a[aria-current]::after {
+  opacity: 1;
   transform: translateX(-50%) rotate(45deg) scale(1);
 }
 
@@ -716,12 +731,39 @@ p {
 
 .menu-toggle {
   display: none;
+  flex: 0 0 44px;
   margin-left: auto;
-  min-height: 40px;
-  padding: 0 16px;
-  border: 1px solid var(--heliodor);
-  font-size: var(--step-small);
-  font-weight: 600;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  color: var(--on-dark);
+}
+
+.menu-toggle:active {
+  color: var(--heliodor);
+}
+
+.menu-toggle__top {
+  transform-origin: 12px 8px;
+}
+
+.menu-toggle__bottom {
+  transform-origin: 12px 16px;
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle__top {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle__bottom {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .menu-toggle:hover {
+    color: var(--heliodor);
+  }
 }
 
 .mobile-menu {
@@ -735,17 +777,14 @@ p {
   padding: calc(var(--header-h) + 40px) var(--gutter) 32px;
   background: var(--night-deep);
   overflow-y: auto;
+  overscroll-behavior: contain;
   opacity: 0;
   visibility: hidden;
-  transition:
-    opacity 240ms var(--ease-out),
-    visibility 0s linear 240ms;
 }
 
 .mobile-menu[data-open] {
   opacity: 1;
   visibility: visible;
-  transition: opacity 240ms var(--ease-out);
 }
 
 .mobile-menu ul {
@@ -766,25 +805,6 @@ p {
   color: var(--heliodor);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .mobile-menu li {
-    transform: translateY(12px);
-    opacity: 0;
-    transition:
-      transform 300ms var(--ease-out),
-      opacity 300ms var(--ease-out);
-  }
-
-  .mobile-menu[data-open] li {
-    transform: none;
-    opacity: 1;
-  }
-
-  .mobile-menu[data-open] li:nth-child(2) { transition-delay: 50ms; }
-  .mobile-menu[data-open] li:nth-child(3) { transition-delay: 100ms; }
-  .mobile-menu[data-open] li:nth-child(4) { transition-delay: 150ms; }
-}
-
 @media (max-width: 1100px) {
   .site-nav,
   .site-header__action {
@@ -794,6 +814,7 @@ p {
   .menu-toggle {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
   }
 }
 
@@ -805,14 +826,44 @@ p {
 
 /* ---------- The compass ---------- */
 
+.compass > .emblem {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .emblem {
+  position: relative;
+  aspect-ratio: 1;
+  /* The logo's white rose and Heliodor arcs, with soft ivory highlights
+     and blue facet shadows to retain the compass's sculpted depth. */
+  --compass-gold: var(--heliodor);
+  --compass-gold-light: var(--heliodor-light);
+  --compass-gold-shade: var(--heliodor-deep);
+  --compass-gold-mid: #ffd52e;
+  --compass-rose-light: #fffdf5;
+  --compass-rose-mid: #edf3f2;
+  --compass-rose-shade: #c1d8e5;
+  --compass-rose-deep: #97b8d0;
+  --compass-minor-light: #e7eff2;
+  --compass-minor-mid: #cedde7;
+  --compass-minor-shade: #a2bfd2;
+  --compass-minor-deep: #7c9fb9;
   overflow: visible;
 }
 
-.emblem g,
-.emblem .em-needle {
-  transform-box: view-box;
-  transform-origin: 300px 300px;
+.em-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 50%;
+}
+
+.em-layer > svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
 
 .em-line {
@@ -839,8 +890,8 @@ p {
   display: none;
 }
 
-/* Low-poly facets: flat tones of the brand golds and the star's whites and
-   moonshine blues, stepped so each facet reads as its own plane. */
+/* Low-poly facets: bright gold bands around an ivory-and-blue rose.
+   The quieter diagonal points keep the long cardinal points in front. */
 /* Facets are stroked in their own fill to close anti-aliasing seams. */
 .em-facet,
 .em-point polygon {
@@ -848,52 +899,56 @@ p {
   stroke-linejoin: round;
 }
 
-.em-facet.f1 { fill: var(--heliodor); stroke: var(--heliodor); }
-.em-facet.f2 { fill: var(--heliodor-light); stroke: var(--heliodor-light); }
-.em-facet.f3 { fill: var(--heliodor-deep); stroke: var(--heliodor-deep); }
-.em-facet.f4 { fill: #ffd52e; stroke: #ffd52e; }
+.em-facet.f1 { fill: var(--compass-gold); stroke: var(--compass-gold); }
+.em-facet.f2 { fill: var(--compass-gold-light); stroke: var(--compass-gold-light); }
+.em-facet.f3 { fill: var(--compass-gold-shade); stroke: var(--compass-gold-shade); }
+.em-facet.f4 { fill: var(--compass-gold-mid); stroke: var(--compass-gold-mid); }
 
-.em-point .s1 { fill: var(--white); stroke: var(--white); }
-.em-point .s2 { fill: var(--moonshine); stroke: var(--moonshine); }
-.em-point .s3 { fill: #b9dcef; stroke: #b9dcef; }
-.em-point .s4 { fill: #8cbcd9; stroke: #8cbcd9; }
+.em-point .s1 { fill: var(--compass-rose-light); stroke: var(--compass-rose-light); }
+.em-point .s2 { fill: var(--compass-rose-mid); stroke: var(--compass-rose-mid); }
+.em-point .s3 { fill: var(--compass-rose-shade); stroke: var(--compass-rose-shade); }
+.em-point .s4 { fill: var(--compass-rose-deep); stroke: var(--compass-rose-deep); }
 
-.em-point--minor .s1 { fill: #c9e4f2; stroke: #c9e4f2; }
-.em-point--minor .s2 { fill: #a9d0e6; stroke: #a9d0e6; }
-.em-point--minor .s3 { fill: #6f9fc4; stroke: #6f9fc4; }
-.em-point--minor .s4 { fill: #4f7fab; stroke: #4f7fab; }
+.em-point--minor .s1 { fill: var(--compass-minor-light); stroke: var(--compass-minor-light); }
+.em-point--minor .s2 { fill: var(--compass-minor-mid); stroke: var(--compass-minor-mid); }
+.em-point--minor .s3 { fill: var(--compass-minor-shade); stroke: var(--compass-minor-shade); }
+.em-point--minor .s4 { fill: var(--compass-minor-deep); stroke: var(--compass-minor-deep); }
 
 .em-hub {
   fill: var(--sapphire-deep);
-  stroke: var(--heliodor);
+  stroke: var(--compass-gold-mid);
   stroke-width: 5;
   stroke-linejoin: miter;
 }
 
 .em-hub__core {
-  fill: var(--heliodor);
+  fill: var(--compass-gold-light);
 }
 
 .em-needle {
   transform: rotate(var(--needle, 0deg));
 }
 
-.em-needle__n1 { fill: var(--heliodor-light); }
-.em-needle__n2 { fill: var(--heliodor-deep); }
+.em-needle__n1 { fill: var(--compass-gold-light); }
+.em-needle__n2 { fill: var(--compass-gold-shade); }
 .em-needle__s1 { fill: var(--sapphire-deep); }
 .em-needle__s2 { fill: var(--night-deep); }
 
 .em-needle__hub {
-  fill: var(--heliodor);
+  fill: var(--compass-gold-light);
 }
 
 /* The circle of light around it. */
 .magic-circle {
   position: relative;
   aspect-ratio: 1;
+  /* Skip offscreen drawing without pausing or restarting animation clocks. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
 }
 
-/* Each layer rotates whole, so the GPU moves it instead of redrawing it. */
+/* Only the two moving layers promote and rotate their pre-rendered artwork.
+   The fixed compass card keeps live SVG lettering. */
 .mc-layer {
   position: absolute;
   inset: 0;
@@ -901,10 +956,18 @@ p {
   height: 100%;
   overflow: visible;
   fill: none;
+  transform-origin: 50% 50%;
 }
 
-/* Each facet is stroked in its own fill, which closes the hairline seams
-   anti-aliasing leaves between neighbouring polygons. */
+.mc-layer > svg,
+.mc-layer > img {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Source-vector styles are also read by scripts/bake-compass-rings.cjs.
+   Each facet's stroke closes hairline seams between neighbouring polygons. */
 .mc-facet {
   stroke-width: 0.8;
   stroke-linejoin: round;
@@ -1009,8 +1072,7 @@ p {
   pointer-events: none;
 }
 
-/* Two tiled layers of dots; each slides up by exactly one tile and loops,
-   so the drift is seamless and the GPU moves two layers, nothing more. */
+/* Two static tiled layers of dots. */
 .motes__layer {
   position: absolute;
   inset: 0 0 auto;
@@ -1520,7 +1582,6 @@ p {
   gap: clamp(14px, 2vw, 24px);
   padding: 14px 8px;
   margin-inline: -8px;
-  transition: background-color 180ms ease;
 }
 
 .event-row__thumb {
@@ -1573,7 +1634,6 @@ p {
   fill: none;
   stroke: var(--heliodor);
   stroke-width: 1.8;
-  transition: transform 240ms var(--ease-out);
 }
 
 .events__more {
@@ -1592,9 +1652,6 @@ p {
     background: rgb(253 254 254 / 0.05);
   }
 
-  .event-row:hover .event-row__arrow {
-    transform: translate(3px, -3px);
-  }
 }
 
 @media (max-width: 640px) {
@@ -1710,7 +1767,6 @@ p {
   font-weight: 600;
   line-height: 1.4;
   color: var(--sapphire-deep);
-  transition: color 180ms ease;
 }
 
 .faq__q::-webkit-details-marker {
@@ -1735,7 +1791,6 @@ p {
   height: 1.5px;
   background: var(--gold-ink);
   translate: 0 -50%;
-  transition: transform 240ms var(--ease-out);
 }
 
 .faq__icon::after {
@@ -1756,9 +1811,6 @@ p {
 
 .faq__item::details-content {
   opacity: 0;
-  transition:
-    opacity 220ms var(--ease-out),
-    content-visibility 220ms allow-discrete;
 }
 
 .faq__item[open]::details-content {
@@ -1786,8 +1838,7 @@ p {
   display: flex;
   align-items: center;
   min-height: clamp(640px, 86vh, 820px);
-  /* clip, not hidden: hidden would make this a scroll container and pin the
-     sticky painting below the padding instead of to the screen. */
+  /* Clip the oversized compass without creating a scroll container. */
   overflow: clip;
 }
 
@@ -1888,7 +1939,6 @@ p {
   text-decoration: underline;
   text-decoration-color: rgb(255 205 3 / 0.5);
   text-underline-offset: 5px;
-  transition: color 160ms ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1994,9 +2044,6 @@ p {
   text-decoration: underline;
   text-decoration-color: transparent;
   text-underline-offset: 0.25em;
-  transition:
-    color 180ms ease,
-    text-decoration-color 180ms ease;
 }
 
 .footer__legal {
@@ -2029,93 +2076,223 @@ p {
   }
 }
 
-/* ---------- Motion ---------- */
+/* ---------- Finding our bearing ---------- */
 
-@keyframes line-up {
-  to {
-    transform: none;
-  }
+.guild-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: max(24px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+  background: var(--night-deep);
+  color: var(--on-dark);
+  text-align: center;
 }
 
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
+.guild-loader__instrument {
+  width: min(72vw, 336px, 64svh);
+  aspect-ratio: 1;
 }
 
-@keyframes appear {
-  from {
-    opacity: 0;
-    scale: 0.92;
-  }
+.guild-loader__compass {
+  width: 100%;
+}
+
+/* No script means no screen covering the content. Once ready, pointer and
+   keyboard access returns immediately; only the departing mark fades. */
+.guild-loader--initial {
+  display: none;
+  z-index: 101;
+}
+
+.js .guild-loader--initial {
+  display: grid;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.js[data-loading] .guild-loader--initial {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* ---------- Motion: compass opening and interaction feedback ---------- */
+
+@keyframes dial-in {
+  from { opacity: 0; transform: rotate(-8deg) scale(0.98); }
+}
+
+@keyframes arc-align {
+  from { opacity: 0; transform: rotate(-32deg) scale(0.96); }
+}
+
+@keyframes ring-align {
+  from { opacity: 0; transform: rotate(32deg) scale(0.96); }
+}
+
+@keyframes rose-align {
+  from { opacity: 0; transform: rotate(-8deg) scale(0.96); }
 }
 
 @keyframes needle-in {
-  from {
-    transform: rotate(-160deg);
-  }
-}
-
-@keyframes draw {
-  from {
-    stroke-dashoffset: 1;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
+  from { transform: rotate(-56deg); }
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes spin-back {
-  to {
-    transform: rotate(-360deg);
-  }
+  to { transform: rotate(-360deg); }
 }
 
-/* Each moves by exactly its layer's tile height (--tile), so the loop is seamless. */
-@keyframes drift-near {
-  to {
-    transform: translateY(-440px);
-  }
+@keyframes loading-arrive {
+  from { opacity: 0.35; transform: rotate(-8deg) scale(0.92); }
 }
 
-@keyframes drift-far {
-  to {
-    transform: translateY(-620px);
-  }
+@keyframes loading-rose {
+  from { opacity: 0.6; transform: rotate(-18deg) scale(0.9); }
+}
+
+/* Three magnetic bearings per revolution. The final angle is the first
+   plus 360 degrees, so the loop never snaps back to its starting point. */
+@keyframes loading-seek {
+  0% { transform: rotate(-56deg); }
+  40% { transform: rotate(32deg); }
+  80% { transform: rotate(212deg); }
+  100% { transform: rotate(304deg); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .js .lines [data-line] {
-    transform: translateY(108%);
-    animation: line-up 900ms var(--ease-out) forwards;
-    animation-delay: calc(var(--i, 0) * 120ms + 150ms);
+  .guild-loader__instrument {
+    animation: loading-arrive 800ms var(--ease-out) backwards;
   }
 
-  .js .hero__foot {
-    animation: fade-up 700ms var(--ease-out) 450ms both;
+  .guild-loader__compass .em-tick-layer {
+    animation: spin-back 14s linear infinite;
   }
 
-  .js .emblem--hero .em-draw {
-    stroke-dasharray: 1;
-    animation: draw 1400ms var(--ease-out) 250ms both;
+  .guild-loader__compass .em-arcs {
+    animation: spin 6400ms linear infinite;
+  }
+
+  .guild-loader__compass .em-ring {
+    animation: spin-back 4800ms linear infinite;
+  }
+
+  .guild-loader__compass .em-star {
+    animation: loading-rose 800ms var(--ease-out) backwards;
+  }
+
+  .guild-loader__compass .em-needle {
+    animation: loading-seek 4s var(--ease-out) infinite;
+  }
+
+  @supports (animation-timing-function: linear(0, 1)) {
+    .guild-loader__compass .em-needle {
+      animation-timing-function: var(--ease-compass);
+    }
+  }
+
+  .js .guild-loader--initial {
+    transition: opacity var(--duration-menu) var(--ease-out),
+      visibility 0s linear var(--duration-menu);
+  }
+
+  .js[data-loading] .guild-loader--initial {
+    transition: none;
+  }
+
+  /* Let the hero's opening begin when it can actually be seen. */
+  .js[data-loading] .emblem--hero .em-layer,
+  .js[data-loading] .mc-bezel,
+  .js[data-loading] .mc-scan {
+    animation-play-state: paused;
+  }
+
+  /* Only controls transition. Reading surfaces and paintings stay still. */
+  .button {
+    transition: transform var(--duration-press) var(--ease-out),
+      background-color var(--duration-feedback) ease,
+      color var(--duration-feedback) ease;
+  }
+
+  .button:active:not(:focus-visible) {
+    transform: scale(0.97);
+  }
+
+  .site-nav a {
+    transition: color var(--duration-feedback) ease;
+  }
+
+  .site-nav a::after {
+    transition: opacity var(--duration-feedback) ease,
+      transform var(--duration-feedback) var(--ease-out);
+  }
+
+  .menu-toggle__top,
+  .menu-toggle__bottom {
+    transition: transform 200ms var(--ease-out);
+  }
+
+  .mobile-menu {
+    transition: opacity var(--duration-feedback) var(--ease-out),
+      visibility 0s linear var(--duration-feedback);
+  }
+
+  .mobile-menu[data-open] {
+    transition-duration: var(--duration-menu), 0s;
+    transition-delay: 0s;
+  }
+
+  .faq__icon::after {
+    transition: transform var(--duration-feedback) var(--ease-out);
+  }
+
+  .rail-dots__dot::before {
+    transition: scale var(--duration-press) var(--ease-out);
+  }
+
+  /* Keyboard actions remain immediate, including Escape returning focus. */
+  .site-header:has(.menu-toggle:focus-visible) .mobile-menu,
+  .menu-toggle:focus-visible path,
+  .site-nav a:focus-visible::after,
+  .faq__q:focus-visible .faq__icon::after,
+  .rail-dots__dot:focus-visible::before {
+    transition: none;
+  }
+
+  /* The dial arrives, opposing rings align, then the needle finds its bearing.
+     These finite animations run in CSS; text and actions never wait for them. */
+  .js .emblem--hero .em-tick-layer {
+    animation: dial-in var(--duration-compass-align) var(--ease-out) backwards;
+  }
+
+  .js .emblem--hero .em-arcs {
+    animation: arc-align var(--duration-compass-align) var(--ease-out) 80ms backwards;
+  }
+
+  .js .emblem--hero .em-ring {
+    animation: ring-align var(--duration-compass-align) var(--ease-out) 160ms backwards;
   }
 
   .js .emblem--hero .em-star {
-    animation: appear 900ms var(--ease-out) 200ms both;
+    animation: rose-align var(--duration-compass-align) var(--ease-out) 240ms backwards;
   }
 
   .js .emblem--hero .em-needle {
-    animation: needle-in 1600ms var(--ease-out) 500ms backwards;
+    animation: needle-in var(--duration-compass-settle) var(--ease-out) 240ms backwards;
   }
 
-  /* Ambient: the bezel turns slowly, motes of light drift up. */
+  @supports (animation-timing-function: linear(0, 1)) {
+    .js .emblem--hero .em-needle {
+      animation-timing-function: var(--ease-compass);
+    }
+  }
+
   .mc-bezel {
     animation: spin 140s linear infinite;
     will-change: transform;
@@ -2126,44 +2303,15 @@ p {
     will-change: transform;
   }
 
-  .motes__layer--near {
-    animation: drift-near 18s linear infinite;
-  }
-
-  .motes__layer--far {
-    animation: drift-far 40s linear infinite;
-  }
-
-  /* The ambient motion stops off screen and while the page scrolls
-     (Ambient.tsx sets data-still and data-scrolling). */
-  [data-still] .mc-bezel,
-  [data-still] .mc-scan,
-  [data-still] .motes__layer,
-  [data-scrolling] .mc-bezel,
-  [data-scrolling] .mc-scan,
-  [data-scrolling] .motes__layer {
+  [data-ambient-hidden] .mc-bezel,
+  [data-ambient-hidden] .mc-scan {
     animation-play-state: paused;
-  }
-
-  .js [data-reveal] [data-reveal-item] {
-    opacity: 0;
-    transform: translateY(24px);
-    transition:
-      opacity 700ms var(--ease-out),
-      transform 700ms var(--ease-out);
-    transition-delay: var(--reveal-delay, 0ms);
-  }
-
-  .js [data-reveal].is-in [data-reveal-item] {
-    opacity: 1;
-    transform: none;
+    will-change: auto;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .motes {
-    display: none;
-  }
+  .motes { display: none; }
 }
 
 /* ==========================================================================
@@ -2294,9 +2442,6 @@ p {
     height: 7px;
     rotate: 45deg;
     border: 1px solid currentColor;
-    transition:
-      background-color 160ms ease,
-      scale 160ms ease;
   }
 
   .rail-dots__dot[aria-current="true"]::before {
@@ -2392,17 +2537,11 @@ p {
     background: var(--night-deep);
     translate: 0 100%;
     visibility: hidden;
-    transition:
-      translate 240ms var(--ease-out),
-      visibility 0s linear 240ms;
   }
 
   .join-dock[data-show="true"] {
     translate: 0 0;
     visibility: visible;
-    transition:
-      translate 240ms var(--ease-out),
-      visibility 0s;
   }
 
   .join-dock__text {
@@ -2462,11 +2601,4 @@ p {
     grid-auto-columns: calc(47% - 7px);
   }
 
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .join-dock,
-  .join-dock[data-show="true"] {
-    transition: none;
-  }
 }

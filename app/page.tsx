@@ -1,8 +1,5 @@
-import type { CSSProperties } from "react";
-
-import { Emblem } from "./components/Emblem";
 import { Events, JoinDockFromLuma } from "./components/Events";
-import { HeroCompass } from "./components/HeroCompass";
+import { MagneticCompass } from "./components/MagneticCompass";
 import { StructuredData } from "./components/StructuredData";
 import { MagicCircle, Motes } from "./components/MagicCircle";
 import { Flourish, Ornate } from "./components/Ornament";
@@ -13,7 +10,7 @@ const numerals = ["I", "II", "III", "IV", "V"];
 
 function SectionHead({ id, title, tone = "light" }: { id: string; title: string; tone?: "light" | "dark" }) {
   return (
-    <div className={`section-head section-head--${tone}`} data-reveal-item>
+    <div className={`section-head section-head--${tone}`}>
       <h2 className="heading" id={id}>
         {title}
       </h2>
@@ -22,9 +19,7 @@ function SectionHead({ id, title, tone = "light" }: { id: string; title: string;
   );
 }
 
-/* A painting laid into a section as its atmosphere. The inner layer
-   is pinned to the screen while the section scrolls over it, so the painting
-   only ever has to fill one screen and is never stretched to a tall section. */
+/* A static painting laid into each section as its atmosphere. */
 function Paint({ which }: { which: "dark" | "dark-water" | "light" }) {
   return (
     <span className={`paint paint--${which}`} aria-hidden="true">
@@ -80,23 +75,23 @@ export default function Home() {
       />
 
       {/* Opening: gold type on deep sapphire, the compass inside its circle of light. */}
-      <section className="band band--night hero" aria-labelledby="page-title" data-ambient>
+      <section className="band band--night hero" aria-labelledby="page-title">
         <Paint which="dark" />
         <span className="sky" aria-hidden="true" />
-        <div className="hero__stage" aria-hidden="true">
+        <div className="hero__stage" aria-hidden="true" data-compass-face>
           <MagicCircle className="hero__circle" />
-          <HeroCompass className="hero__compass" />
+          <MagneticCompass id="hero-em" className="hero__compass" emblemClassName="emblem--hero" />
         </div>
         <Motes />
         <div className="wrap hero__inner">
           <h1 className="hero__title lines" id="page-title">
             <span className="line">
-              <span data-line className="gold-text" style={{ "--i": 0 } as CSSProperties}>
+              <span data-line className="gold-text">
                 We seek those
               </span>
             </span>
             <span className="line">
-              <span data-line className="gold-text" style={{ "--i": 1 } as CSSProperties}>
+              <span data-line className="gold-text">
                 who seek
               </span>
             </span>
@@ -121,10 +116,10 @@ export default function Home() {
       </section>
 
       {/* Who we are: the Sigil of Seeking. */}
-      <section className="band band--sky band--cut who" id="who" aria-labelledby="who-title" data-reveal>
+      <section className="band band--sky band--cut who" id="who" aria-labelledby="who-title">
         <Paint which="light" />
         <div className="wrap who__grid">
-          <div data-reveal-item>
+          <div>
             <Ornate as="blockquote" className="ornate--light who__sigil">
               <p className="who__quote">&ldquo;{brand.sigil.quote}&rdquo;</p>
               <p className="who__answer">{brand.sigil.answer}</p>
@@ -133,10 +128,10 @@ export default function Home() {
           </div>
           <div className="who__copy">
             <SectionHead id="who-title" title="Who we are" />
-            <p className="lead" data-reveal-item>
+            <p className="lead">
               {brand.who}
             </p>
-            <p data-reveal-item>
+            <p>
               We welcome technology, business, creative and events enthusiasts from colleges and senior high schools, especially, but not
               limited to, those from the provinces. Membership is free. We seek those who seek.
             </p>
@@ -145,15 +140,15 @@ export default function Home() {
       </section>
 
       {/* Vision */}
-      <section className="band band--blue band--cut band--cut-left vision" id="vision" aria-labelledby="vision-title" data-reveal>
+      <section className="band band--blue band--cut band--cut-left vision" id="vision" aria-labelledby="vision-title">
         <Paint which="light" />
         <span className="sky sky--stars" aria-hidden="true" />
         <div className="wrap vision__inner">
           <SectionHead id="vision-title" title="Our vision" tone="dark" />
-          <p className="vision__statement" data-reveal-item>
+          <p className="vision__statement">
             {vision.lead}
           </p>
-          <div className="vision__body" data-reveal-item>
+          <div className="vision__body">
             {vision.body.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
@@ -162,13 +157,13 @@ export default function Home() {
       </section>
 
       {/* Mission */}
-      <section className="band band--sky band--cut mission" id="mission" aria-labelledby="mission-title" data-reveal>
+      <section className="band band--sky band--cut mission" id="mission" aria-labelledby="mission-title">
         <Paint which="light" />
         <div className="wrap">
           <SectionHead id="mission-title" title="Our mission" />
           <ul className="mission__list rail" id="mission-rail">
             {mission.map((item, index) => (
-              <li key={item.lead} data-reveal-item>
+              <li key={item.lead}>
                 <Ornate className="ornate--light mission__card">
                   <span className="medallion" aria-hidden="true">
                     {numerals[index]}
@@ -184,14 +179,14 @@ export default function Home() {
       </section>
 
       {/* Pillars */}
-      <section className="band band--night band--cut band--cut-left pillars" id="pillars" aria-labelledby="pillars-title" data-reveal>
+      <section className="band band--night band--cut band--cut-left pillars" id="pillars" aria-labelledby="pillars-title">
         <Paint which="dark-water" />
         <span className="sky sky--stars" aria-hidden="true" />
         <div className="wrap">
           <SectionHead id="pillars-title" title="Five pillars" tone="dark" />
           <ul className="pillars__grid rail" id="pillars-rail">
             {pillars.map((pillar, index) => (
-              <li key={pillar.title} data-reveal-item>
+              <li key={pillar.title}>
                 <Ornate className="ornate--dark pillar">
                   <span className="pillar__n" aria-hidden="true">
                     <span>{numerals[index]}</span>
@@ -207,7 +202,7 @@ export default function Home() {
       </section>
 
       {/* Culture */}
-      <section className="band band--royal band--cut culture" id="culture" aria-labelledby="culture-title" data-reveal>
+      <section className="band band--royal band--cut culture" id="culture" aria-labelledby="culture-title">
         <Paint which="light" />
         <span className="sky sky--stars" aria-hidden="true" />
         <div className="wrap">
@@ -217,7 +212,7 @@ export default function Home() {
           <Ornate className="ornate--dark culture__panel">
             <ul className="culture__grid">
               {culture.map((value) => (
-                <li key={value} className="value" data-reveal-item>
+                <li key={value} className="value">
                   <span className="value__gem" aria-hidden="true" />
                   <span className="value__text">{value}</span>
                 </li>
@@ -228,13 +223,13 @@ export default function Home() {
       </section>
 
       {/* Programmes */}
-      <section className="band band--sky band--cut band--cut-left programmes" id="programmes" aria-labelledby="programmes-title" data-reveal>
+      <section className="band band--sky band--cut band--cut-left programmes" id="programmes" aria-labelledby="programmes-title">
         <Paint which="light" />
         <div className="wrap">
           <SectionHead id="programmes-title" title="What we do" />
           <ul className="programmes__grid rail" id="programmes-rail">
             {programmes.map((programme) => (
-              <li key={programme.name} data-reveal-item>
+              <li key={programme.name}>
                 <Ornate className="ornate--light programme">
                   <p className="programme__cadence">{programme.cadence}</p>
                   <h3 className="programme__name">{programme.name}</h3>
@@ -249,12 +244,12 @@ export default function Home() {
       </section>
 
       {/* Events */}
-      <section className="band band--night band--cut events" id="events" aria-labelledby="events-title" data-reveal>
+      <section className="band band--night band--cut events" id="events" aria-labelledby="events-title">
         <Paint which="dark-water" />
         <span className="sky sky--stars" aria-hidden="true" />
         <div className="wrap">
           <SectionHead id="events-title" title="Gatherings" tone="dark" />
-          <p className="events__intro" data-reveal-item>
+          <p className="events__intro">
             Every gathering is posted on Luma. Here is what is coming up, and what the guild has hosted so far.
           </p>
           <Events />
@@ -262,17 +257,17 @@ export default function Home() {
       </section>
 
       {/* Join */}
-      <section className="band band--blue band--cut band--cut-left join" id="join" aria-labelledby="join-title" data-reveal>
+      <section className="band band--blue band--cut band--cut-left join" id="join" aria-labelledby="join-title">
         <Paint which="light" />
         <span className="sky sky--stars" aria-hidden="true" />
         <div className="wrap">
           <SectionHead id="join-title" title="How to join" tone="dark" />
-          <p className="join__intro" data-reveal-item>
+          <p className="join__intro">
             Membership is free. There is no fee and no donation; what the guild asks for is curiosity and contribution.
           </p>
           <ol className="join__steps">
             {joinSteps.map((step, index) => (
-              <li key={step.title} className="join__step" data-reveal-item>
+              <li key={step.title} className="join__step">
                 <span className="medallion" aria-hidden="true">
                   {numerals[index]}
                 </span>
@@ -281,7 +276,7 @@ export default function Home() {
               </li>
             ))}
           </ol>
-          <div className="actions join__actions" data-reveal-item>
+          <div className="actions join__actions">
             <a className="button button--gold" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
               Find the next Open Table
             </a>
@@ -293,11 +288,11 @@ export default function Home() {
       </section>
 
       {/* Questions */}
-      <section className="band band--sky band--cut faq" id="faq" aria-labelledby="faq-title" data-reveal>
+      <section className="band band--sky band--cut faq" id="faq" aria-labelledby="faq-title">
         <Paint which="light" />
         <div className="wrap faq__grid">
           <SectionHead id="faq-title" title="Questions" />
-          <div className="faq__list" data-reveal-item>
+          <div className="faq__list">
             {faqs.map((item) => (
               <details className="faq__item" key={item.q}>
                 <summary className="faq__q">
@@ -312,26 +307,26 @@ export default function Home() {
       </section>
 
       {/* Close */}
-      <section className="band band--night band--cut band--cut-left close" aria-labelledby="close-title" data-reveal data-ambient>
+      <section className="band band--night band--cut band--cut-left close" aria-labelledby="close-title">
         <Paint which="dark" />
         <span className="sky" aria-hidden="true" />
         <Motes className="motes--sparse" />
         {/* The opening's compass returns, larger and cropped by the edge, its
             needle swung round to point at the way on. */}
-        <div className="close__compass" aria-hidden="true">
+        <div className="close__compass" aria-hidden="true" data-compass-face>
           <MagicCircle className="close__circle" />
-          <Emblem id="close-em" className="close__emblem" needle={78} />
+          <MagneticCompass id="close-em" className="close__emblem" initialAngle={78} />
         </div>
         <div className="wrap close__inner">
           <div className="close__text">
-            <h2 className="close__title gold-text" id="close-title" data-reveal-item>
+            <h2 className="close__title gold-text" id="close-title">
               <span>Onward,</span> <span>fellow seeker</span>
             </h2>
             <Flourish className="close__flourish" />
-            <p className="close__lead" data-reveal-item>
+            <p className="close__lead">
               {brand.motto} Gatherings go up on Luma as they are set; come to the next one and bring someone from another school.
             </p>
-            <div className="actions" data-reveal-item>
+            <div className="actions">
               <a className="button button--gold" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
                 See upcoming gatherings
               </a>
@@ -339,7 +334,7 @@ export default function Home() {
                 How to join
               </a>
             </div>
-            <div className="close__follow" data-reveal-item>
+            <div className="close__follow">
               <span className="close__follow-label">Follow the guild</span>
               <ul className="close__social">
                 {socialLinks
