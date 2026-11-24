@@ -2796,7 +2796,6 @@ p {
      spring back instead of snapping. */
   .button,
   .site-nav a,
-  .wordmark,
   .close__social a,
   .footer__links a {
     translate: var(--mx, 0px) var(--my, 0px);
@@ -2822,13 +2821,11 @@ p {
       color var(--duration-feedback) ease;
   }
 
-  .wordmark,
   .close__social a,
   .footer__links a {
     transition: translate 900ms var(--ease-compass), color var(--duration-feedback) ease;
   }
 
-  .wordmark[data-magnet],
   .close__social a[data-magnet],
   .footer__links a[data-magnet] {
     transition: translate 240ms var(--ease-out), color var(--duration-feedback) ease;

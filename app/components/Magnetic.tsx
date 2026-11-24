@@ -6,7 +6,7 @@ import { useEffect } from "react";
    leaves, on the compass's own spring curve. Mouse and trackpad only, never
    with reduced motion; one passive listener, at most one style write per frame,
    and only the translate property moves, so nothing is laid out again. */
-const TARGETS = ".button, .site-nav a, .wordmark, .close__social a, .footer__links a";
+const TARGETS = ".button, .site-nav a, .close__social a, .footer__links a";
 const PULL = 0.28; // share of the cursor's offset from the centre
 const REACH = 9; // most a target moves, in pixels
 
