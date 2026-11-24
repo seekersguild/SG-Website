@@ -10,11 +10,11 @@ export default function NotFound() {
       title="Off the map"
       intro="This page is not on the chart. It may have moved, or the address may have a typo."
     >
-      <Link className="button button--gold" href="/">
+      <Link className="button" href="/">
         Back to the home page
       </Link>
       {sectionNav.map((item) => (
-        <Link className="button button--line" href={item.href} key={item.href}>
+        <Link className="button" href={item.href} key={item.href}>
           {item.label}
         </Link>
       ))}

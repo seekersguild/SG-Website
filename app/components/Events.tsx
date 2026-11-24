@@ -1,8 +1,7 @@
-import Image from "next/image";
-
 import { getEvents, type GuildEvent } from "../content/events";
 import { LUMA_URL } from "../content/site";
 import { JoinDock } from "./JoinDock";
+import { LumaImage } from "./LumaImage";
 import { Ornate } from "./Ornament";
 import { PastEvents } from "./PastEvents";
 
@@ -20,10 +19,15 @@ function Arrow() {
 
 function Upcoming({ event }: { event: GuildEvent }) {
   return (
-    <Ornate className="ornate--dark next-event">
+    <Ornate className={`ornate--dark next-event${event.cover ? "" : " next-event--text-only"}`}>
       {event.cover ? (
         <div className="next-event__cover">
-          <Image src={event.cover} alt="" fill sizes="(max-width: 760px) 90vw, 240px" />
+          <LumaImage
+            src={event.cover}
+            alt=""
+            fill
+            sizes="(min-width: 540px) and (max-width: 640px) and (orientation: landscape) 28vw, (max-width: 640px) calc(100vw - 88px), (max-width: 1100px) 28vw, (any-pointer: coarse) 260px, (min-width: 1334px) 320px, 24vw"
+          />
         </div>
       ) : null}
       <div className="next-event__body">
@@ -33,9 +37,9 @@ function Upcoming({ event }: { event: GuildEvent }) {
           <time dateTime={event.start}>
             {fmt(event.start, { weekday: "long", month: "long", day: "numeric", year: "numeric" })}, {fmt(event.start, { hour: "numeric", minute: "2-digit" })}
           </time>
-          {event.venue ? <> &middot; {event.venue}</> : null}
+          {event.venue ? <span className="next-event__venue">{event.venue}</span> : null}
         </p>
-        <a className="button button--gold" href={event.url} target="_blank" rel="noreferrer noopener">
+        <a className="button" href={event.url} target="_blank" rel="noreferrer noopener">
           Reserve a seat on Luma
         </a>
       </div>
@@ -50,7 +54,7 @@ export async function Events() {
   return (
     <>
       {upcoming.length ? (
-        <div className="events__next" data-reveal-item>
+        <div className="events__next">
           {upcoming.map((event) => (
             <Upcoming key={event.id} event={event} />
           ))}
@@ -59,7 +63,7 @@ export async function Events() {
 
       <PastEvents total={previous.length}>
       {years.map((y) => (
-        <section className="events__year" key={y} aria-label={`Events in ${y}`} data-reveal-item>
+        <section className="events__year" key={y} aria-label={`Events in ${y}`}>
           <h3 className="events__year-title">{y}</h3>
           <ul className="event-list">
             {previous
@@ -68,7 +72,7 @@ export async function Events() {
                 <li key={event.id}>
                   <a className="event-row" href={event.url} target="_blank" rel="noreferrer noopener">
                     <span className="event-row__thumb" aria-hidden="true">
-                      {event.cover ? <Image src={event.cover} alt="" fill sizes="56px" /> : null}
+                      {event.cover ? <LumaImage src={event.cover} alt="" fill sizes="56px" /> : null}
                     </span>
                     <time className="event-row__date" dateTime={event.start}>
                       {fmt(event.start, { month: "short", day: "numeric" })}
@@ -89,7 +93,7 @@ export async function Events() {
       ))}
       </PastEvents>
 
-      <p className="events__more" data-reveal-item>
+      <p className="events__more">
         <a className="text-link" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
           See every gathering on Luma
         </a>

@@ -11,7 +11,7 @@ export function PastEvents({ total, children }: { total: number; children: React
     <div className="events__past" data-open={open ? "true" : "false"}>
       {children}
       {total > 4 ? (
-        <button type="button" className="events__toggle" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+        <button type="button" className="button events__toggle" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
           {open ? "Show fewer" : `Show all ${total} past gatherings`}
         </button>
       ) : null}

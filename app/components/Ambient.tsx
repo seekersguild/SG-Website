@@ -1,46 +1,32 @@
 "use client";
 
 import { useEffect } from "react";
-
-/* Keeps the ambient motion (the compass rings and the motes) out of the way
-   of scrolling. Sections that carry it opt in with [data-ambient]:
-   - off screen, the section gets [data-still] and its motion pauses;
-   - while the page is scrolling, <html> gets [data-scrolling] and all of it
-     pauses, resuming a moment after the scroll settles. The rings turn once
-     every one to two minutes, so the pause is invisible, but it gives every
-     scroll frame to the scroll itself.
-   The pausing is CSS (animation-play-state in globals.css). */
+import { usePathname } from "next/navigation";
+/* Ring timelines keep running through scrolling, menus and offscreen travel.
+   Only a hidden document pauses them; reduced motion is handled in CSS. */
 export function Ambient() {
+  const pathname = usePathname();
   useEffect(() => {
     const root = document.documentElement;
-    const sections = document.querySelectorAll<HTMLElement>("[data-ambient]");
-    if (!sections.length) return;
-
-    let observer: IntersectionObserver | undefined;
-    if ("IntersectionObserver" in window) {
-      observer = new IntersectionObserver((entries) => {
-        for (const entry of entries) entry.target.toggleAttribute("data-still", !entry.isIntersecting);
-      });
-      sections.forEach((el) => observer!.observe(el));
-    }
-
-    let settle = 0;
-    const onScroll = () => {
-      if (!settle) root.setAttribute("data-scrolling", "");
-      else clearTimeout(settle);
-      settle = window.setTimeout(() => {
-        settle = 0;
-        root.removeAttribute("data-scrolling");
-      }, 200);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-
+    const sync = () => root.toggleAttribute("data-ambient-hidden", document.hidden);
+    sync();
+    document.addEventListener("visibilitychange", sync);
+    // Fetch each below-fold painting shortly before it enters view. Keep the
+    // section's real geometry so anchor measurements and scrolling stay exact.
+    const paintings = document.querySelectorAll<HTMLElement>(".band:not(.hero) > .paint, .who__field, .join__field");
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.setAttribute("data-paint-ready", "");
+        observer.unobserve(entry.target);
+      }
+    }, { rootMargin: "800px 0px" });
+    paintings.forEach((painting) => observer.observe(painting));
     return () => {
-      observer?.disconnect();
-      window.removeEventListener("scroll", onScroll);
-      clearTimeout(settle);
-      root.removeAttribute("data-scrolling");
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", sync);
+      root.removeAttribute("data-ambient-hidden");
     };
-  }, []);
+  }, [pathname]);
   return null;
 }

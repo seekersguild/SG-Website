@@ -2,9 +2,15 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 
 import { Ambient } from "./components/Ambient";
-import { Reveal } from "./components/Reveal";
+import { BootLoader } from "./components/BootLoader";
+import { LoadingScreen } from "./components/LoadingScreen";
+import { Magnetic } from "./components/Magnetic";
+import { ScrollAccents } from "./components/ScrollAccents";
+import { ScrollMotion } from "./components/ScrollMotion";
+import { SectionNavigation } from "./components/SectionNavigation";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 import { siteUrl } from "./site-url";
 
@@ -78,15 +84,19 @@ export const viewport: Viewport = {
   themeColor: "#0f0f0f",
 };
 
-/* Runs before paint: marks the document as scripted so reveal states only
-   apply when the observer that clears them will actually run. */
-const jsFlag = `document.documentElement.classList.add('js')`;
+/* Show the first-load mark before paint. Fail open after four seconds if
+   hydration fails; keyboard use dismisses it immediately. With no JavaScript,
+   the initial loader is hidden by default and the page stays readable. */
+const jsFlag = `(()=>{const root=document.documentElement;root.classList.add('js');root.setAttribute('data-loading','');const ready=()=>{root.removeAttribute('data-loading');clearTimeout(timeout);window.removeEventListener('guild:ready',ready);window.removeEventListener('keydown',ready)};const timeout=setTimeout(ready,4000);window.addEventListener('guild:ready',ready);window.addEventListener('keydown',ready)})()`;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${cinzel.variable} ${lora.variable} ${montserrat.variable}`} suppressHydrationWarning>
       <body>
         <script dangerouslySetInnerHTML={{ __html: jsFlag }} />
+        <BootLoader>
+          <LoadingScreen initial />
+        </BootLoader>
         <a className="skip-link" href="#main">
           Skip to content
         </a>
@@ -95,8 +105,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
         </main>
         <SiteFooter />
-        <Reveal />
         <Ambient />
+        <ScrollAccents />
+        <ScrollMotion />
+        <SectionNavigation />
+        <Magnetic />
       </body>
     </html>
   );

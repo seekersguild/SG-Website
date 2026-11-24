@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 /* The guild's compass, drawn from the logo's own geometry (two S arcs, an
    inner ring with its two spurs, the four long points and the hub) in a
@@ -77,6 +77,14 @@ const diagonals = [315, 45, 135, 225].map((d) => point(156, d, 15));
 const arcs = [band(193, 219, 172, 328, 13), band(193, 219, 352, 148, 13)];
 const ring = band(123, 133, 0, 360, 22.5);
 
+function Layer({ className, style, children }: { className: string; style?: CSSProperties; children: ReactNode }) {
+  return (
+    <span className={`em-layer ${className}`} style={style}>
+      <svg viewBox="0 0 600 600" focusable="false">{children}</svg>
+    </span>
+  );
+}
+
 export function Emblem({
   id = "em",
   className = "",
@@ -92,7 +100,8 @@ export function Emblem({
   style?: CSSProperties;
 }) {
   return (
-    <svg className={`emblem ${className}`} viewBox="0 0 600 600" aria-hidden="true" focusable="false" style={style}>
+    <div className={`emblem ${className}`} aria-hidden="true" style={style}>
+      <Layer className="em-tick-layer">
       <g className="em-ticks">
         <circle className="em-line" cx={C} cy={C} r={286} pathLength={1} />
         {ticks.map((d) => (
@@ -106,20 +115,19 @@ export function Emblem({
           />
         ))}
       </g>
+      </Layer>
 
-      {/* The faceted bands are revealed through masks whose strokes can be
-          drawn on, so the S and the ring still draw themselves in. */}
+      {/* Static masks join the faceted bands and hooks. The entrance fades
+          the complete bands, without animating these mask strokes. */}
+      <Layer className="em-arcs">
       <defs>
         <mask id={`${id}-arcs`} maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="600">
           <path className="em-draw" d={`M${pt(164, 176)} ${arc(206, 172, 328).replace(/^M/, "L")}`} pathLength={1} />
           <path className="em-draw" d={`M${pt(164, 356)} ${arc(206, 352, 148).replace(/^M/, "L")}`} pathLength={1} />
         </mask>
-        <mask id={`${id}-ring`} maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="600">
-          <circle className="em-draw em-draw--ring" cx={C} cy={C} r={140} pathLength={1} />
-        </mask>
       </defs>
 
-      <g className="em-arcs" mask={`url(#${id}-arcs)`}>
+      <g mask={`url(#${id}-arcs)`}>
         {arcs.flatMap((facets, k) =>
           facets.map((f, i) => <polygon key={`a${k}-${i}`} className={`em-facet ${tone(i + k)}`} points={f} />),
         )}
@@ -127,16 +135,24 @@ export function Emblem({
         <polygon className="em-facet f2" points={bar(polar(206, 172), polar(164, 176), 26)} />
         <polygon className="em-facet f4" points={bar(polar(206, 352), polar(164, 356), 26)} />
       </g>
+      </Layer>
 
-      <g className="em-ring" mask={`url(#${id}-ring)`}>
+      <Layer className="em-ring">
+        <defs>
+          <mask id={`${id}-ring`} maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="600">
+            <circle className="em-draw em-draw--ring" cx={C} cy={C} r={140} pathLength={1} />
+          </mask>
+        </defs>
+      <g mask={`url(#${id}-ring)`}>
         {ring.map((f, i) => (
           <polygon key={`r${i}`} className={`em-facet ${tone(i)}`} points={f} />
         ))}
         <polygon className="em-facet f1" points={`${pt(154, 315)} ${pt(133, 306)} ${pt(133, 324)}`} />
         <polygon className="em-facet f3" points={`${pt(154, 135)} ${pt(133, 126)} ${pt(133, 144)}`} />
       </g>
+      </Layer>
 
-      <g className="em-star">
+      <Layer className="em-star">
         {[...diagonals, ...cardinals].map((facets, k) => (
           <g key={`p${k}`} className={k < 4 ? "em-point em-point--minor" : "em-point"}>
             {facets.map((f) => (
@@ -146,17 +162,17 @@ export function Emblem({
         ))}
         <polygon className="em-hub" points={ngon(30, 8, 22.5)} />
         <polygon className="em-hub__core" points={ngon(10, 8, 22.5)} />
-      </g>
+      </Layer>
 
       {showNeedle ? (
-        <g className="em-needle" style={{ "--needle": `${needle}deg` } as CSSProperties}>
+        <Layer className="em-needle" style={{ "--needle": `${needle}deg` } as CSSProperties}>
           <polygon className="em-needle__n1" points={`${C} 78 ${C} ${C} ${C - 11} ${C}`} />
           <polygon className="em-needle__n2" points={`${C} 78 ${C + 11} ${C} ${C} ${C}`} />
           <polygon className="em-needle__s1" points={`${C} 522 ${C} ${C} ${C - 11} ${C}`} />
           <polygon className="em-needle__s2" points={`${C} 522 ${C + 11} ${C} ${C} ${C}`} />
           <polygon className="em-needle__hub" points={ngon(13, 8, 22.5)} />
-        </g>
+        </Layer>
       ) : null}
-    </svg>
+    </div>
   );
 }

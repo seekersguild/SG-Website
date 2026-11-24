@@ -18,19 +18,17 @@ export function SiteHeader() {
   const menuButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    let frame = 0;
+    let wasSolid = false;
     function onScroll() {
-      if (frame) return;
-      frame = requestAnimationFrame(() => {
-        frame = 0;
-        setSolid(window.scrollY > 24);
-      });
+      const next = window.scrollY > 24;
+      if (next === wasSolid) return;
+      wasSolid = next;
+      setSolid(next);
     }
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
-      cancelAnimationFrame(frame);
     };
   }, []);
 
@@ -54,6 +52,13 @@ export function SiteHeader() {
   }, [pathname]);
 
   useEffect(() => {
+    const wide = window.matchMedia("(min-width: 1101px)");
+    const onChange = () => { if (wide.matches) setMenuOpen(false); };
+    wide.addEventListener("change", onChange);
+    return () => wide.removeEventListener("change", onChange);
+  }, []);
+
+  useEffect(() => {
     if (!menuOpen) return;
     document.documentElement.classList.add("menu-lock");
     function onKey(event: KeyboardEvent) {
@@ -74,7 +79,7 @@ export function SiteHeader() {
   return (
     <header className="site-header" data-solid={solid || menuOpen ? "" : undefined}>
       <div className="site-header__bar">
-        <Link className="wordmark" href="/" aria-label="Seekers Guild, home">
+        <Link className="wordmark" href="/" prefetch={false} aria-label="Seekers Guild, home">
           <Image src="/assets/seekersguild_logo.png" alt="" width={40} height={40} priority />
           <span>Seekers Guild</span>
         </Link>
@@ -83,7 +88,7 @@ export function SiteHeader() {
           <ul>
             {sectionNav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} aria-current={isActive(item.href) ? "location" : undefined}>
+                <Link href={item.href} prefetch={false} aria-current={isActive(item.href) ? "location" : undefined}>
                   {item.label}
                 </Link>
               </li>
@@ -91,7 +96,7 @@ export function SiteHeader() {
           </ul>
         </nav>
 
-        <a className="button button--gold site-header__action" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
+        <a className="button site-header__action" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
           Join a gathering
         </a>
 
@@ -99,11 +104,15 @@ export function SiteHeader() {
           ref={menuButton}
           className="menu-toggle"
           type="button"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
           onClick={() => setMenuOpen((open) => !open)}
         >
-          {menuOpen ? "Close" : "Menu"}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" aria-hidden="true">
+            <path className="menu-toggle__top" d="M4 8h16" />
+            <path className="menu-toggle__bottom" d="M4 16h16" />
+          </svg>
         </button>
       </div>
 
@@ -112,14 +121,14 @@ export function SiteHeader() {
           <ul>
             {sectionNav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} aria-current={isActive(item.href) ? "location" : undefined} onClick={() => setMenuOpen(false)}>
+                <Link href={item.href} prefetch={false} aria-current={isActive(item.href) ? "location" : undefined} onClick={() => setMenuOpen(false)}>
                   {item.label}
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
-        <a className="button button--gold button--wide" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
+        <a className="button button--wide" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
           Join a gathering on Luma
         </a>
       </div>

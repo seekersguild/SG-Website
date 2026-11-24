@@ -19,7 +19,7 @@ export function SiteFooter() {
             <ul>
               {[...sectionNav, ...moreNav].map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href}>{item.label}</Link>
+                  <Link href={item.href} prefetch={false}>{item.label}</Link>
                 </li>
               ))}
             </ul>
