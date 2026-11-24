@@ -17,6 +17,72 @@ export function Flourish({ className = "" }: { className?: string }) {
   );
 }
 
+/* The compass bezel's faceted sapphire, as a flat low-poly field. */
+const facetTones = ["f-a", "f-b", "f-c", "f-d"];
+const facets = (() => {
+  const cols = 8;
+  const rows = 6;
+  const w = 600 / cols;
+  const h = 600 / rows;
+  // Corner points nudged so the facets read as cut, not gridded.
+  const jitter = (x: number, y: number) => ((Math.sin(x * 12.9898 + y * 78.233) * 43758.5453) % 1) * 0.28;
+  const pt = (c: number, r: number) => {
+    const x = c * w + (c === 0 || c === cols ? 0 : jitter(c, r) * w);
+    const y = r * h + (r === 0 || r === rows ? 0 : jitter(r + 3, c + 7) * h);
+    return `${x.toFixed(1)} ${y.toFixed(1)}`;
+  };
+  const out: { d: string; tone: string }[] = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const a = pt(c, r), b = pt(c + 1, r), d = pt(c, r + 1), e = pt(c + 1, r + 1);
+      const flip = (c + r) % 2 === 0;
+      out.push({ d: flip ? `M${a} L${b} L${e} Z` : `M${a} L${b} L${d} Z`, tone: facetTones[(c * 3 + r * 5) % 4] });
+      out.push({ d: flip ? `M${a} L${e} L${d} Z` : `M${b} L${e} L${d} Z`, tone: facetTones[(c * 7 + r * 2 + 1) % 4] });
+    }
+  }
+  return out;
+})();
+
+export function Facets({ className = "" }: { className?: string }) {
+  return (
+    <svg className={`facets ${className}`} viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+      {facets.map((f, i) => (
+        <path key={i} d={f.d} className={f.tone} />
+      ))}
+    </svg>
+  );
+}
+
+
+/* A year as a dial of twelve ticks; the gold ones mark how often a
+   programme comes round (12 monthly, 4 quarterly, 2 twice a year, 1 yearly). */
+export function YearDial({ times, className = "" }: { times: number; className?: string }) {
+  const lit = new Set(Array.from({ length: times }, (_, i) => Math.round((i * 12) / times) % 12));
+  return (
+    <svg className={`dial ${className}`} viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+      <circle cx="50" cy="50" r="47" className="dial__ring" />
+      {Array.from({ length: 12 }, (_, i) => {
+        const a = ((i * 30 - 90) * Math.PI) / 180;
+        const on = lit.has(i);
+        const r1 = on ? 31 : 36;
+        return (
+          <line
+            key={i}
+            x1={+(50 + r1 * Math.cos(a)).toFixed(2)}
+            y1={+(50 + r1 * Math.sin(a)).toFixed(2)}
+            x2={+(50 + 42 * Math.cos(a)).toFixed(2)}
+            y2={+(50 + 42 * Math.sin(a)).toFixed(2)}
+            className={on ? "dial__tick dial__tick--on" : "dial__tick"}
+          />
+        );
+      })}
+      <text x="50" y="51" className="dial__n" textAnchor="middle" dominantBaseline="central">
+        {times}
+      </text>
+    </svg>
+  );
+}
+
 function Corner() {
   return (
     <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">

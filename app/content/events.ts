@@ -1,3 +1,4 @@
+import { cache } from "react";
 import snapshot from "./luma-snapshot.json";
 
 /* Gatherings, read from the guild's public Luma profile.
@@ -89,7 +90,7 @@ async function fetchPeriod(period: "past" | "future"): Promise<LumaEntry[] | nul
   }
 }
 
-export async function getEvents() {
+export const getEvents = cache(async function getEvents() {
   const [past, future] = await Promise.all([fetchPeriod("past"), fetchPeriod("future")]);
   const live = past !== null && future !== null && past.length + future.length > 0;
   const source = live ? { past, future } : (snapshot as unknown as { past: LumaEntry[]; future: LumaEntry[] });
@@ -98,4 +99,4 @@ export async function getEvents() {
   const upcoming = map(source.future).sort((a, b) => a.start.localeCompare(b.start));
   const previous = map(source.past).sort((a, b) => b.start.localeCompare(a.start));
   return { upcoming, previous, live };
-}
+});

@@ -38,6 +38,8 @@ export function MagneticCompass({
     let frame = 0;
     let lastTime = 0;
     let controlled = false;
+    let moveFrame = 0;
+    let pendingMove: PointerEvent | null = null;
     let tap: { id: number; x: number; y: number; started: number } | null = null;
 
     // Mass 1, stiffness 100, damping 10: a modest overshoot, then rest.
@@ -48,6 +50,9 @@ export function MagneticCompass({
       needle.style.transform = `rotate(${current.toFixed(3)}deg)`;
     };
     const stop = () => {
+      cancelAnimationFrame(moveFrame);
+      moveFrame = 0;
+      pendingMove = null;
       tap = null;
       cancelAnimationFrame(frame);
       frame = 0;
@@ -108,7 +113,16 @@ export function MagneticCompass({
     };
 
     const onMove = (event: PointerEvent) => {
-      if (event.pointerType === "mouse" && hover.matches) attract(event);
+      if (event.pointerType !== "mouse" || !hover.matches || reducedMotion.matches) return;
+      pendingMove = event;
+      if (moveFrame) return;
+      // High-polling mice can deliver several moves per display frame. Only
+      // measure the face and update the bearing once, using the latest point.
+      moveFrame = requestAnimationFrame(() => {
+        moveFrame = 0;
+        if (pendingMove) attract(pendingMove);
+        pendingMove = null;
+      });
     };
     const onDown = (event: PointerEvent) => {
       if (!event.isPrimary) {

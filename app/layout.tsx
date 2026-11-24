@@ -4,7 +4,10 @@ import localFont from "next/font/local";
 import { Ambient } from "./components/Ambient";
 import { BootLoader } from "./components/BootLoader";
 import { LoadingScreen } from "./components/LoadingScreen";
+import { Magnetic } from "./components/Magnetic";
+import { ScrollAccents } from "./components/ScrollAccents";
 import { ScrollMotion } from "./components/ScrollMotion";
+import { SectionNavigation } from "./components/SectionNavigation";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
 import "lenis/dist/lenis.css";
@@ -103,7 +106,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </main>
         <SiteFooter />
         <Ambient />
+        <ScrollAccents />
         <ScrollMotion />
+        <SectionNavigation />
+        <Magnetic />
       </body>
     </html>
   );

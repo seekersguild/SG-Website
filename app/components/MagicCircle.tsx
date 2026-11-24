@@ -19,7 +19,7 @@ const numerals = [30, 60, 120, 150, 210, 240, 300, 330].map((bearing) => {
   return { bearing, x, y };
 });
 
-function Ring({ kind }: { kind: "bezel" | "scan" }) {
+function Ring({ kind, lazy }: { kind: "bezel" | "scan"; lazy: boolean }) {
   return (
     <span className={`mc-layer mc-${kind}`}>
       <img
@@ -30,17 +30,18 @@ function Ring({ kind }: { kind: "bezel" | "scan" }) {
         height={1800}
         alt=""
         decoding="async"
+        loading={lazy ? "lazy" : "eager"}
         draggable={false}
       />
     </span>
   );
 }
 
-export function MagicCircle({ className = "" }: { className?: string }) {
+export function MagicCircle({ className = "", lazy = false }: { className?: string; lazy?: boolean }) {
   return (
     <div className={`magic-circle ${className}`} aria-hidden="true">
-      <Ring kind="bezel" />
-      <Ring kind="scan" />
+      <Ring kind="bezel" lazy={lazy} />
+      <Ring kind="scan" lazy={lazy} />
       <span className="mc-layer">
         <svg viewBox="0 0 600 600" focusable="false">
           {cardinals.map((c) => (

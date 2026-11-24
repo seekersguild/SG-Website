@@ -48,7 +48,7 @@ export function JoinDock({ href, title, when }: { href: string; title: string; w
         <span className="join-dock__label">{when ? `Next gathering, ${when}` : "Gatherings"}</span>
         <span className="join-dock__title">{title}</span>
       </p>
-      <a className="button button--gold join-dock__button" href={href} target="_blank" rel="noreferrer noopener" tabIndex={show ? undefined : -1}>
+      <a className="button join-dock__button" href={href} target="_blank" rel="noreferrer noopener" tabIndex={show ? undefined : -1}>
         {when ? "Reserve" : "See Luma"}
       </a>
     </div>
