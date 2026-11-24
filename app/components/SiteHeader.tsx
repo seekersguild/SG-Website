@@ -79,7 +79,22 @@ export function SiteHeader() {
   return (
     <header className="site-header" data-solid={solid || menuOpen ? "" : undefined}>
       <div className="site-header__bar">
-        <Link className="wordmark" href="/" prefetch={false} aria-label="Seekers Guild, home">
+        <Link
+          className="wordmark"
+          href="/"
+          prefetch={false}
+          aria-label="Seekers Guild, back to top"
+          onClick={(event) => {
+            // On the home page the mark returns to the very top, and the
+            // address drops any section hash. Elsewhere it navigates home.
+            if (pathname !== "/" || event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+            event.preventDefault();
+            setMenuOpen(false);
+            const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+            if (window.location.hash) history.replaceState(null, "", "/");
+          }}
+        >
           <Image src="/assets/seekersguild_logo.png" alt="" width={40} height={40} priority />
           <span>Seekers Guild</span>
         </Link>
