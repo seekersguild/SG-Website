@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { MagicCircle, Motes } from "./components/MagicCircle";
 import { MagneticCompass } from "./components/MagneticCompass";
 import { AtAGlanceSection } from "./components/OrgSections";
@@ -46,6 +47,9 @@ export default function Home() {
               <a className="button" href="#events">
                 Join a gathering
               </a>
+              <Link className="button" href="/impact">
+                See our impact
+              </Link>
             </div>
           </div>
         </div>

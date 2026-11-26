@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { Suspense } from "react";
 
 import { Ambient } from "./components/Ambient";
 import { BootLoader } from "./components/BootLoader";
@@ -9,6 +10,7 @@ import { ScrollMotion } from "./components/ScrollMotion";
 import { SectionNavigation } from "./components/SectionNavigation";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
+import { GatheringBar, GatheringBarFallback } from "./components/GatheringBar";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import { siteUrl } from "./site-url";
@@ -30,7 +32,7 @@ const lora = localFont({
   ],
   variable: "--font-lora",
   display: "swap",
-  // Lora is only used below the first screen; let the fonts above it load first.
+  // Load Lora on demand; preserve bandwidth on pages that open in Cinzel/Montserrat.
   preload: false,
   fallback: ["Georgia", "serif"],
 });
@@ -105,6 +107,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
         </main>
         <SiteFooter />
+        <Suspense fallback={<GatheringBarFallback />}>
+          <GatheringBar />
+        </Suspense>
         <Ambient />
         <ScrollAccents />
         <ScrollMotion />

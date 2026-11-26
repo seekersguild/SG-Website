@@ -27,3 +27,11 @@
   .aim__lead { font-size: clamp(1.375rem, 1.7vw, 1.625rem); }
   .aim__body { font-size: 1rem; }
 }
+
+/* Five reading columns need a full desktop width. Small laptops keep the
+   established three-plus-two composition instead of squeezing the prose. */
+@media (min-width: 1101px) and (max-width: 1279px) {
+  .pillars .pillars__row { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .pillars .pillar { grid-column: span 2; }
+  .pillars .pillar:nth-child(n + 4) { grid-column: span 3; }
+}

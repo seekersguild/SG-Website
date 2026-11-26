@@ -17,7 +17,7 @@
   align-content: start;
   position: relative;
   gap: 12px;
-  padding-top: 22px;
+  padding-top: 0;
 }
 
 .pillar__n {
@@ -39,7 +39,7 @@
 }
 
 .pillar__body {
-  font-size: var(--step-small);
+  font-size: var(--step-body);
   line-height: 1.7;
   color: var(--on-dark-2);
 }

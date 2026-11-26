@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
    centre is near the middle of the screen. Observers change only boundary state;
    content never waits for an animation and scrolling needs no frame handler. */
 const targets = [
-  ".aim", ".pillar", ".value", ".programme", ".event-row", ".faq__q",
+  ".programme", ".event-row", ".faq__q",
   ".close__social a",
   ".footer__links a", ".footer__legal a",
 ].join(",");

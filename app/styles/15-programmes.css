@@ -136,7 +136,7 @@
 
 .programme__body {
   padding-top: 2px;
-  font-size: 0.9375rem;
+  font-size: var(--step-body);
   line-height: 1.75;
   color: var(--ink-2);
 }

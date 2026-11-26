@@ -2,6 +2,20 @@
 :root { --header-h: calc(64px + env(safe-area-inset-top, 0px)); }
 .site-header__bar { padding-top: env(safe-area-inset-top); }
 
+/* One page-opening line, calibrated to the home motto. Content length must
+   not move another page's heading up or down within its first section. */
+:root { --page-start: calc(var(--header-h) + clamp(96px, 21svh, 224px) - 5px); }
+.page-enter > .band:is(.hero, .vision, .content-opening, .page-opening):first-of-type {
+  margin-top: 0;
+  padding-top: var(--page-start);
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+@media (max-width: 1100px) {
+  :root { --page-start: calc(var(--header-h) + clamp(40px, 8svh, 72px) - 5px); }
+}
+
 .button,
 .menu-toggle,
 summary {

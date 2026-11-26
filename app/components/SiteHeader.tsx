@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-import { LUMA_URL, sectionNav } from "../content/site";
+import { sectionNav } from "../content/site";
 
 /* One plain bar: the mark, the page links, and one action for the site's
    main audience, organisations: Partner with us. It turns solid
@@ -47,9 +47,11 @@ export function SiteHeader() {
     if (!menuOpen) return;
     document.documentElement.classList.add("menu-lock");
     // The overlay owns keyboard and assistive navigation while it is open.
-    const background = [...document.querySelectorAll<HTMLElement>("main, .site-footer")];
+    const background = [...document.querySelectorAll<HTMLElement>("main, .site-footer, .gathering-bar")];
     const previousInert = background.map((element) => element.inert);
     background.forEach((element) => { element.inert = true; });
+    const menu = document.getElementById("mobile-menu");
+    if (menu) menu.scrollTop = 0;
     const links = [...document.querySelectorAll<HTMLAnchorElement>("#mobile-menu a[href]")];
     links[0]?.focus({ preventScroll: true });
     function onKey(event: KeyboardEvent) {
@@ -146,12 +148,6 @@ export function SiteHeader() {
             ))}
           </ul>
         </nav>
-        <Link className="button button--wide" href="/partners" onClick={() => setMenuOpen(false)}>
-          Partner with us
-        </Link>
-        <a className="mobile-menu__luma" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
-          Join a gathering on Luma
-        </a>
       </div>
     </header>
   );

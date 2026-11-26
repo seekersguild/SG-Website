@@ -187,9 +187,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .aim::after,
-  .pillar::after,
-  .value::after,
   .programme__dial,
   .dial__n {
     transition: none;

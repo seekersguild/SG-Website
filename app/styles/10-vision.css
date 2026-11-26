@@ -1,5 +1,9 @@
-/* Our vision: the live site's original composition and type scale. */
+/* Match the deployed Vision composition and its original blue painting. */
 .vision::before { background-position: 41% 13%; }
+.vision > .paint--light { opacity: 1; }
+.vision > .paint--light::after { background: none; }
+/* Retain the shared opening baseline across pages. */
+.vision .split > .section-head { padding-top: 0; }
 .vision__statement {
   max-width: 40ch;
   font-family: var(--f-serif);
@@ -21,6 +25,20 @@
   font-size: var(--step-body);
   line-height: 1.75;
   color: var(--on-dark-2);
+}
+
+/* The next chapter starts promptly after the angled edge. */
+.vision + .mission {
+  justify-content: flex-start;
+  padding-top: calc(var(--cut) + clamp(56px, 5vw, 80px));
+}
+
+@media (min-width: 1101px) {
+  .vision {
+    min-height: calc(100svh - var(--header-h) + var(--cut));
+    display: flex;
+    align-items: center;
+  }
 }
 
 @media (max-width: 760px) {

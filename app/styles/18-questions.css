@@ -65,7 +65,7 @@
 .faq__a {
   max-width: 62ch;
   padding: 0 32px 22px 0;
-  font-size: var(--step-small);
+  font-size: var(--step-body);
   line-height: 1.8;
   color: var(--ink-2);
 }
