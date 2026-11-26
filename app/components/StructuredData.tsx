@@ -3,9 +3,9 @@ import { brand, faqs, socialLinks, tagline } from "../content/site";
 import { siteUrl } from "../site-url";
 
 /* Machine-readable facts about the guild for search engines and AI answer
-   engines: the organisation, the site, every public gathering, and the FAQ.
-   Everything here mirrors what is visible on the page. */
-export async function StructuredData() {
+   engines: the organisation and the site on every page, the gatherings on
+   What we do, and the FAQ on Join. Each mirrors what that page shows. */
+export async function StructuredData({ events = false, faq = false }: { events?: boolean; faq?: boolean }) {
   const { upcoming, previous } = await getEvents();
   const orgId = `${siteUrl}/#organization`;
 
@@ -48,14 +48,18 @@ export async function StructuredData() {
         inLanguage: "en",
         publisher: { "@id": orgId },
       },
-      {
-        "@type": "FAQPage",
-        "@id": `${siteUrl}/#faq`,
-        mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
-      },
+      ...(faq
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": `${siteUrl}/join#faq`,
+              mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+            },
+          ]
+        : []),
       // Google requires a location for Event results; events without a public venue are left out here
       // (they still appear in the visible list).
-      ...[...upcoming, ...previous].filter((e) => e.venue).map(event),
+      ...(events ? [...upcoming, ...previous].filter((e) => e.venue).map(event) : []),
     ],
   };
 

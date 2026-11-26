@@ -1,0 +1,28 @@
+/* Our vision: the live site's original composition and type scale. */
+.vision::before { background-position: 41% 13%; }
+.vision__statement {
+  max-width: 40ch;
+  font-family: var(--f-serif);
+  letter-spacing: -0.005em;
+  color: var(--white);
+  font-size: clamp(1.375rem, 1.1rem + 0.8vw, 1.75rem);
+  font-weight: 400;
+  line-height: 1.4;
+}
+.vision__statement::before, .vision__statement::after { color: var(--heliodor); }
+.vision__statement::before { content: "\201C"; }
+.vision__statement::after { content: "\201D"; }
+
+.vision__body {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px clamp(32px, 4vw, 64px);
+  margin-top: clamp(36px, 4vw, 56px);
+  font-size: var(--step-body);
+  line-height: 1.75;
+  color: var(--on-dark-2);
+}
+
+@media (max-width: 760px) {
+  .vision__body { grid-template-columns: 1fr; }
+}

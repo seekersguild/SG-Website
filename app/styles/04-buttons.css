@@ -1,0 +1,58 @@
+/* ---------- Buttons ---------- */
+
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 0;
+  background: var(--heliodor);
+  color: var(--obsidian);
+  font-family: var(--f-sans);
+  font-size: var(--step-small);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  text-align: center;
+}
+
+
+.button--wide {
+  width: 100%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    background: var(--heliodor-light);
+  }
+}
+
+.button:active {
+  background: var(--heliodor-deep);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+}
+
+/* Supporting navigation stays readable and tappable without another gold block. */
+.actions > .text-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 8px;
+  font-size: var(--step-small);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .actions > .text-link:hover,
+  .events__toggle:hover {
+    text-decoration-thickness: 2px;
+  }
+}

@@ -3,21 +3,94 @@
 
 export type NavItem = { label: string; href: string };
 
-/* The site is one page: these are its four sections. */
+export function programmeAnchor(name: string) {
+  return `programme-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-$/, "")}`;
+}
+
+/* The header's pages. The site markets the guild to organisations first, so
+   it reads like a B2B site: who we are, what we run, the proof, how people
+   take part, and how to reach us. "Partner with us" is the header's button. */
 export const sectionNav: NavItem[] = [
-  { label: "Vision", href: "/#vision" },
-  { label: "Mission", href: "/#mission" },
-  { label: "Pillars", href: "/#pillars" },
-  { label: "Culture", href: "/#culture" },
-  { label: "Programmes", href: "/#programmes" },
-  { label: "Events", href: "/#events" },
-  { label: "Join", href: "/#join" },
+  { label: "About", href: "/about" },
+  { label: "Programmes", href: "/programmes" },
+  { label: "Impact", href: "/impact" },
+  { label: "Get involved", href: "/join" },
+  { label: "Contact", href: "/contact" },
 ];
 
-/* Footer-only links (the header is already full). */
-export const moreNav: NavItem[] = [{ label: "Questions", href: "/#faq" }];
-
 export const LUMA_URL = "https://luma.com/user/seekersguild";
+
+/* The guild's shared inbox (Community Overview 2026). */
+export const CONTACT_EMAIL = "seekersguild.community@gmail.com";
+
+/* From the Seekers Guild Community Overview 2026. All historical figures. */
+export const atAGlance = [
+  { value: "2025", label: "Founded in April" },
+  { value: "200+", label: "Members reached" },
+  { value: "10+", label: "Institutions and industry partners" },
+  { value: "30+", label: "National and international hackathon wins" },
+];
+
+/* Who guild programmes bring together (Community Overview 2026). */
+export const audience = [
+  "College students",
+  "Founders",
+  "Developers",
+  "Product managers",
+  "Designers",
+  "Investors",
+  "Mentors",
+  "Community leaders",
+  "Professionals",
+  "Corporate innovation teams",
+];
+
+/* Selected ecosystem involvement (Community Overview 2026). */
+export const ecosystem = [
+  { year: "2026", name: "COSMOS 2026 and SparkFest 2026", detail: "Long-term community partnership with GDG on Campus PUP." },
+  { year: "2025", name: "AWS Student Community Day Mega Manila 2025", detail: "Gold Partner of AWS Cloud Clubs Philippines. The event involved students from more than 20 universities." },
+  { year: "2025", name: "Echelon Philippines 2025", detail: "Brainsparks and e27." },
+  { year: "2025", name: "Philippine Design Fest 2025", detail: "Filipino Graphic Designers." },
+  { year: "2025", name: "Match & Hatch", detail: "Philippine Startup Week 2025." },
+];
+
+/* The partner ecosystem (Community Overview 2026). */
+export const partners = [
+  { name: "Apex Human", description: "AI product-building education.", relationship: "Long-term partner" },
+  { name: "Internly", description: "Internship discovery and hiring for Filipino students and employers.", relationship: "Long-term partner" },
+  { name: "SnappyStrip", description: "A customisable web-based photobooth and digital experience.", relationship: "Long-term partner" },
+  { name: "GDG on Campus PUP", description: "Google Developer Groups on Campus, Polytechnic University of the Philippines.", relationship: "Long-term partner" },
+  { name: "Tutorials Dojo", description: "A Manila-founded technology learning platform focused on cloud and IT certification training.", relationship: "Strategic partner" },
+];
+
+/* Why organisations partner with the guild, each reason stated from the
+   Community Overview's own facts. */
+export const partnerReasons = [
+  {
+    title: "Reach builders early",
+    body: "College students, founders, developers and designers, many from the provinces, met while they are still choosing what to build and where to work.",
+  },
+  {
+    title: "Show up where they gather",
+    body: "A public Open Table every month, Founders Live Manila pitch nights, and LockIn Villa retreats for the guild's Top 50 builders.",
+  },
+  {
+    title: "Join partners who stay",
+    body: "Apex Human, Internly, SnappyStrip and GDG on Campus PUP are long-term partners, and Tutorials Dojo is a strategic partner.",
+  },
+];
+
+/* Partnership tiers, named in the Seekers Guild Partnership Primer. Each
+   tier's inclusions are agreed by the partnerships team: list them in
+   `benefits` and they appear on the Partners page. Until then the page
+   shows the tier's scope and invites a conversation. */
+export const partnershipTiers: { name: string; scope: string; benefits: string[] }[] = [
+  { name: "Annual Anchor Partner", scope: "Year-round support across the guild's full calendar.", benefits: [] },
+  { name: "Program Partner", scope: "Support for one flagship programme across its editions.", benefits: [] },
+  { name: "Event Support Partner", scope: "Support for a single gathering.", benefits: [] },
+  { name: "In-Kind Partner", scope: "Products, services or venues in place of funds.", benefits: [] },
+  { name: "Media Partner", scope: "Coverage and promotion of guild events to your audience.", benefits: [] },
+];
 
 export const socialLinks = [
   { label: "Facebook", href: "https://www.facebook.com/seekersguildcommunity" },
@@ -106,32 +179,46 @@ export const culture = [
   "Flat hierarchy",
 ];
 
-/* The guild's recurring programmes, from the Seekers Guild strategic roadmap
-   and programme documents. */
-export const programmes = [
+/* The guild's recurring programmes, from the Seekers Guild strategic roadmap,
+   programme documents and Community Overview 2026. Flagships first. */
+export const programmes: { cadence: string; name: string; body: string; access: string; room: string; flagship?: boolean }[] = [
   {
     cadence: "Monthly",
     name: "Open Table",
-    body: "A relaxed gathering at a café on the last Sunday of every month, 2:00 to 7:00 PM. Co-work, catch up, and get informal advice from the people sitting across from you.",
+    body: "A relaxed gathering at a café on the last Sunday of every month, 2:00 to 7:00 PM. Co-work, catch up, and get informal advice from the people sitting across from you. The series reached its seventh edition in August 2026.",
     access: "Open to the public",
+    room: "Students, builders and members of the public meeting the guild",
+    flagship: true,
   },
   {
     cadence: "Quarterly",
-    name: "LockIn Villa × Founders Live Manila",
-    body: "A three-day, two-night builder retreat. Hackers, hipsters and hustlers live and build together under one roof, then present what they shipped, sold and learned on Day 3.",
-    access: "Selected builders",
+    name: "LockIn Villa",
+    body: "A planned quarterly, three-day build lock-in for the Top 50 ranked members. They build together and present their results, sales, lessons and reach on Day 3.",
+    access: "Planned programme",
+    room: "The guild's Top 50 ranked builders",
+    flagship: true,
+  },
+  {
+    cadence: "Event-based",
+    name: "Founders Live Manila",
+    body: "The Philippine chapter of the global Founders Live network. Five early-stage founders pitch for 99 seconds each, followed by four minutes of audience Q&A per founder.",
+    access: "See individual event details",
+    room: "Early-stage founders and the audience that questions them",
+    flagship: true,
   },
   {
     cadence: "Twice a year",
     name: "Outreach Program",
     body: "The guild travels to a barangay or municipality outside Manila to run workshops with students, local officials and youth councils.",
     access: "Open, volunteer-driven",
+    room: "Students, local officials and youth councils outside Manila",
   },
   {
     cadence: "Yearly",
     name: "Awards & Recognition",
     body: "An evening of journey-sharing where the guild recognises its top contributors, followed by networking with investors.",
     access: "Members recognised for their contribution",
+    room: "The guild's top contributors, and investors",
   },
 ];
 
@@ -180,6 +267,6 @@ export const faqs = [
   },
   {
     q: "What else does the guild run besides Open Table?",
-    a: "LockIn Villa × Founders Live Manila, a three-day builder retreat; the Outreach Program in barangays and municipalities outside Manila; the yearly Awards & Recognition; and workshops, talks and founder events such as Match & Hatch and Zero to CEO.",
+    a: "Founders Live Manila features short startup pitches and audience Q&A. LockIn Villa is a separate, planned three-day build lock-in. The guild also runs the Outreach Program outside Manila, yearly Awards & Recognition, and workshops, talks and founder events such as Match & Hatch and Zero to CEO.",
   },
 ];

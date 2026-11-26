@@ -1,0 +1,207 @@
+/* ---------- Who we are ----------
+   An identity panel for the official Sigil, paired with an editorial introduction.
+   All artwork stays static and the paintings remain behind the reading surfaces. */
+
+.who {
+  overflow: clip;
+}
+
+/* Preserve the live section's fold placement after the home-page reorder. */
+.band.who::before { background-position: 73% 67%; }
+
+.who__grid {
+  /* Reserve space on both sides of the angled boundary, inside the shared frame. */
+  --who-gap: clamp(144px, 14vw, 208px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: var(--who-gap);
+  align-items: center;
+}
+
+.who__side {
+  position: relative;
+  isolation: isolate;
+  color: var(--on-dark);
+}
+
+.who__field {
+  position: absolute;
+  top: -360px;
+  bottom: -360px;
+  left: -100vw;
+  right: calc(var(--who-gap) / -2);
+  z-index: -1;
+  display: block;
+  background: var(--sapphire-deep);
+  transform: skewX(3deg);
+}
+
+.who__field .facets {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.22;
+}
+
+.who__monet {
+  position: absolute;
+  inset: 0;
+  background-image: url("/images/paint-royal-1400.webp");
+  background-image: image-set(url("/images/paint-royal-1400.webp") 1x, url("/images/paint-royal-2000.webp") 2x);
+  background-position: 70% 45%;
+  background-size: cover;
+}
+
+.facets path { stroke-width: 0.6; }
+.facets .f-a { fill: #062f6c; stroke: #062f6c; }
+.facets .f-b { fill: #053576; stroke: #053576; }
+.facets .f-c { fill: #073c85; stroke: #073c85; }
+.facets .f-d { fill: #04295e; stroke: #04295e; }
+
+.who__sigil {
+  display: grid;
+  justify-items: center;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.who__sigil blockquote {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  max-width: 27rem;
+}
+
+.who__logo {
+  width: clamp(176px, 17vw, 240px);
+  height: auto;
+  margin-bottom: 4px;
+}
+
+.who__quote {
+  max-width: 22ch;
+  font-family: var(--f-serif);
+  font-size: clamp(1.75rem, 1.15rem + 1.25vw, 2.25rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--white);
+  text-wrap: balance;
+}
+
+.who__answer {
+  max-width: 32ch;
+  font-family: var(--f-serif);
+  font-size: clamp(1.0625rem, 1rem + 0.2vw, 1.1875rem);
+  line-height: 1.55;
+  color: var(--on-dark-2);
+}
+
+.who__source {
+  font-family: var(--f-guild);
+  font-size: var(--step-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--heliodor);
+}
+
+.who__copy {
+  display: grid;
+  gap: 24px;
+  min-width: 0;
+}
+
+.who__copy .section-head {
+  margin-bottom: 8px;
+}
+
+.who__copy .lead {
+  font-family: var(--f-serif);
+  font-size: clamp(1.25rem, 1.05rem + 0.45vw, 1.5rem);
+  line-height: 1.5;
+  color: var(--sapphire-deep);
+}
+
+.who__copy > p:not(.lead) {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--ink-2);
+}
+
+/* Tablets pair the mark and its meaning; phones give the Sigil its own space. */
+@media (max-width: 860px) {
+  .who__grid {
+    --who-stack-space: clamp(64px, 9vw, 80px);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .who__field {
+    right: -100vw;
+    bottom: calc(var(--who-stack-space) * -1);
+    transform: skewY(-2deg);
+  }
+
+  .who__copy {
+    width: 100%;
+    margin: calc(var(--who-stack-space) * 2) 0 0;
+  }
+
+  .who__sigil {
+    grid-template-columns: clamp(144px, 22vw, 168px) minmax(0, 1fr);
+    align-items: center;
+    justify-items: start;
+    gap: 16px 36px;
+    padding: 0;
+    text-align: left;
+  }
+
+  .who__logo {
+    grid-row: span 2;
+    width: 100%;
+    margin: 0;
+  }
+
+  .who__sigil blockquote {
+    justify-items: start;
+  }
+
+  .who__quote {
+    font-size: clamp(1.75rem, 3.8vw, 2rem);
+  }
+
+  .who__source {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 560px) {
+  .who__sigil {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .who__logo {
+    grid-row: auto;
+    width: 144px;
+  }
+
+  .who__sigil blockquote {
+    justify-items: center;
+    gap: 14px;
+  }
+
+  .who__source {
+    grid-column: auto;
+  }
+
+  .who__copy {
+    gap: 22px;
+  }
+}

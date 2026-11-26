@@ -1,0 +1,50 @@
+[
+    {
+        "id":  "cma-136510",
+        "title":  "Water Lilies (Agapanthus)",
+        "date":  "c. 1915–26",
+        "artist":  "Claude Monet",
+        "museum":  "Cleveland Museum of Art",
+        "source":  "https://clevelandart.org/art/1960.81",
+        "imageSource":  "https://openaccess-cdn.clevelandart.org/1960.81/1960.81_print.jpg",
+        "license":  "CC0 / public domain",
+        "licenseUrl":  "https://www.clevelandart.org/open-access",
+        "apiSource":  "https://openaccess-api.clevelandart.org/api/artworks/136510"
+    },
+    {
+        "id":  "cma-95272",
+        "title":  "Gardener\u0027s House at Antibes",
+        "date":  "1888",
+        "artist":  "Claude Monet",
+        "museum":  "Cleveland Museum of Art",
+        "source":  "https://clevelandart.org/art/1916.1044",
+        "imageSource":  "https://openaccess-cdn.clevelandart.org/1916.1044/1916.1044_print.jpg",
+        "license":  "CC0 / public domain",
+        "licenseUrl":  "https://www.clevelandart.org/open-access",
+        "apiSource":  "https://openaccess-api.clevelandart.org/api/artworks/95272"
+    },
+    {
+        "id":  "cma-130391",
+        "title":  "Spring Flowers",
+        "date":  "1864",
+        "artist":  "Claude Monet",
+        "museum":  "Cleveland Museum of Art",
+        "source":  "https://clevelandart.org/art/1953.155",
+        "imageSource":  "https://openaccess-cdn.clevelandart.org/1953.155/1953.155_print.jpg",
+        "license":  "CC0 / public domain",
+        "licenseUrl":  "https://www.clevelandart.org/open-access",
+        "apiSource":  "https://openaccess-api.clevelandart.org/api/artworks/130391"
+    },
+    {
+        "id":  "nga-74796",
+        "title":  "The Japanese Footbridge",
+        "date":  "1899",
+        "artist":  "Claude Monet",
+        "museum":  "National Gallery of Art",
+        "source":  "https://www.nga.gov/artworks/74796-japanese-footbridge",
+        "imageSource":  "https://api.nga.gov/iiif/0b9cefb5-1ee4-401a-8154-8d4039191a28/full/!1800,1800/0/default.jpg",
+        "license":  "Public domain / open access",
+        "licenseUrl":  "https://www.nga.gov/open-access-policy",
+        "apiSource":  "https://www.nga.gov/artworks/74796-japanese-footbridge"
+    }
+]

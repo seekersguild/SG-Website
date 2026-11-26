@@ -1,0 +1,272 @@
+/* ---------- The compass ---------- */
+
+.compass > .emblem {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.emblem {
+  position: relative;
+  aspect-ratio: 1;
+  /* The logo's white rose and Heliodor arcs, with soft ivory highlights
+     and blue facet shadows to retain the compass's sculpted depth. */
+  --compass-gold: var(--heliodor);
+  --compass-gold-light: var(--heliodor-light);
+  --compass-gold-shade: var(--heliodor-deep);
+  --compass-gold-mid: #ffd52e;
+  --compass-rose-light: #fffdf5;
+  --compass-rose-mid: #edf3f2;
+  --compass-rose-shade: #c1d8e5;
+  --compass-rose-deep: #97b8d0;
+  --compass-minor-light: #e7eff2;
+  --compass-minor-mid: #cedde7;
+  --compass-minor-shade: #a2bfd2;
+  --compass-minor-deep: #7c9fb9;
+  overflow: visible;
+}
+
+.em-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 50%;
+}
+
+.em-layer > svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.em-line {
+  fill: none;
+  stroke: var(--heliodor);
+  stroke-width: 1.5;
+  stroke-opacity: 0.45;
+}
+
+.em-tick {
+  stroke: var(--heliodor);
+  stroke-width: 1.5;
+  stroke-opacity: 0.45;
+}
+
+.em-tick--major {
+  stroke-width: 3;
+  stroke-opacity: 1;
+}
+
+/* Inside the bezel the degree scale is already drawn: no second one. */
+.emblem--hero .em-ticks,
+.close__emblem .em-ticks {
+  display: none;
+}
+
+/* Low-poly facets: bright gold bands around an ivory-and-blue rose.
+   The quieter diagonal points keep the long cardinal points in front. */
+/* Facets are stroked in their own fill to close anti-aliasing seams. */
+.em-facet,
+.em-point polygon {
+  stroke-width: 1;
+  stroke-linejoin: round;
+}
+
+.em-facet.f1 { fill: var(--compass-gold); stroke: var(--compass-gold); }
+.em-facet.f2 { fill: var(--compass-gold-light); stroke: var(--compass-gold-light); }
+.em-facet.f3 { fill: var(--compass-gold-shade); stroke: var(--compass-gold-shade); }
+.em-facet.f4 { fill: var(--compass-gold-mid); stroke: var(--compass-gold-mid); }
+
+.em-point .s1 { fill: var(--compass-rose-light); stroke: var(--compass-rose-light); }
+.em-point .s2 { fill: var(--compass-rose-mid); stroke: var(--compass-rose-mid); }
+.em-point .s3 { fill: var(--compass-rose-shade); stroke: var(--compass-rose-shade); }
+.em-point .s4 { fill: var(--compass-rose-deep); stroke: var(--compass-rose-deep); }
+
+.em-point--minor .s1 { fill: var(--compass-minor-light); stroke: var(--compass-minor-light); }
+.em-point--minor .s2 { fill: var(--compass-minor-mid); stroke: var(--compass-minor-mid); }
+.em-point--minor .s3 { fill: var(--compass-minor-shade); stroke: var(--compass-minor-shade); }
+.em-point--minor .s4 { fill: var(--compass-minor-deep); stroke: var(--compass-minor-deep); }
+
+.em-hub {
+  fill: var(--sapphire-deep);
+  stroke: var(--compass-gold-mid);
+  stroke-width: 5;
+  stroke-linejoin: miter;
+}
+
+.em-hub__core {
+  fill: var(--compass-gold-light);
+}
+
+.em-needle {
+  transform: rotate(var(--needle, 0deg));
+}
+
+.em-needle__n1 { fill: var(--compass-gold-light); }
+.em-needle__n2 { fill: var(--compass-gold-shade); }
+.em-needle__s1 { fill: var(--sapphire-deep); }
+.em-needle__s2 { fill: var(--night-deep); }
+
+.em-needle__hub {
+  fill: var(--compass-gold-light);
+}
+
+/* The circle of light around it. */
+.magic-circle {
+  position: relative;
+  aspect-ratio: 1;
+  /* Skip offscreen drawing without pausing or restarting animation clocks. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
+/* Only the two moving layers promote and rotate their pre-rendered artwork.
+   The fixed compass card keeps live SVG lettering. */
+.mc-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  transform-origin: 50% 50%;
+}
+
+.mc-layer > svg,
+.mc-layer > img {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Source-vector styles are also read by scripts/bake-compass-rings.cjs.
+   Each facet's stroke closes hairline seams between neighbouring polygons. */
+.mc-facet {
+  stroke-width: 0.8;
+  stroke-linejoin: round;
+}
+
+.mc-facet--1 { fill: #0a2e63; stroke: #0a2e63; }
+.mc-facet--2 { fill: #082656; stroke: #082656; }
+.mc-facet--3 { fill: #0c3670; stroke: #0c3670; }
+.mc-facet--4 { fill: #06204a; stroke: #06204a; }
+
+.mc-rule {
+  fill: none;
+  stroke-linejoin: miter;
+  stroke: rgb(255 205 3 / 0.6);
+  stroke-width: 1.5;
+}
+
+.mc-rule--fine {
+  stroke: rgb(255 205 3 / 0.35);
+  stroke-width: 1;
+}
+
+.mc-tick {
+  stroke: rgb(255 205 3 / 0.45);
+  stroke-width: 1;
+}
+
+.mc-tick--major {
+  stroke: rgb(255 205 3 / 0.7);
+  stroke-width: 1.5;
+}
+
+.mc-tick--cardinal {
+  stroke: var(--heliodor);
+  stroke-width: 2.5;
+}
+
+/* Mask strokes for drawing the bands in: white shows, so a full stroke
+   reveals the band and a dashed-off one hides it. */
+.em-draw {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 36;
+}
+
+.em-draw--ring {
+  stroke-width: 40;
+}
+
+/* The scanner ring. */
+.mc-track {
+  fill: none;
+  stroke: rgb(120 190 255 / 0.22);
+  stroke-width: 1;
+  stroke-dasharray: 2 6;
+}
+
+.mc-scan__arc {
+  fill: none;
+  stroke: rgb(255 205 3 / 0.45);
+  stroke-width: 1.5;
+}
+
+.mc-node {
+  fill: rgb(255 205 3 / 0.6);
+}
+
+.mc-numeral {
+  fill: rgb(253 254 254 / 0.4);
+  font-family: var(--f-sans);
+  font-size: 9px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.mc-cardinal {
+  fill: var(--heliodor);
+  font-family: var(--f-guild);
+  font-size: 20px;
+  font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.mc-text {
+  fill: rgb(255 221 86 / 0.75);
+  font-family: var(--f-guild);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+}
+
+/* Motes of light; a few take the lilac and pink tints. */
+.motes {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Two static tiled layers of dots. */
+.motes__layer {
+  position: absolute;
+  inset: 0 0 auto;
+  height: calc(100% + var(--tile));
+  background-repeat: repeat;
+}
+
+.motes__layer--near {
+  --tile: 440px;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='560' height='440'><circle cx='90' cy='60' r='1.5' fill='%23fff1a8'/><circle cx='330' cy='250' r='1' fill='%23d9c6f2'/><circle cx='470' cy='380' r='1.5' fill='%23fff1a8'/><circle cx='210' cy='330' r='1' fill='%23fff1a8'/></svg>");
+  opacity: 0.75;
+}
+
+.motes__layer--far {
+  --tile: 620px;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='760' height='620'><circle cx='180' cy='140' r='1' fill='%23ffd3e2'/><circle cx='520' cy='40' r='1' fill='%23fff1a8'/><circle cx='640' cy='470' r='1.5' fill='%23d9c6f2'/><circle cx='300' cy='520' r='1' fill='%23fff1a8'/><circle cx='60' cy='400' r='1' fill='%23fff1a8'/></svg>");
+  background-position: 37% 0;
+  opacity: 0.5;
+}
+
+.motes--sparse .motes__layer--far {
+  display: none;
+}

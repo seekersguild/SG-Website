@@ -7,14 +7,14 @@ import { useEffect, useRef, useState } from "react";
 
 import { LUMA_URL, sectionNav } from "../content/site";
 
-/* One plain bar: the mark, the section links, one action. It turns solid
+/* One plain bar: the mark, the page links, and one action for the site's
+   main audience, organisations: Partner with us. It turns solid
    once the page moves, stays in view while reading, and marks the section
    being read. */
 export function SiteHeader() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [solid, setSolid] = useState(false);
-  const [current, setCurrent] = useState<string | null>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -33,21 +33,6 @@ export function SiteHeader() {
   }, []);
 
   useEffect(() => {
-    const sections = sectionNav
-      .map((item) => document.getElementById(item.href.split("#")[1]))
-      .filter((el): el is HTMLElement => Boolean(el));
-    if (!sections.length) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) if (entry.isIntersecting) setCurrent(entry.target.id);
-      },
-      { rootMargin: "-45% 0px -50% 0px" },
-    );
-    sections.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [pathname]);
-
-  useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
 
@@ -61,20 +46,38 @@ export function SiteHeader() {
   useEffect(() => {
     if (!menuOpen) return;
     document.documentElement.classList.add("menu-lock");
+    // The overlay owns keyboard and assistive navigation while it is open.
+    const background = [...document.querySelectorAll<HTMLElement>("main, .site-footer")];
+    const previousInert = background.map((element) => element.inert);
+    background.forEach((element) => { element.inert = true; });
+    const links = [...document.querySelectorAll<HTMLAnchorElement>("#mobile-menu a[href]")];
+    links[0]?.focus({ preventScroll: true });
     function onKey(event: KeyboardEvent) {
       if (event.key === "Escape") {
         setMenuOpen(false);
         menuButton.current?.focus();
       }
+      if (event.key === "Tab") {
+        const first = menuButton.current;
+        const last = links.at(-1);
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus();
+        }
+      }
     }
     window.addEventListener("keydown", onKey);
     return () => {
       document.documentElement.classList.remove("menu-lock");
+      background.forEach((element, index) => { element.inert = previousInert[index]; });
       window.removeEventListener("keydown", onKey);
     };
   }, [menuOpen]);
 
-  const isActive = (href: string) => pathname === "/" && current === href.split("#")[1];
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <header className="site-header" data-solid={solid || menuOpen ? "" : undefined}>
@@ -103,7 +106,7 @@ export function SiteHeader() {
           <ul>
             {sectionNav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} prefetch={false} aria-current={isActive(item.href) ? "location" : undefined}>
+                <Link href={item.href} aria-current={isActive(item.href) ? "page" : undefined}>
                   {item.label}
                 </Link>
               </li>
@@ -111,9 +114,9 @@ export function SiteHeader() {
           </ul>
         </nav>
 
-        <a className="button site-header__action" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
-          Join a gathering
-        </a>
+        <Link className="button site-header__action" href="/partners" aria-current={isActive("/partners") ? "page" : undefined}>
+          Partner with us
+        </Link>
 
         <button
           ref={menuButton}
@@ -136,14 +139,17 @@ export function SiteHeader() {
           <ul>
             {sectionNav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} prefetch={false} aria-current={isActive(item.href) ? "location" : undefined} onClick={() => setMenuOpen(false)}>
+                <Link href={item.href} aria-current={isActive(item.href) ? "page" : undefined} onClick={() => setMenuOpen(false)}>
                   {item.label}
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
-        <a className="button button--wide" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
+        <Link className="button button--wide" href="/partners" onClick={() => setMenuOpen(false)}>
+          Partner with us
+        </Link>
+        <a className="mobile-menu__luma" href={LUMA_URL} target="_blank" rel="noreferrer noopener">
           Join a gathering on Luma
         </a>
       </div>

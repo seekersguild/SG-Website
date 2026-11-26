@@ -1,0 +1,172 @@
+/* ---------- Programmes: a timetable ----------
+   Each row opens with a sapphire block holding a year dial (gold ticks
+   for each time the programme comes round), then the programme itself. */
+
+.timetable {
+  display: grid;
+  gap: 12px;
+  margin-top: var(--head-gap);
+}
+
+.programme {
+  display: grid;
+  grid-template-columns: clamp(150px, 14vw, 196px) minmax(0, 1fr);
+  background: var(--face-light);
+}
+
+.programme__when {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 14px;
+  padding: 28px 16px;
+  background: var(--sapphire-deep);
+}
+
+.dial {
+  width: clamp(64px, 6vw, 84px);
+  height: auto;
+  overflow: visible;
+}
+
+.dial__ring {
+  fill: none;
+  stroke: rgb(255 205 3 / 0.45);
+  stroke-width: 1;
+}
+
+.dial__tick {
+  stroke: rgb(253 254 254 / 0.28);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.dial__tick--on {
+  stroke: var(--heliodor);
+  stroke-width: 3.2;
+}
+
+.dial__n {
+  font-family: var(--f-guild);
+  font-size: 22px;
+  font-weight: 700;
+  fill: var(--heliodor);
+}
+
+/* A twelfth of a turn on hover, or in the reading area on compact layouts. */
+.programme__dial {
+  transition: rotate 900ms var(--ease-out);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .programme[data-scroll-active] .programme__dial {
+    rotate: 30deg;
+  }
+
+  .programme[data-scroll-active] .dial__n {
+    rotate: -30deg;
+  }
+}
+
+@media (min-width: 1101px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .programme:hover .programme__dial {
+    rotate: 30deg;
+  }
+
+  .programme:hover .dial__n {
+    rotate: -30deg;
+  }
+}
+
+.dial__n {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: rotate 900ms var(--ease-out);
+}
+
+.programme__cadence {
+  font-family: var(--f-guild);
+  font-size: var(--step-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--heliodor-light);
+  text-align: center;
+}
+
+.programme__main {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 6fr);
+  column-gap: clamp(24px, 3vw, 48px);
+  row-gap: 12px;
+  align-items: start;
+  padding: clamp(26px, 2.8vw, 38px) clamp(24px, 3vw, 44px);
+}
+
+.programme__head {
+  display: grid;
+  gap: 10px;
+}
+
+.programme__name {
+  font-family: var(--f-serif);
+  font-size: clamp(1.25rem, 1.1rem + 0.45vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--sapphire-deep);
+  text-wrap: balance;
+}
+
+.programme__access {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--step-small);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.programme__access::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  rotate: 45deg;
+  background: #c99600;
+}
+
+.programme__body {
+  padding-top: 2px;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--ink-2);
+}
+
+@media (max-width: 960px) {
+  .programme__main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .programme {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .programme__when {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 22px;
+  }
+
+  .dial {
+    width: 52px;
+  }
+
+  .programme__cadence {
+    font-size: var(--step-small);
+    text-align: left;
+  }
+}
+

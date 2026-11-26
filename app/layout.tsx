@@ -4,7 +4,6 @@ import localFont from "next/font/local";
 import { Ambient } from "./components/Ambient";
 import { BootLoader } from "./components/BootLoader";
 import { LoadingScreen } from "./components/LoadingScreen";
-import { Magnetic } from "./components/Magnetic";
 import { ScrollAccents } from "./components/ScrollAccents";
 import { ScrollMotion } from "./components/ScrollMotion";
 import { SectionNavigation } from "./components/SectionNavigation";
@@ -81,7 +80,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0f0f0f",
+  themeColor: "#020d24",
+  viewportFit: "cover",
 };
 
 /* Show the first-load mark before paint. Fail open after four seconds if
@@ -109,7 +109,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ScrollAccents />
         <ScrollMotion />
         <SectionNavigation />
-        <Magnetic />
       </body>
     </html>
   );

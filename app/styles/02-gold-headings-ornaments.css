@@ -1,0 +1,102 @@
+/* ---------- Gold, headings, ornaments ---------- */
+
+.gold-text {
+  color: var(--heliodor);
+}
+
+.heading {
+  font-family: var(--f-guild);
+  font-size: var(--step-head);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  text-wrap: balance;
+}
+
+.section-head {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+}
+
+.section-head--dark .heading {
+  color: var(--heliodor);
+}
+
+.section-head--light .heading {
+  color: var(--sapphire-deep);
+}
+
+.flourish {
+  width: 112px;
+  height: auto;
+  fill: none;
+  stroke: var(--heliodor);
+  stroke-width: 1.4;
+}
+
+.flourish__gem {
+  fill: var(--heliodor);
+  stroke: none;
+}
+
+.section-head--light .flourish {
+  stroke: #c99600;
+}
+
+.section-head--light .flourish .flourish__gem {
+  fill: #c99600;
+}
+
+/* Gold-framed panels with filigree corners. */
+.ornate {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  height: 100%;
+  padding: clamp(26px, 2.4vw, 34px) clamp(22px, 2.2vw, 30px);
+  border: 1px solid;
+}
+
+.ornate__corner {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  pointer-events: none;
+}
+
+.ornate__corner svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke-width: 1.6;
+}
+
+.ornate__corner .corner__inner {
+  stroke-width: 1;
+  opacity: 0.6;
+}
+
+.ornate__corner--tl { top: -3px; left: -3px; }
+.ornate__corner--tr { top: -3px; right: -3px; transform: rotate(90deg); }
+.ornate__corner--br { bottom: -3px; right: -3px; transform: rotate(180deg); }
+.ornate__corner--bl { bottom: -3px; left: -3px; transform: rotate(270deg); }
+
+.ornate--dark {
+  border-color: rgb(255 205 3 / 0.45);
+  background: var(--face-dark);
+  box-shadow:
+    inset 0 0 0 4px var(--face-dark),
+    inset 0 0 0 5px rgb(255 205 3 / 0.16);
+  color: var(--on-dark);
+}
+
+.ornate--dark .ornate__corner svg {
+  stroke: var(--heliodor);
+}
+
+.ornate--dark .corner__gem {
+  fill: var(--heliodor);
+  stroke: none;
+}

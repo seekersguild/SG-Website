@@ -16,7 +16,7 @@ export function SectionNavigation() {
     const destination = (hash: string) => {
       try {
         const target = document.getElementById(decodeURIComponent(hash.slice(1)));
-        if (target?.id === "main") return target;
+        if (target?.id === "main" || target?.hasAttribute("data-scroll-target")) return target;
         return target?.closest<HTMLElement>("section.band") ?? null;
       } catch {
         return null;

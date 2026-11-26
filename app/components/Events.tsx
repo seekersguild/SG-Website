@@ -1,49 +1,46 @@
+import Link from "next/link";
+
 import { getEvents, type GuildEvent } from "../content/events";
 import { LUMA_URL } from "../content/site";
-import { JoinDock } from "./JoinDock";
 import { LumaImage } from "./LumaImage";
-import { Ornate } from "./Ornament";
 import { PastEvents } from "./PastEvents";
 
 const tz = "Asia/Manila";
 const fmt = (iso: string, opts: Intl.DateTimeFormatOptions) => new Intl.DateTimeFormat("en-PH", { ...opts, timeZone: tz }).format(new Date(iso));
 const year = (iso: string) => fmt(iso, { year: "numeric" });
 
-function Arrow() {
+/* Home and Impact use the same event layout and registration link. */
+function FeaturedEvent({ event }: { event: GuildEvent }) {
+  const days = Math.ceil((new Date(event.start).getTime() - Date.now()) / 86_400_000);
+  const soon = days <= 0 ? "Today" : days === 1 ? "Tomorrow" : `In ${days} days`;
   return (
-    <svg className="event-row__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M7 17 17 7M9 7h8v8" />
-    </svg>
-  );
-}
-
-function Upcoming({ event }: { event: GuildEvent }) {
-  return (
-    <Ornate className={`ornate--dark next-event${event.cover ? "" : " next-event--text-only"}`}>
+    <article className={`feature-event${event.cover ? "" : " feature-event--text-only"}`}>
+      <time className="feature-event__when" dateTime={event.start} aria-label={fmt(event.start, { dateStyle: "full", timeStyle: "short" })}>
+        <span className="feature-event__day">{fmt(event.start, { day: "numeric" })}</span>
+        <span className="feature-event__month">{fmt(event.start, { month: "long" })}</span>
+        <span className="feature-event__year">{year(event.start)}</span>
+        <span className="feature-event__weekday">
+          {fmt(event.start, { weekday: "long" })}, {fmt(event.start, { hour: "numeric", minute: "2-digit" })}
+        </span>
+        <span className="feature-event__issuer">Seekers Guild</span>
+      </time>
+      <div className="feature-event__body">
+        <h3 className="feature-event__title">{event.title}</h3>
+        <p className="feature-event__details">
+          {[soon, event.venue, event.free ? "Free entry" : null].filter(Boolean).join(" · ")}
+        </p>
+        <div className="actions">
+          <a className="button" href={event.url} target="_blank" rel="noreferrer noopener">
+            Reserve a seat on Luma
+          </a>
+        </div>
+      </div>
       {event.cover ? (
-        <div className="next-event__cover">
-          <LumaImage
-            src={event.cover}
-            alt=""
-            fill
-            sizes="(min-width: 540px) and (max-width: 640px) and (orientation: landscape) 28vw, (max-width: 640px) calc(100vw - 88px), (max-width: 1100px) 28vw, (any-pointer: coarse) 260px, (min-width: 1334px) 320px, 24vw"
-          />
+        <div className="feature-event__cover">
+          <LumaImage src={event.cover} alt={`${event.title} poster`} fill sizes="(max-width: 640px) 240px, (max-width: 1000px) 148px, 260px" />
         </div>
       ) : null}
-      <div className="next-event__body">
-        <p className="next-event__label">Next gathering</p>
-        <h3 className="next-event__title">{event.title}</h3>
-        <p className="next-event__when">
-          <time dateTime={event.start}>
-            {fmt(event.start, { weekday: "long", month: "long", day: "numeric", year: "numeric" })}, {fmt(event.start, { hour: "numeric", minute: "2-digit" })}
-          </time>
-          {event.venue ? <span className="next-event__venue">{event.venue}</span> : null}
-        </p>
-        <a className="button" href={event.url} target="_blank" rel="noreferrer noopener">
-          Reserve a seat on Luma
-        </a>
-      </div>
-    </Ornate>
+    </article>
   );
 }
 
@@ -56,7 +53,7 @@ export async function Events() {
       {upcoming.length ? (
         <div className="events__next">
           {upcoming.map((event) => (
-            <Upcoming key={event.id} event={event} />
+            <FeaturedEvent key={event.id} event={event} />
           ))}
         </div>
       ) : null}
@@ -84,7 +81,6 @@ export async function Events() {
                       </span>
                     </span>
                     <span className="visually-hidden">(opens on Luma)</span>
-                    <Arrow />
                   </a>
                 </li>
               ))}
@@ -102,14 +98,25 @@ export async function Events() {
   );
 }
 
-/* The phone and tablet join bar, filled from Luma: the next gathering when
-   one is set, otherwise a pointer to Luma. */
-export async function JoinDockFromLuma() {
-  const { upcoming } = await getEvents();
+/* The home page's gathering block, set like an event poster: a calendar
+   leaf with the date, the title and details, and the event's own cover
+   large beside it. The count of past gatherings sits under the heading. */
+export async function NextGathering() {
+  const { upcoming, previous } = await getEvents();
   const next = upcoming[0];
-  return next ? (
-    <JoinDock href={next.url} title={next.title} when={fmt(next.start, { weekday: "short", month: "short", day: "numeric" })} />
-  ) : (
-    <JoinDock href={LUMA_URL} title="Posted on Luma as they are set" when={null} />
+  return (
+    <>
+      <p className="events__intro">
+        {previous.length
+          ? `The guild has hosted ${previous.length} gatherings since April 2025. ${next ? "Here is the next one." : "The next one goes up on Luma as soon as it is set."}`
+          : "Every gathering is posted on Luma."}
+      </p>
+      {next ? <FeaturedEvent event={next} /> : null}
+      <p className="events__more">
+        <Link className="text-link" href="/impact#events">
+          See every gathering the guild has hosted
+        </Link>
+      </p>
+    </>
   );
 }

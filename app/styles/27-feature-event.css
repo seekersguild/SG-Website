@@ -1,0 +1,109 @@
+/* A printed admission slip: one paper surface, sapphire type and a date stub.
+   The two transparent notches reveal the painting underneath. */
+.feature-event {
+  --ticket-stub: 164px;
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--ticket-stub) minmax(0, 1fr) minmax(200px, 308px);
+  align-items: center;
+  gap: 0;
+  margin-top: var(--head-gap);
+  min-height: 352px;
+  background: var(--moonshine);
+  /* Static stains belong to the paper, beneath all printed content.
+     Offset, feathered rings keep the coffee mark faint and uneven. */
+  background-image:
+    radial-gradient(ellipse 68px 55px at 7% 96%, transparent 63%, rgb(122 78 38 / .11) 67%, rgb(122 78 38 / .035) 71%, transparent 75%),
+    radial-gradient(ellipse 71px 53px at 7.3% 96.5%, transparent 64%, rgb(122 78 38 / .065) 68%, transparent 73%),
+    radial-gradient(ellipse 100px 64px at 7% 98%, rgb(148 105 59 / .055), transparent 80%),
+    radial-gradient(ellipse at 0 0, rgb(157 114 65 / .13), transparent 48%),
+    radial-gradient(ellipse at 100% 100%, rgb(157 114 65 / .12), transparent 52%),
+    radial-gradient(ellipse at 80% 0, rgb(173 134 86 / .05), transparent 38%);
+  border-radius: 2px;
+  isolation: isolate;
+  mask-image: radial-gradient(circle 12px at var(--ticket-stub) 0, transparent 98%, #000 100%), radial-gradient(circle 12px at var(--ticket-stub) 100%, transparent 98%, #000 100%);
+  mask-composite: intersect;
+}
+.feature-event::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url("/images/ticket-paper-fibres.webp") repeat;
+  background-size: 256px 256px;
+  opacity: .35;
+  pointer-events: none;
+}
+.feature-event::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgb(5 53 118 / 0.4);
+  pointer-events: none;
+}
+.events__next .feature-event { margin-top: 0; }
+.feature-event--text-only { grid-template-columns: var(--ticket-stub) minmax(0, 1fr); }
+.feature-event__when {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  align-content: center;
+  align-self: stretch;
+  justify-items: center;
+  padding: 36px 20px;
+  text-align: center;
+  border-right: 1px dashed rgb(5 53 118 / .35);
+}
+.feature-event__day {
+  font-family: var(--f-serif);
+  font-size: clamp(3.75rem, 5vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--sapphire-deep);
+}
+.feature-event__month { font-family: var(--f-serif); font-size: 1.125rem; color: var(--sapphire-deep); }
+.feature-event__year { font-family: var(--f-serif); font-size: 1rem; line-height: 1.2; color: var(--ink-2); }
+.feature-event__weekday { margin-top: 12px; font-family: var(--f-serif); font-size: var(--step-small); line-height: 1.6; color: var(--ink-2); }
+.feature-event__issuer { margin-top: 24px; font-family: var(--f-guild); font-size: .75rem; font-weight: 600; color: var(--sapphire-deep); }
+.feature-event__body { min-width: 0; display: grid; align-content: center; justify-items: center; text-align: center; gap: 22px; padding: clamp(32px, 3vw, 44px); }
+.feature-event__title {
+  max-width: 26ch;
+  font-family: var(--f-serif);
+  font-size: clamp(1.625rem, 2.6vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--sapphire-deep);
+  text-wrap: balance;
+}
+.feature-event__details { font-family: var(--f-serif); font-style: italic; font-size: 1rem; line-height: 1.7; color: var(--ink-2); }
+.feature-event .actions { margin-top: 8px; }
+.feature-event__cover { position: relative; width: calc(100% - 48px); margin: 32px 32px 32px 16px; aspect-ratio: 1; align-self: center; }
+.feature-event__cover img { object-fit: contain; }
+@media (max-width: 1000px) {
+  .feature-event { --ticket-stub: 132px; grid-template-columns: var(--ticket-stub) minmax(0, 1fr) 180px; }
+  .feature-event__when { padding-inline: 12px; }
+  .feature-event__day { font-size: 3.75rem; }
+  .feature-event__month { font-size: 1.125rem; }
+  .feature-event__cover { width: calc(100% - 32px); margin-inline: 8px 24px; }
+  .feature-event__body { padding: 32px 24px; }
+  .feature-event__issuer { font-size: .6875rem; }
+  .feature-event--text-only { grid-template-columns: var(--ticket-stub) minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  .feature-event, .feature-event--text-only {
+    grid-template-columns: minmax(0, 1fr);
+    mask-image: radial-gradient(circle 12px at 0 132px, transparent 98%, #000 100%), radial-gradient(circle 12px at 100% 132px, transparent 98%, #000 100%);
+  }
+  .feature-event::after { inset: 14px; }
+  .feature-event__when { grid-template-columns: 80px minmax(0, 1fr); grid-template-rows: auto auto auto; column-gap: 16px; row-gap: 2px; height: 132px; padding: 20px 32px; align-content: center; justify-items: start; text-align: left; border-right: 0; border-bottom: 1px dashed rgb(5 53 118 / .35); }
+  .feature-event__day { grid-row: 1 / 4; align-self: center; font-size: 3.75rem; }
+  .feature-event__month { grid-column: 2; }
+  .feature-event__year { grid-column: 2; font-size: .8125rem; }
+  .feature-event__weekday { grid-column: 2; margin: 0; font-size: .8125rem; }
+  .feature-event__issuer { display: none; }
+  .feature-event__body { padding: 30px 24px 24px; gap: 18px; }
+  .feature-event__title { font-size: 1.625rem; }
+  .feature-event .actions { margin-top: 4px; }
+  .feature-event .button { width: 100%; justify-content: center; }
+  .feature-event__cover { width: min(calc(100% - 64px), 240px); justify-self: center; margin: 8px 32px 36px; }
+}

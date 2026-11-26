@@ -1,0 +1,40 @@
+/* ---------- Culture: a large serif list ---------- */
+
+.values {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(32px, 4vw, 64px);
+}
+
+.value {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 16px 0 18px;
+  font-family: var(--f-serif);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--white);
+}
+
+@media (max-width: 640px) {
+  .values {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .value {
+    padding: 14px 0 16px;
+  }
+}
+
+.value::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  translate: 0 -3px;
+  rotate: 45deg;
+  background: var(--heliodor);
+}

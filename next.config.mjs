@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Earlier addresses, kept working for any links already shared.
+  async redirects() {
+    return [{ source: "/what-we-do", destination: "/programmes", permanent: true }];
+  },
   async headers() {
     return [{
       source: "/images/:path*",

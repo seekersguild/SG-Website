@@ -19,22 +19,10 @@
    },
    "hosts": [
     {
-     "name": "Nerry Vyncynt Carreon"
-    },
-    {
      "name": "Seekers Guild"
     },
     {
      "name": "Huawei Cloud Developer Group"
-    },
-    {
-     "name": "Carlos Jerico Dela Torre"
-    },
-    {
-     "name": "Danielle Pauleen G. Labasa"
-    },
-    {
-     "name": "Alexandre Andrei Nevero"
     }
    ],
    "ticket_info": {
@@ -61,15 +49,6 @@
    "hosts": [
     {
      "name": "Seekers Guild"
-    },
-    {
-     "name": "Carlos Jerico Dela Torre"
-    },
-    {
-     "name": "Nerry Vyncynt Carreon"
-    },
-    {
-     "name": "Danielle Pauleen G. Labasa"
     }
    ],
    "ticket_info": {
@@ -96,12 +75,6 @@
    "hosts": [
     {
      "name": "Seekers Guild"
-    },
-    {
-     "name": "Carlos Jerico Dela Torre"
-    },
-    {
-     "name": "Nerry Vyncynt Carreon"
     }
    ],
    "ticket_info": {
@@ -128,9 +101,6 @@
    "hosts": [
     {
      "name": "Seekers Guild"
-    },
-    {
-     "name": "Carlos Jerico Dela Torre"
     }
    ],
    "ticket_info": {
@@ -157,9 +127,6 @@
    "hosts": [
     {
      "name": "Seekers Guild"
-    },
-    {
-     "name": "Carlos Jerico Dela Torre"
     }
    ],
    "ticket_info": {
@@ -186,9 +153,6 @@
    "hosts": [
     {
      "name": "Seekers Guild"
-    },
-    {
-     "name": "Carlos Jerico Dela Torre"
     }
    ],
    "ticket_info": {
@@ -322,12 +286,6 @@
    "hosts": [
     {
      "name": "Seekers Guild"
-    },
-    {
-     "name": "Nerry Vyncynt Carreon"
-    },
-    {
-     "name": "Hunsell Dela Cruz"
     }
    ],
    "ticket_info": {
@@ -352,9 +310,6 @@
     }
    },
    "hosts": [
-    {
-     "name": "Melanie Dotollo"
-    },
     {
      "name": "Seekers Guild"
     }
@@ -386,9 +341,6 @@
     },
     {
      "name": "Seekers Guild"
-    },
-    {
-     "name": null
     }
    ],
    "ticket_info": {
@@ -417,15 +369,6 @@
    "hosts": [
     {
      "name": "Seekers Guild"
-    },
-    {
-     "name": "Carlos Jerico Dela Torre"
-    },
-    {
-     "name": "James Fontanilla"
-    },
-    {
-     "name": "Nerry Vyncynt Carreon"
     }
    ],
    "ticket_info": {

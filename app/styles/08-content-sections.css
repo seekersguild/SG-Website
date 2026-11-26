@@ -1,0 +1,21 @@
+/* ---------- Content sections ----------
+   Type does the work here: no framed cards. Each section has its own
+   composition (pull quote, split, rows, columns, list, timetable). */
+
+/* Heading in a narrow left column, the content carries the wide right one. */
+.split {
+  display: grid;
+  gap: var(--head-gap);
+}
+
+@media (min-width: 1024px) {
+  .split {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    column-gap: clamp(32px, 4vw, 72px);
+    align-items: start;
+  }
+
+  .split > .section-head {
+    padding-top: 6px;
+  }
+}
