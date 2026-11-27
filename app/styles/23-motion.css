@@ -1,0 +1,377 @@
+/* ---------- Motion: compass opening and interaction feedback ---------- */
+
+@keyframes dial-in {
+  from { opacity: 0; transform: rotate(-8deg) scale(0.98); }
+}
+
+@keyframes arc-align {
+  from { opacity: 0; transform: rotate(-32deg) scale(0.96); }
+}
+
+@keyframes ring-align {
+  from { opacity: 0; transform: rotate(32deg) scale(0.96); }
+}
+
+@keyframes rose-align {
+  from { opacity: 0; transform: rotate(-8deg) scale(0.96); }
+}
+
+@keyframes needle-in {
+  from { transform: rotate(-56deg); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-back {
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes loading-arrive {
+  from { opacity: 0.35; transform: rotate(-8deg) scale(0.92); }
+}
+
+@keyframes loading-rose {
+  from { opacity: 0.6; transform: rotate(-18deg) scale(0.9); }
+}
+
+/* Three magnetic bearings per revolution. The final angle is the first
+   plus 360 degrees, so the loop never snaps back to its starting point. */
+@keyframes loading-seek {
+  0% { transform: rotate(-56deg); }
+  40% { transform: rotate(32deg); }
+  80% { transform: rotate(212deg); }
+  100% { transform: rotate(304deg); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .guild-loader__instrument {
+    animation: loading-arrive 800ms var(--ease-out) backwards;
+  }
+
+  .guild-loader__compass .em-tick-layer {
+    animation: spin-back 14s linear infinite;
+  }
+
+  .guild-loader__compass .em-arcs {
+    animation: spin 6400ms linear infinite;
+  }
+
+  .guild-loader__compass .em-ring {
+    animation: spin-back 4800ms linear infinite;
+  }
+
+  .guild-loader__compass .em-star {
+    animation: loading-rose 800ms var(--ease-out) backwards;
+  }
+
+  .guild-loader__compass .em-needle {
+    animation: loading-seek 4s var(--ease-out) infinite;
+  }
+
+  @supports (animation-timing-function: linear(0, 1)) {
+    .guild-loader__compass .em-needle {
+      animation-timing-function: var(--ease-compass);
+    }
+  }
+
+  .js .guild-loader--initial {
+    transition: opacity var(--duration-menu) var(--ease-out),
+      visibility 0s linear var(--duration-menu);
+  }
+
+  .js[data-loading] .guild-loader--initial {
+    transition: none;
+  }
+
+  /* Let the hero's opening begin when it can actually be seen. */
+  .js[data-loading] .emblem--hero .em-layer,
+  .js[data-loading] .mc-bezel,
+  .js[data-loading] .mc-scan {
+    animation-play-state: paused;
+  }
+
+  /* Only controls transition. Reading surfaces and paintings stay still. */
+  .button {
+    transition: transform var(--duration-press) var(--ease-out),
+      background-color var(--duration-feedback) ease,
+      color var(--duration-feedback) ease;
+  }
+
+  .button:active:not(:focus-visible) {
+    transform: scale(0.97);
+  }
+
+  .site-nav a,
+  .close__social a,
+  .footer__links a {
+    transition: color var(--duration-feedback) ease;
+  }
+
+  .site-nav a::after {
+    transition: opacity var(--duration-feedback) ease,
+      transform var(--duration-feedback) var(--ease-out);
+  }
+
+  .menu-toggle__top,
+  .menu-toggle__bottom {
+    transition: transform 200ms var(--ease-out);
+  }
+
+  .mobile-menu {
+    transition: opacity var(--duration-feedback) var(--ease-out),
+      visibility 0s linear var(--duration-feedback);
+  }
+
+  .mobile-menu[data-open] {
+    transition-duration: var(--duration-menu), 0s;
+    transition-delay: 0s;
+  }
+
+  .faq__icon::after {
+    transition: transform 320ms var(--ease-out);
+  }
+
+  /* Keyboard actions remain immediate, including Escape returning focus. */
+  .site-header:has(.menu-toggle:focus-visible) .mobile-menu,
+  .menu-toggle:focus-visible path,
+  .site-nav a:focus-visible::after,
+  .faq__q:focus-visible .faq__icon::after {
+    transition: none;
+  }
+
+  /* The dial arrives, opposing rings align, then the needle finds its bearing.
+     These finite animations run in CSS; text and actions never wait for them. */
+  .js .emblem--hero .em-tick-layer {
+    animation: dial-in var(--duration-compass-align) var(--ease-out) backwards;
+  }
+
+  .js .emblem--hero .em-arcs {
+    animation: arc-align var(--duration-compass-align) var(--ease-out) 80ms backwards;
+  }
+
+  .js .emblem--hero .em-ring {
+    animation: ring-align var(--duration-compass-align) var(--ease-out) 160ms backwards;
+  }
+
+  .js .emblem--hero .em-star {
+    animation: rose-align var(--duration-compass-align) var(--ease-out) 240ms backwards;
+  }
+
+  .js .emblem--hero .em-needle {
+    animation: needle-in var(--duration-compass-settle) var(--ease-out) 240ms backwards;
+  }
+
+  @supports (animation-timing-function: linear(0, 1)) {
+    .js .emblem--hero .em-needle {
+      animation-timing-function: var(--ease-compass);
+    }
+  }
+
+  .mc-bezel {
+    animation: spin 140s linear infinite;
+    will-change: transform;
+  }
+
+  .mc-scan {
+    animation: spin-back 90s linear infinite;
+    will-change: transform;
+  }
+
+  [data-ambient-hidden] .mc-bezel,
+  [data-ambient-hidden] .mc-scan {
+    animation-play-state: paused;
+    will-change: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .programme__dial,
+  .dial__n {
+    transition: none;
+  }
+
+  .motes { display: none; }
+}
+
+/* ==========================================================================
+   Compact layout: phones and portrait tablets (860px and narrower)
+
+   Not the desktop stacked up, but its own design for touch. The opening and
+   the send-off are centred bookends around the compass; groups of cards
+   become rows you swipe, with dots; the culture becomes chips; past
+   gatherings open on the latest few. Desktop never sees any of it.
+   ========================================================================== */
+
+/* Desktop: the complete gathering archive needs no expansion control. */
+.events__toggle {
+  display: none;
+  min-height: 44px;
+}
+
+@media (max-width: 860px) {
+  /* ---- Opening: the motto, then the compass rising on the horizon ----
+     The compass is zoomed past the screen's width with its hub just above
+     the section's foot, so only its upper half shows: the gold S, the
+     needle, north, and the motto arcing over the top. */
+  .hero {
+    --horizon: min(136vw, 780px);
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    min-height: 100svh;
+    padding-top: calc(var(--header-h) + clamp(24px, 6vw, 56px));
+    padding-bottom: calc(var(--horizon) * 0.6 + clamp(16px, 4vw, 40px));
+  }
+
+  .hero__stage {
+    position: absolute;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 50%;
+    width: var(--horizon);
+    margin: 0;
+    translate: -50% 40%;
+  }
+
+  .hero__inner {
+    justify-items: center;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .hero .hero__title {
+    font-size: clamp(2.5rem, 10.4vw, 4.25rem);
+  }
+
+  .hero__foot {
+    justify-items: center;
+    gap: 24px;
+    max-width: 30rem;
+    margin-inline: auto;
+  }
+
+  .hero__lead--full {
+    display: none;
+  }
+
+  .hero__lead--short {
+    display: block;
+    font-size: var(--step-lead);
+    line-height: 1.6;
+  }
+
+  .hero .actions,
+  .close .actions {
+    justify-content: center;
+  }
+
+  /* ---- Rows of cards you swipe ---- */
+  .rail {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    grid-auto-columns: min(84%, 340px);
+    gap: 14px;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 6px var(--gutter) 10px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rail > li {
+    grid-column: auto;
+    scroll-snap-align: start;
+  }
+
+  /* A 24px target around an 8px diamond. */
+
+  /* ---- Past gatherings: the latest few, then a button ---- */
+  .events__past[data-open="false"] .events__year:not(:first-of-type),
+  .events__past[data-open="false"] .events__year .event-list > li:nth-child(n + 5) {
+    display: none;
+  }
+
+  .events__toggle {
+    display: inline-flex;
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  /* ---- Send-off: centred, with the same horizon under it ---- */
+  .close {
+    --horizon: min(136vw, 780px);
+    padding-bottom: calc(var(--horizon) * 0.6 + clamp(16px, 4vw, 40px));
+  }
+
+  .close .close__compass {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 50%;
+    width: var(--horizon);
+    margin: 0;
+    translate: -50% 40%;
+  }
+
+  .close__text {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .close .close__title {
+    font-size: min(clamp(2.25rem, 9.4vw, 4rem), 10.4cqi);
+  }
+
+  .close__flourish {
+    margin-left: 0;
+  }
+
+  .close__follow {
+    justify-content: center;
+  }
+
+  .close__social {
+    justify-content: center;
+  }
+
+}
+
+/* Phones: one card per view, full-width buttons, the code in one column. */
+@media (max-width: 560px) {
+  .hero .actions,
+  .close .actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .hero .actions .button,
+  .close .actions .button {
+    justify-content: center;
+  }
+}
+
+/* Portrait tablets: two cards per view, with the next peeking in. */
+@media (min-width: 561px) and (max-width: 860px) {
+  .rail {
+    grid-auto-columns: calc(47% - 7px);
+  }
+
+}
+
+@media (max-width: 760px) {
+  .who__monet,
+  .join__monet {
+    background-image: url("/images/paint-royal-1400.webp");
+  }
+}

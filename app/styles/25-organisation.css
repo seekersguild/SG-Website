@@ -1,0 +1,451 @@
+/* ---------- Organisation sections ----------
+   At a glance, why partner, the tiers, the record, the partners, ways in,
+   contact and the footer. They borrow the existing layouts and type, and
+   add only what those cannot express. */
+
+/* One line under a heading, saying what the section is for. */
+.glance, .reasons, .audience, .tiers, .ecosystem, .partners-list, .ways {
+  --band-pad: clamp(64px, 6vw, 88px);
+  --head-gap: 32px;
+}
+
+.section-lead {
+  max-width: 52ch;
+  margin-top: 20px;
+  font-size: var(--step-lead);
+  line-height: 1.65;
+}
+
+.section-lead--light {
+  color: var(--ink-2);
+}
+
+.section-lead--dark {
+  color: var(--on-dark-2);
+}
+
+/* ----- At a glance (home) ----- */
+
+.glance__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 32px;
+}
+
+.glance__more {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--step-small);
+  color: var(--white);
+}
+
+.glance__since {
+  margin-top: 16px;
+  font-family: var(--f-serif);
+  font-size: 1rem;
+  color: var(--on-dark-2);
+}
+
+.glance__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  margin: var(--head-gap) 0 0;
+  gap: 24px;
+}
+
+.glance__stat {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 30px 24px 6px 0;
+}
+
+.glance__stat + .glance__stat {
+  padding-left: 0;
+}
+
+.glance__stat dd {
+  margin: 0;
+  font-family: var(--f-guild);
+  font-size: clamp(2.5rem, 1.7rem + 2.4vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--heliodor);
+}
+
+.glance__stat dt {
+  max-width: 18ch;
+  font-size: var(--step-small);
+  line-height: 1.5;
+  color: var(--on-dark);
+}
+
+@media (max-width: 760px) {
+  .glance__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .glance__stat,
+  .glance__stat + .glance__stat {
+    padding: 22px 16px 22px 0;
+    border-left: 0;
+  }
+
+  .glance__stat:nth-child(even) {
+    padding-left: 0;
+  }
+
+  .glance__stat:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    border-bottom: 0;
+  }
+}
+
+/* ----- Why partner (partners): three white panels on the light band ----- */
+
+.reasons__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(32px, 4vw, 64px);
+  margin-top: var(--head-gap);
+}
+
+.reason {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 0;
+}
+
+.reason__n {
+  font-family: var(--f-guild);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #c99600;
+}
+
+.reason__title {
+  font-family: var(--f-serif);
+  font-size: clamp(1.25rem, 1.1rem + 0.45vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--sapphire-deep);
+}
+
+.reason__body {
+  font-size: var(--step-body);
+  line-height: 1.75;
+  color: var(--ink-2);
+}
+
+@media (max-width: 860px) {
+  .reasons__list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ----- Ways to partner (partners): five columns, one per tier ----- */
+
+.tiers__row {
+  margin-top: clamp(36px, 4vw, 52px);
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+
+.tiers__row .pillar,
+.tiers__row .pillar:nth-child(n + 4) {
+  grid-column: auto;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 16px clamp(32px, 5vw, 80px);
+  padding-block: 28px;
+}
+
+.tiers__row .tier__benefits { grid-column: 2; }
+
+.tier__benefits {
+  display: grid;
+  gap: 6px;
+  margin-top: 6px;
+  padding-left: 1.1em;
+  list-style: disc;
+  font-size: var(--step-small);
+  color: var(--on-dark-2);
+}
+
+.tiers__note {
+  margin-top: clamp(32px, 3.4vw, 48px);
+  font-size: var(--step-small);
+  color: var(--on-dark-2);
+}
+
+.tiers__note .text-link,
+.way__link {
+  color: var(--heliodor-light);
+}
+
+/* ----- Our work so far (impact): the mission's rows, year as numeral ----- */
+
+.ecosystem .aims {
+  margin-top: clamp(32px, 3.4vw, 48px);
+}
+
+.ecosystem .aim {
+  grid-template-columns: 5rem minmax(0, 5fr) minmax(0, 6fr);
+}
+
+@media (max-width: 860px) {
+  .ecosystem .aim { grid-template-columns: 4rem minmax(0, 1fr); }
+  .ecosystem .aim__body { grid-column: 2; }
+}
+
+.aim__n--year {
+  color: var(--sapphire-deep);
+  padding-top: 4px;
+  font-size: clamp(1.125rem, 1rem + 0.4vw, 1.375rem);
+}
+
+/* ----- Partner ecosystem (impact): the strategic partner leads ----- */
+
+.ally-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.6vw, 20px);
+  margin-top: var(--head-gap);
+}
+
+.ally {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 28px 0;
+  border-bottom: 1px solid rgb(253 254 254 / 0.25);
+}
+
+.ally--strategic {
+  grid-column: 1 / -1;
+  padding-bottom: 40px;
+}
+
+.ally__relationship {
+  font-family: var(--f-sans);
+  font-size: var(--step-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--white);
+}
+
+.ally__name {
+  font-family: var(--f-serif);
+  font-size: clamp(1.25rem, 1.1rem + 0.45vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--white);
+}
+
+.ally--strategic .ally__name {
+  font-size: clamp(1.5rem, 1.25rem + 0.8vw, 1.875rem);
+}
+
+.ally__body {
+  max-width: 60ch;
+  font-size: var(--step-body);
+  line-height: 1.7;
+  color: var(--on-dark-2);
+}
+
+@media (max-width: 760px) {
+  .ally-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ----- Programmes: flagship mark and who is in the room ----- */
+
+.programme__flag {
+  justify-self: start;
+  padding: 3px 9px;
+  border: 1px solid #c99600;
+  font-family: var(--f-guild);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--gold-ink);
+}
+
+.programme__text {
+  display: grid;
+  gap: 14px;
+}
+
+.programme__room {
+  font-size: var(--step-small);
+  font-weight: 600;
+  color: var(--sapphire-deep);
+}
+
+.programme__room span {
+  margin-right: 0.25em;
+  font-weight: 400;
+  color: var(--ink-2);
+}
+
+/* ----- Ways to get involved (join): four columns ----- */
+
+@media (min-width: 1101px) {
+  .pillars__row--four {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .pillars__row--four .pillar { grid-column: auto; }
+}
+
+@media (max-width: 640px) {
+  .tiers__row .pillar,
+  .tiers__row .pillar:nth-child(n + 4) { grid-template-columns: minmax(0, 1fr); }
+  .tiers__row .tier__benefits { grid-column: 1; }
+}
+
+@media (min-width: 641px) and (max-width: 1100px) {
+  .pillars__row--four .pillar,
+  .pillars__row--four .pillar:nth-child(n + 4) {
+    grid-column: span 3;
+  }
+}
+
+.way__link {
+  margin-top: 6px;
+  font-size: var(--step-small);
+}
+
+/* ----- Contact: every row a full-width link, plainly clickable ----- */
+
+.contact__intro .section-head {
+  margin-bottom: 4px;
+}
+
+.contact__list {
+  border-top: 1px solid rgb(255 205 3 / 0.3);
+}
+
+.contact__row {
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  min-height: 68px;
+  padding: 14px 4px;
+  border-bottom: 1px solid rgb(255 205 3 / 0.3);
+  color: var(--white);
+}
+
+.contact__label {
+  font-family: var(--f-guild);
+  font-size: var(--step-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--heliodor);
+}
+
+.contact__value {
+  min-width: 0;
+  overflow-wrap: break-word;
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgb(255 205 3 / 0.5);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+}
+
+.contact__arrow {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--heliodor);
+  stroke-width: 1.8;
+}
+
+.contact .paint--dark::after {
+  background: rgb(2 13 36 / 0.82);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contact__row:hover {
+    background: rgb(253 254 254 / 0.04);
+  }
+
+  .contact__row:hover .contact__value {
+    color: var(--heliodor-light);
+    text-decoration-color: currentColor;
+  }
+}
+
+@media (max-width: 560px) {
+  .contact__row {
+    grid-template-columns: minmax(0, 1fr) 20px;
+    row-gap: 4px;
+  }
+
+  .contact__label {
+    grid-column: 1 / -1;
+  }
+
+  .contact__value {
+    font-size: 0.9375rem;
+  }
+}
+
+/* ----- Next-step band, blue tone (home's invitation to organisations) ----- */
+
+.next-step.band--blue .close__lead {
+  color: var(--white);
+}
+
+/* ----- Footer: brand, then three columns ----- */
+
+.footer__top {
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+}
+
+.footer__links {
+  grid-template-columns: repeat(2, minmax(0, 150px)) max-content;
+  column-gap: clamp(32px, 4vw, 64px);
+}
+
+.footer__links .footer__email {
+  white-space: nowrap;
+  color: var(--white);
+  text-decoration-color: rgb(255 205 3 / 0.55);
+}
+
+.footer__legal {
+  align-items: center;
+}
+
+.footer__legal p {
+  margin-right: auto;
+}
+
+@media (max-width: 1100px) {
+  .footer__top {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .footer__links {
+    justify-content: start;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer__links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .footer__connect {
+    grid-column: 1 / -1;
+  }
+}

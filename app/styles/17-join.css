@@ -1,0 +1,200 @@
+/* ---------- Join ----------
+   Mirrors Who we are. The steps sit open on the band's left; the right half
+   is a full-bleed field of faceted sapphire over the Monet, carrying the
+   way in. The band's clip-path trims the field to its angled edges. */
+
+.join {
+  overflow: clip;
+}
+
+.join__layout {
+  --join-gap: clamp(64px, 9vw, 144px);
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--join-gap);
+  align-items: center;
+}
+
+.join__main {
+  display: grid;
+  gap: var(--head-gap);
+}
+
+.join__step {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  column-gap: 24px;
+  row-gap: 10px;
+  padding-block: 24px;
+  color: var(--on-dark-2);
+  font-size: var(--step-body);
+  line-height: 1.7;
+}
+
+.join__step:first-child {
+  padding-top: 0;
+}
+
+.join__step:last-child {
+  padding-bottom: 0;
+}
+
+.join__n {
+  grid-row: 1 / 3;
+  font-family: var(--f-guild);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--heliodor);
+}
+
+.join__step > :not(.join__n) {
+  grid-column: 2;
+  min-width: 0;
+  max-width: 52ch;
+  overflow-wrap: anywhere;
+}
+
+.join__title {
+  padding-top: 2px;
+  font-family: var(--f-serif);
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--white);
+}
+
+/* The way in, on its field: the band's right half, cut on one steep
+   diagonal that runs the full height of the band. */
+.join__layout {
+  --slant: clamp(140px, 14vw, 210px);
+}
+
+.join__side {
+  position: static;
+  display: grid;
+  gap: 16px;
+  padding-left: 24px;
+  color: var(--on-dark);
+}
+
+.join__main {
+  padding-right: 72px;
+}
+
+.join__slab {
+  position: absolute;
+  top: calc((var(--band-pad) + var(--cut)) * -1 - 2px);
+  bottom: calc(var(--band-pad) * -1 - 2px);
+  left: calc((100% - var(--join-gap)) * 7 / 12 + var(--join-gap) / 2 - var(--slant) / 2);
+  right: -100vw;
+  z-index: -1;
+  overflow: hidden;
+  clip-path: polygon(var(--slant) 0, 100% 0, 100% 100%, 0 100%);
+  background: var(--sapphire-deep);
+  pointer-events: none;
+}
+
+.join__field .facets {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+}
+
+.join__monet {
+  position: absolute;
+  inset: 0;
+  background-image: url("/images/paint-royal-1400.webp");
+  background-image: image-set(url("/images/paint-royal-1400.webp") 1x, url("/images/paint-royal-2000.webp") 2x);
+  background-position: 30% 55%;
+  background-size: cover;
+}
+
+.join__free {
+  font-family: var(--f-serif);
+  font-size: clamp(1.75rem, 1.3rem + 1.3vw, 2.375rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--heliodor);
+}
+
+.join__intro {
+  max-width: 32ch;
+  font-size: var(--step-lead);
+  line-height: 1.65;
+  color: var(--on-dark);
+}
+
+.join__actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  max-width: 320px;
+  margin-top: 20px;
+}
+
+.join__actions .button {
+  justify-content: center;
+}
+
+/* Phones and portrait tablets: the field becomes the band's lower half. */
+@media (max-width: 960px) {
+  .join__layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .join__side {
+    position: relative;
+    margin-top: clamp(176px, 40vw, 260px);
+  }
+
+  .join__layout {
+    --slant: clamp(40px, 10vw, 64px);
+  }
+
+  .join__side {
+    padding-left: 0;
+  }
+
+  .join__main {
+    padding-right: 0;
+  }
+
+  .join__slab {
+    top: calc(clamp(64px, 14vw, 96px) * -1 - var(--slant));
+    left: calc(var(--gutter) * -1);
+    right: calc(var(--gutter) * -1);
+    clip-path: polygon(0 var(--slant), 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+@media (max-width: 640px) {
+  .join__step {
+    grid-template-columns: 40px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 12px;
+  }
+
+  .join__n {
+    grid-row: 1;
+    font-size: 1.75rem;
+  }
+
+  .join__title {
+    padding-top: 0;
+    font-size: 1.1875rem;
+  }
+
+  .join .join__step > p {
+    grid-column: 1 / -1;
+  }
+
+  .join__actions {
+    max-width: none;
+  }
+}

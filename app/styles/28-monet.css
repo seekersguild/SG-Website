@@ -1,0 +1,102 @@
+/* Each section owns one real Monet painting. A still colour wash preserves
+   the reading contrast; no filters, parallax, blending or animation work. */
+.paint.paint--artwork .paint__img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  background-image: none;
+  object-fit: cover;
+  object-position: center;
+}
+
+.band > .paint.paint--artwork {
+  opacity: 1;
+}
+
+.band > .paint.paint--artwork::after {
+  background: rgb(2 13 36 / 0.8);
+}
+
+.band--sky > .paint.paint--artwork::after {
+  background: rgb(239 248 251 / 0.4);
+}
+
+.band--sky > .paint.paint--artwork {
+  opacity: 0.3;
+}
+
+.band--blue > .paint.paint--artwork::after,
+.band--royal > .paint.paint--artwork::after {
+  background: none;
+}
+
+.close.band--night > .paint.paint--artwork::after {
+  background: rgb(2 13 36 / 0.76);
+}
+
+.band > .paint--dark-water.paint--artwork::after {
+  background: rgb(2 13 36 / 0.82);
+}
+
+/* Keep the painting beneath the same 82% navy wash as the live site's pillars. */
+.pillars > .paint.paint--artwork .paint__img {
+  object-position: center 62%;
+}
+
+/* Bound identity-panel images to the viewport, not the oversized geometry. */
+.who__field,
+.join__slab {
+  background: var(--sapphire-deep);
+}
+
+img.who__monet,
+img.join__monet {
+  width: 100vw;
+  height: 100%;
+  background-image: none;
+  object-fit: cover;
+}
+
+img.who__monet { left: auto; right: 0; }
+img.join__monet { left: 0; right: auto; }
+
+@media (max-width: 860px) {
+  img.who__monet { left: 50%; right: auto; transform: translateX(-50%); }
+}
+
+@media (max-width: 760px) {
+  .hero > .paint.paint--artwork::after {
+    background: rgb(2 13 36 / 0.84);
+  }
+}
+
+.artwork-credits {
+  padding-top: calc(var(--header-h) + 64px);
+}
+
+.artwork-credits .heading {
+  color: var(--sapphire-deep);
+}
+
+.artwork-credits p {
+  max-width: 68ch;
+  margin-top: 24px;
+}
+
+.artwork-credits__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 48px;
+  margin-top: 48px;
+}
+
+.artwork-credits__list dd {
+  margin: 8px 0 0;
+  font-size: var(--step-small);
+}
+
+@media (max-width: 640px) {
+  .artwork-credits__list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

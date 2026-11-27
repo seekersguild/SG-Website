@@ -1,0 +1,42 @@
+/* ---------- Finding our bearing ---------- */
+
+.guild-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: max(24px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+  background: var(--night-deep);
+  color: var(--on-dark);
+  text-align: center;
+}
+
+.guild-loader__instrument {
+  width: min(72vw, 336px, 64svh);
+  aspect-ratio: 1;
+}
+
+.guild-loader__compass {
+  width: 100%;
+}
+
+/* No script means no screen covering the content. Once ready, pointer and
+   keyboard access returns immediately; only the departing mark fades. */
+.guild-loader--initial {
+  display: none;
+  z-index: 101;
+}
+
+.js .guild-loader--initial {
+  display: grid;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.js[data-loading] .guild-loader--initial {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}

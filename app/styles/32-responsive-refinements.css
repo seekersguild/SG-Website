@@ -1,0 +1,91 @@
+/* Responsive polish: content remains in normal flow, with native zoom intact. */
+:root { --header-h: calc(64px + env(safe-area-inset-top, 0px)); }
+.site-header__bar { padding-top: env(safe-area-inset-top); }
+
+/* One page-opening line, calibrated to the home motto. Content length must
+   not move another page's heading up or down within its first section. */
+:root { --page-start: calc(var(--header-h) + clamp(96px, 21svh, 224px) - 5px); }
+.page-enter > .band:is(.hero, .vision, .content-opening, .page-opening):first-of-type {
+  margin-top: 0;
+  padding-top: var(--page-start);
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+@media (max-width: 1100px) {
+  :root { --page-start: calc(var(--header-h) + clamp(40px, 8svh, 72px) - 5px); }
+}
+
+.button,
+.menu-toggle,
+summary {
+  touch-action: manipulation;
+}
+
+.button,
+.menu-toggle {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Keep reading and navigation clear of notches when held sideways. */
+.wrap,
+.site-header__bar {
+  padding-left: max(var(--gutter), env(safe-area-inset-left));
+  padding-right: max(var(--gutter), env(safe-area-inset-right));
+}
+
+.mobile-menu {
+  padding-left: max(var(--gutter), env(safe-area-inset-left));
+  padding-right: max(var(--gutter), env(safe-area-inset-right));
+  padding-bottom: max(32px, env(safe-area-inset-bottom));
+}
+
+/* Keep the footer email on one line when it fits, but allow text enlargement
+   without forcing its grid wider than a phone. */
+@media (max-width: 640px) {
+  .footer__links > div { min-width: 0; }
+  .footer__links .footer__email { white-space: normal; overflow-wrap: anywhere; }
+}
+
+/* Coarse inputs need a generous hit area without larger text or new buttons. */
+@media (any-pointer: coarse) {
+  .footer__links a,
+  .footer__legal a,
+  .close__social a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-block: 8px;
+  }
+
+  .footer__links ul { gap: 0; }
+}
+
+/* A landscape phone needs a horizontal composition, not a tall tablet horizon. */
+@media (max-width: 860px) and (max-height: 540px) and (orientation: landscape) {
+  .hero {
+    min-height: 100svh;
+    padding-top: calc(var(--header-h) + 32px);
+    padding-bottom: 48px;
+  }
+
+  .hero__inner { justify-items: start; text-align: left; }
+  .hero .hero__title { max-width: 60%; font-size: clamp(2rem, 5vw, 2.75rem); }
+  .hero__foot { max-width: 55%; margin-inline: 0; justify-items: start; gap: 20px; }
+  .hero__lead--short { font-size: 1rem; }
+  .hero .actions { justify-content: flex-start; }
+  .hero__stage {
+    top: calc(50% + var(--header-h) / 2);
+    bottom: auto;
+    left: auto;
+    right: max(var(--gutter), env(safe-area-inset-right));
+    width: min(36vw, 280px);
+    translate: 0 -50%;
+  }
+
+  .close { padding-bottom: 64px; }
+  .close .close__compass { display: none; }
+  .mobile-menu { gap: 16px; padding-top: calc(var(--header-h) + 16px); }
+  .mobile-menu a:not(.button) { font-size: 1.5rem; }
+}

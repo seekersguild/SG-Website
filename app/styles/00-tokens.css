@@ -1,0 +1,72 @@
+/* Seekers Guild: the guild's own identity (Sapphire, Heliodor, Moonshine,
+   Obsidian; Cinzel, Lora, Montserrat) in flat colour: solid bands meeting
+   on angled cuts, gold-framed panels, a circle of light around the compass,
+   and impressionist paintings laid in as the atmosphere.
+   Readability first: Cinzel only for short titles. */
+
+:root {
+  /* Brand */
+  --sapphire-deep: #053576;
+  --sapphire: #04419c;
+  --sapphire-bright: #0672f8;
+  --sapphire-glow: #0074ff;
+  --heliodor: #ffcd03;
+  --heliodor-light: #ffdd56;
+  --heliodor-deep: #feb812;
+  --moonshine: #eff8fb;
+  --moonshine-cyan: #d9fdfe;
+  --obsidian: #0f0f0f;
+  --white: #fdfefe;
+
+  /* Depth (shades of the brand sapphire) */
+  --night: #03163a;
+  --night-deep: #020d24;
+
+  /* Water-garden tints, used only as light */
+  --lilac: #d9c6f2;
+  --lily-pink: #ffd3e2;
+
+  /* Roles */
+  --ink: #0e1a33;
+  --ink-2: #24324f;
+  --gold-ink: #9a6f00;
+  --on-dark: #fdfefe;
+  --on-dark-2: rgb(253 254 254 / 0.9);
+  /* Flat colour only: no gradients, glows or shadows. */
+  --face-dark: #072c66;
+  --face-light: #ffffff;
+
+  /* Type */
+  --f-guild: var(--font-cinzel), "Cinzel", Georgia, serif;
+  --f-serif: var(--font-lora), "Lora", Georgia, serif;
+  --f-sans: var(--font-montserrat), "Montserrat", system-ui, sans-serif;
+  /* Type scale, calibrated against a16z.com (body 16px / 1.75, headings 28-42px, regular weight) */
+  --step-xs: 0.8125rem;
+  --step-small: 0.875rem;
+  --step-body: 1rem;
+  --step-lead: 1.125rem;
+  --step-h3: 1.1875rem;
+  --step-statement: clamp(1.375rem, 1.1rem + 0.8vw, 1.75rem);
+  --step-head: clamp(1.75rem, 1.4rem + 1vw, 2.375rem);
+  --step-display: clamp(2.5rem, 1.5rem + 3vw, 4.25rem);
+
+  /* Frame */
+  --gutter: clamp(20px, 4vw, 64px);
+  --max: 1160px;
+  --header-h: 64px;
+  --band-pad: clamp(96px, 10vw, 144px);
+  --cut: clamp(24px, 3vw, 44px);
+  --head-gap: clamp(40px, 4.5vw, 64px);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --duration-press: 140ms;
+  --duration-feedback: 160ms;
+  --duration-menu: 220ms;
+  --duration-compass-align: 1600ms;
+  --duration-compass-settle: 2400ms;
+  /* Mass 1, stiffness 100, damping 10; 81 samples over 1.2 seconds.
+     The opening stretches this curve over 2.4 seconds for a slower pull. */
+  --ease-compass: linear(0, 0.01069, 0.04052, 0.0862, 0.14458, 0.21267, 0.28769, 0.36712, 0.44868, 0.53038, 0.61049, 0.68757, 0.76043, 0.82813, 0.88999, 0.94552, 0.99446, 1.03669, 1.07228, 1.1014, 1.12435, 1.14152, 1.15334, 1.16031, 1.16297, 1.16186, 1.15753, 1.15052, 1.14135, 1.1305, 1.11845, 1.1056, 1.09234, 1.079, 1.06588, 1.0532, 1.04119, 1.02998, 1.01972, 1.01047, 1.00229, 0.9952, 0.9892, 0.98426, 0.98034, 0.97738, 0.97529, 0.97402, 0.97346, 0.97354, 0.97415, 0.97522, 0.97666, 0.97838, 0.98032, 0.98239, 0.98455, 0.98672, 0.98887, 0.99095, 0.99293, 0.99479, 0.99649, 0.99803, 0.99939, 1.00058, 1.00159, 1.00243, 1.0031, 1.00361, 1.00398, 1.00421, 1.00432, 1.00432, 1.00424, 1.00408, 1.00385, 1.00358, 1.00327, 1.00293, 1);
+}

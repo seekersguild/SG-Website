@@ -1,0 +1,71 @@
+/* ---------- Pages ---------- */
+
+/* Inner pages open shorter than the home page, so their content comes sooner. */
+.hero--page {
+  min-height: clamp(520px, 64svh, 680px);
+}
+
+.hero--page .page-hero__main {
+  display: grid;
+  gap: 28px;
+}
+
+/* A page switch eases in: a short rise and fade that hides the swap. No fill
+   after it ends, so nothing is left transformed (fixed bars stay fixed). */
+@keyframes page-in {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .page-enter--in {
+    animation: page-in 520ms var(--ease-out) backwards;
+  }
+}
+
+/* Quiet links that lead on to the next page. */
+.text-link {
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+}
+
+.who__copy .text-link {
+  color: var(--sapphire);
+  text-decoration-color: rgb(201 150 0 / 0.7);
+}
+
+.join__more {
+  margin-top: 8px;
+  font-size: var(--step-small);
+}
+
+.join__more .text-link {
+  color: var(--heliodor-light);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .who__copy .text-link:hover {
+    color: var(--sapphire-deep);
+  }
+
+  .join__more .text-link:hover,
+  .events__more .text-link:hover {
+    color: var(--white);
+  }
+}
+
+/* Inner page titles sit a step below the home motto, so the page name never
+   reaches the compass and the hierarchy stays: motto, then page, then section. */
+.hero--page .hero__title {
+  max-width: min(100%, 9.5em);
+  font-size: clamp(2.25rem, 1.4rem + 2.6vw, 3.5rem);
+}
+
+/* The next-step bands use the night painting under the same wash as the close. */
+.next-step .paint--dark::after {
+  background: rgb(2 13 36 / 0.78);
+}

@@ -1,0 +1,239 @@
+/* ---------- Bands ---------- */
+
+.band {
+  position: relative;
+  padding-block: var(--band-pad);
+  isolation: isolate;
+}
+
+/* Still paper folds sit above the paintings and below every reading surface.
+   One small shared vector; no filters, blending or animation work. */
+.band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url("/images/origami-folds.svg") 17% 31% / 960px 800px repeat;
+  opacity: 0.08;
+}
+
+.band:nth-of-type(even)::before {
+  background-position: 73% 67%;
+}
+
+.band:nth-of-type(3n)::before {
+  background-position: 41% 13%;
+}
+
+@media (max-width: 860px) {
+  .band::before {
+    background-size: 720px 600px;
+  }
+}
+
+.band--sky::before {
+  opacity: 0.06;
+}
+
+.band--night {
+  color: var(--on-dark);
+  background: var(--night);
+}
+
+.band--blue {
+  color: var(--on-dark);
+  background: var(--sapphire);
+}
+
+.band--royal {
+  color: var(--on-dark);
+  background: var(--sapphire-deep);
+}
+
+.band--sky {
+  color: var(--ink);
+  background: var(--moonshine);
+}
+
+/* Static paintings fill their sections and scroll with the document. */
+.paint {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.paint__img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.paint::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* Decorative requests wait until the section approaches. No content is hidden
+   or resized, and without JavaScript all paintings load normally. */
+.js .band:not(.hero) > .paint:not([data-paint-ready]) .paint__img,
+.js .who__field:not([data-paint-ready]) .who__monet,
+.js .join__field:not([data-paint-ready]) .join__monet {
+  background-image: none;
+}
+
+/* The deep-blue painting behind the dark bands. It sits under an 80% wash,
+   so the medium file holds enough detail at every density up to 2000px. */
+.paint--dark .paint__img,
+.paint--dark-water .paint__img {
+  background-image: url("/images/atmosphere-dark-medium.webp");
+}
+
+.hero .paint--dark::after {
+  background: rgb(2 13 36 / 0.8);
+}
+
+.close .paint--dark::after {
+  background: rgb(2 13 36 / 0.76);
+}
+
+.paint--dark-water::after {
+  background: rgb(2 13 36 / 0.82);
+}
+
+/* The light painting behind the sky bands, shown at about a fifth of its
+   strength, so the medium file is plenty at every density up to 2000px. */
+.paint--light .paint__img {
+  background-image: url("/images/atmosphere-light-medium.webp");
+}
+
+.band--sky .paint--light {
+  opacity: 0.3;
+}
+
+.band--sky .paint--light::after {
+  background: rgb(239 248 251 / 0.4);
+}
+
+/* The blue bands show the light painting as if blended by luminosity into
+   the band colour. The blend is baked into the files (paint-blue-*,
+   paint-royal-*), so the browser never blends live while scrolling. */
+.band--blue .paint--light .paint__img {
+  background-image: url("/images/paint-blue-2000.webp");
+  background-image: -webkit-image-set(url("/images/paint-blue-2000.webp") 1x, url("/images/paint-blue-3000.webp") 2x);
+  background-image: image-set(url("/images/paint-blue-2000.webp") 1x, url("/images/paint-blue-3000.webp") 2x);
+}
+
+.band--royal .paint--light .paint__img {
+  background-image: url("/images/paint-royal-2000.webp");
+  background-image: -webkit-image-set(url("/images/paint-royal-2000.webp") 1x, url("/images/paint-royal-3000.webp") 2x);
+  background-image: image-set(url("/images/paint-royal-2000.webp") 1x, url("/images/paint-royal-3000.webp") 2x);
+}
+
+@media (max-width: 760px) {
+  .band--blue .paint--light .paint__img {
+    background-image: -webkit-image-set(url("/images/paint-blue-1400.webp") 1x, url("/images/paint-blue-3000.webp") 2x);
+    background-image: image-set(url("/images/paint-blue-1400.webp") 1x, url("/images/paint-blue-3000.webp") 2x);
+  }
+
+  .band--royal .paint--light .paint__img {
+    background-image: -webkit-image-set(url("/images/paint-royal-1400.webp") 1x, url("/images/paint-royal-3000.webp") 2x);
+    background-image: image-set(url("/images/paint-royal-1400.webp") 1x, url("/images/paint-royal-3000.webp") 2x);
+  }
+}
+
+@media (max-width: 760px) and (max-aspect-ratio: 13/25) {
+  .band--blue .paint--light .paint__img {
+    background-image: -webkit-image-set(url("/images/paint-blue-1400.webp") 1x, url("/images/paint-blue-tall.webp") 2x);
+    background-image: image-set(url("/images/paint-blue-1400.webp") 1x, url("/images/paint-blue-tall.webp") 2x);
+  }
+
+  .band--royal .paint--light .paint__img {
+    background-image: -webkit-image-set(url("/images/paint-royal-1400.webp") 1x, url("/images/paint-royal-tall.webp") 2x);
+    background-image: image-set(url("/images/paint-royal-1400.webp") 1x, url("/images/paint-royal-tall.webp") 2x);
+  }
+}
+
+@media (min-width: 2001px) {
+  .band--blue .paint--light .paint__img {
+    background-image: url("/images/paint-blue-3000.webp");
+  }
+
+  .band--royal .paint--light .paint__img {
+    background-image: url("/images/paint-royal-3000.webp");
+  }
+}
+
+/* Phones: the small files at every density. Under their washes the extra
+   pixels of the 2-3x files are not visible, only their weight is. */
+@media (max-width: 760px) {
+  .paint--dark .paint__img,
+  .paint--dark-water .paint__img {
+    background-image: url("/images/atmosphere-dark-small.webp");
+  }
+
+  .paint--light .paint__img {
+    background-image: url("/images/atmosphere-light-small.webp");
+  }
+}
+
+/* Very wide screens (2K, 4K, ultrawide): larger 1x files and the full-resolution scans at 2x. */
+@media (min-width: 2001px) {
+  .paint--dark .paint__img,
+  .paint--dark-water .paint__img {
+    background-image: -webkit-image-set(url("/images/atmosphere-dark-large.webp") 1x, url("/images/atmosphere-dark-large.webp") 2x);
+    background-image: image-set(url("/images/atmosphere-dark-large.webp") 1x, url("/images/atmosphere-dark-large.webp") 2x);
+  }
+
+  .paint--light .paint__img {
+    background-image: -webkit-image-set(url("/images/atmosphere-light-large.webp") 1x, url("/images/atmosphere-light-large.webp") 2x);
+    background-image: image-set(url("/images/atmosphere-light-large.webp") 1x, url("/images/atmosphere-light-large.webp") 2x);
+  }
+}
+
+/* 4K and wider: the full scans at every density (nothing larger exists). */
+@media (min-width: 2881px) {
+  .paint--dark .paint__img,
+  .paint--dark-water .paint__img {
+    background-image: url("/images/atmosphere-dark-large.webp");
+  }
+
+  .paint--light .paint__img {
+    background-image: url("/images/atmosphere-light-large.webp");
+  }
+}
+
+/* A faint starfield on the night bands. */
+.sky {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cg fill='%23ffffff'%3E%3Ccircle cx='52' cy='78' r='1.2' opacity='.7'/%3E%3Ccircle cx='182' cy='52' r='.8' opacity='.6'/%3E%3Ccircle cx='221' cy='169' r='.8' opacity='.5'/%3E%3Ccircle cx='156' cy='130' r='1.2' opacity='.45'/%3E%3C/g%3E%3Ccircle cx='104' cy='208' r='1.2' fill='%23ffdd56' opacity='.7'/%3E%3Ccircle cx='26' cy='182' r='.8' fill='%23d9fdfe' opacity='.6'/%3E%3C/svg%3E");
+  background-size: 260px 260px;
+  opacity: 0.55;
+}
+
+.sky--stars {
+  opacity: 0.35;
+}
+
+.band--cut {
+  margin-top: calc(var(--cut) * -1);
+  padding-top: calc(var(--band-pad) + var(--cut));
+  /* The polygon runs a few pixels past the sides and bottom: edges that sit
+     exactly on the screen edge are anti-aliased at fractional pixel ratios
+     and let the page background show through as a hairline. */
+  clip-path: polygon(-4px calc(var(--cut) + 0.4px), calc(100% + 4px) -0.4px, calc(100% + 4px) calc(100% + 4px), -4px calc(100% + 4px));
+}
+
+.band--cut-left {
+  clip-path: polygon(-4px -0.4px, calc(100% + 4px) calc(var(--cut) + 0.4px), calc(100% + 4px) calc(100% + 4px), -4px calc(100% + 4px));
+}
