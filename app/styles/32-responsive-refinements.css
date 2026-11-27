@@ -41,6 +41,13 @@ summary {
   padding-bottom: max(32px, env(safe-area-inset-bottom));
 }
 
+/* Keep the footer email on one line when it fits, but allow text enlargement
+   without forcing its grid wider than a phone. */
+@media (max-width: 640px) {
+  .footer__links > div { min-width: 0; }
+  .footer__links .footer__email { white-space: normal; overflow-wrap: anywhere; }
+}
+
 /* Coarse inputs need a generous hit area without larger text or new buttons. */
 @media (any-pointer: coarse) {
   .footer__links a,

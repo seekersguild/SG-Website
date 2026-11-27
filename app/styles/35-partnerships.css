@@ -1,0 +1,88 @@
+/* A partner's reading path: invitation and evidence, programme fit, scope,
+   then one direct contact. The existing guild type and painting layers lead. */
+.partnership-opening,
+.partnership-programmes,
+.partnership-options { font-size: clamp(1rem, .95rem + .2vw, 1.125rem); line-height: 1.7; }
+.partnership-opening { min-height: auto; }
+.partnership-programmes,
+.partnership-options { --band-pad: clamp(64px, 6vw, 88px); }
+.partnership-programmes .heading { overflow-wrap: anywhere; }
+.partnership-opening__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr);
+  gap: clamp(40px, 6vw, 88px);
+  align-items: start;
+}
+.partnership-opening__copy { display: grid; gap: 24px; }
+.partnership-opening .heading { font-size: clamp(2.25rem, 3.8vw, 3.5rem); line-height: 1.12; }
+.partnership-opening__statement { font-family: var(--f-serif); font-size: var(--step-statement); line-height: 1.5; max-width: 25ch; }
+.partnership-opening__copy > p:not(.partnership-opening__statement) { max-width: 53ch; color: var(--on-dark-2); }
+.partnership-opening__actions { margin-top: 8px; gap: 12px 24px; }
+.partnership-opening__evidence { display: grid; gap: 24px; min-width: 0; padding-top: 6px; }
+.partnership-opening__evidence h2 { font-family: var(--f-serif); font-size: var(--step-statement); font-weight: 500; line-height: 1.4; text-wrap: balance; }
+.partnership-opening__evidence p { color: var(--on-dark-2); }
+.partnership-opening__evidence strong { font-weight: 600; color: var(--heliodor-light); }
+.partnership-opening__evidence > .text-link { justify-self: start; display: inline-flex; align-items: center; min-height: 44px; font-size: var(--step-small); }
+.partnership-source { margin-top: 8px; color: var(--on-dark-2); font-size: var(--step-xs); }
+.partnership-opening__partners { margin-top: clamp(44px, 5.5vw, 72px); max-width: 95ch; font-family: var(--f-serif); font-size: var(--step-small); color: var(--on-dark-2); }
+.partnership-intro { max-width: 60ch; margin-top: 24px; }
+.partnership-reading-layout { display: grid; gap: clamp(36px, 4vw, 56px); }
+.partnership-reading-intro .heading { max-width: none; }
+.partnership-programmes__list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(28px, 3.5vw, 48px); }
+.partnership-programme { display: grid; align-content: start; gap: 20px; min-width: 0; }
+.partnership-programme h3 { color: var(--sapphire-deep); font-family: var(--f-serif); font-size: clamp(1.375rem, 1.7vw, 1.625rem); font-weight: 600; line-height: 1.3; }
+.partnership-programme__format { margin-top: 8px; font-size: 1rem; color: var(--ink-2); }
+.partnership-programme > p { color: var(--ink); }
+.partnership-programme dl { display: grid; gap: 20px; margin: 0; }
+.partnership-programme dt { font-size: 1rem; font-weight: 600; color: var(--sapphire-deep); }
+.partnership-programme dd { margin: 4px 0 0; color: var(--ink); }
+.partnership-programmes__more { margin-top: 40px; font-size: var(--step-small); }
+.partnership-options__list { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 40px clamp(28px, 3.5vw, 48px); min-width: 0; }
+.partnership-option { grid-column: span 2; min-width: 0; }
+.partnership-option:nth-child(n + 4) { grid-column: span 3; }
+.partnership-option__name { display: block; font-family: var(--f-serif); font-size: clamp(1.25rem, 1.65vw, 1.5rem); font-weight: 600; line-height: 1.35; color: var(--heliodor-light); }
+.partnership-option__scope { display: block; margin-top: 8px; font-size: 1rem; font-weight: 600; color: var(--on-dark); }
+.partnership-option__body { max-width: 52ch; margin-top: 12px; color: var(--on-dark); }
+.partnership-options__note { margin-top: 40px; max-width: 68ch; color: var(--on-dark-2); }
+.partnership-options__note h3 { font-family: var(--f-serif); font-size: var(--step-h3); font-weight: 600; line-height: 1.4; color: var(--on-dark); }
+.partnership-options__note p { margin-top: 12px; font-size: 1rem; }
+.partnership-contact { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 32px clamp(32px, 6vw, 88px); margin-top: clamp(48px, 6vw, 80px); }
+.partnership-contact h3 { font-family: var(--f-serif); font-size: var(--step-statement); line-height: 1.4; }
+.partnership-contact p { margin-top: 16px; max-width: 51ch; }
+.partnership-contact__details { justify-self: start; }
+.partnership-contact__details p { font-size: var(--step-small); }
+.partnership-contact__details p > span { color: var(--on-dark-2); }
+.partnership-contact__details .text-link { display: inline-flex; align-items: center; min-height: 44px; }
+@media (min-width: 1101px) {
+  .band.page-opening.partnership-opening:not(.hero):not(.vision):not(.who) {
+    min-height: calc(100svh - var(--header-h) + var(--cut) + 28px);
+  }
+}
+@media (max-width: 1100px) {
+  .partnership-opening__layout { gap: 32px; }
+}
+@media (max-width: 960px) {
+  .partnership-programmes__list { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .partnership-programme { grid-template-columns: minmax(0, .8fr) minmax(0, 1.3fr); gap: 16px 32px; }
+  .partnership-programme > div { grid-row: span 2; }
+  .partnership-programme dl { grid-column: 2; }
+  .partnership-options__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .partnership-option, .partnership-option:nth-child(n + 4) { grid-column: auto; }
+}
+@media (max-width: 760px) {
+  .partnership-opening__layout { grid-template-columns: minmax(0, 1fr); }
+  .partnership-opening .heading { font-size: clamp(1.875rem, 8.3vw, 2.75rem); }
+  .partnership-opening__evidence { padding-top: 8px; gap: 20px; }
+  .partnership-contact { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+}
+@media (max-width: 560px) {
+  .partnership-programme { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .partnership-programme > div { grid-row: auto; }
+  .partnership-programme dl { grid-column: auto; gap: 16px; }
+  .partnership-options__list { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .partnership-contact__details { width: 100%; }
+  .partnership-contact .button { width: 100%; }
+  .partnership-opening__actions { align-items: stretch; flex-direction: column; }
+  .partnership-opening .partnership-opening__actions > .button { flex: 0 0 auto; }
+  .partnership-opening__actions > .text-link { justify-content: center; }
+}

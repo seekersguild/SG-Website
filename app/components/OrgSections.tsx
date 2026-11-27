@@ -1,13 +1,12 @@
 ﻿import Link from "next/link";
 
 import { getEvents } from "../content/events";
-import { atAGlance, audience, CONTACT_EMAIL, ecosystem, LUMA_URL, partnerReasons, partners, partnershipTiers, socialLinks } from "../content/site";
+import { atAGlance, CONTACT_EMAIL, ecosystem, LUMA_URL, partners, socialLinks } from "../content/site";
 import { Paint, SectionHead } from "./Sections";
 
 /* The sections that present the guild as an organisation. Each appears on
    exactly one page, where it belongs:
      Home        At a glance
-     Partners    Why partner, Who you reach, Ways to partner
      Impact      Our work so far, Partner ecosystem
      Get involved  Ways to get involved
      Contact     the contact list, inside the page's opening
@@ -47,85 +46,6 @@ export async function AtAGlanceSection() {
               </div>
             ))}
         </dl>
-      </div>
-    </section>
-  );
-}
-
-/* Partners: three reasons to partner, from the guild's own record. */
-export function PartnerReasonsSection() {
-  return (
-    <section className="band band--sky band--cut reasons" id="why" aria-labelledby="why-title">
-      <Paint which="light" artwork="partners-why" />
-      <div className="wrap">
-        <SectionHead id="why-title" title="Why partner with the guild" />
-        <ol className="reasons__list">
-          {partnerReasons.map((reason) => (
-            <li key={reason.title} className="reason">
-              <h3 className="reason__title">{reason.title}</h3>
-              <p className="reason__body">{reason.body}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
-  );
-}
-
-/* Partners: who is in the room. */
-export function AudienceSection() {
-  return (
-    <section className="band band--royal band--cut band--cut-left audience" id="audience" aria-labelledby="audience-title">
-      <Paint which="light" artwork="partners-audience" />
-      <span className="sky sky--stars" aria-hidden="true" />
-      <div className="wrap split">
-        <div>
-          <SectionHead id="audience-title" title="Who you reach" tone="dark" />
-          <Lead tone="dark">The people guild programmes bring together, from college students to corporate innovation teams.</Lead>
-        </div>
-        <ul className="split__main values">
-          {audience.map((role) => (
-            <li key={role} className="value">
-              {role}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-/* Partners: the five tiers, laid out like the pillars. A tier lists its
-   inclusions once the partnerships team adds them to site.ts. */
-export function TiersSection() {
-  return (
-    <section className="band band--night band--cut tiers" id="tiers" aria-labelledby="tiers-title">
-      <Paint which="dark-water" artwork="partners-tiers" />
-      <span className="sky sky--stars" aria-hidden="true" />
-      <div className="wrap">
-        <SectionHead id="tiers-title" title="Ways to partner" tone="dark" />
-        <Lead tone="dark">Five ways to back the guild, from a single gathering to the full year.</Lead>
-        <ol className="pillars__row tiers__row">
-          {partnershipTiers.map((tier) => (
-            <li key={tier.name} className="pillar">
-              <h3 className="pillar__title">{tier.name}</h3>
-              <p className="pillar__body">{tier.scope}</p>
-              {tier.benefits.length ? (
-                <ul className="tier__benefits">
-                  {tier.benefits.map((benefit) => (
-                    <li key={benefit}>{benefit}</li>
-                  ))}
-                </ul>
-              ) : null}
-            </li>
-          ))}
-        </ol>
-        <p className="tiers__note">
-          The inclusions for each tier are agreed with you.{" "}
-          <a className="text-link" href={`mailto:${CONTACT_EMAIL}?subject=Partnership%20packages`}>
-            Ask for the current package sheet
-          </a>
-        </p>
       </div>
     </section>
   );
